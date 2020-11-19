@@ -9,10 +9,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="387.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="wolff_patient.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="387.0" style="-fx-background-color: #e3e4e5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.LogInController">
     
          <children>
-            <Label layoutX="154.0" layoutY="64.0" text="Welcome ">
+            <Label layoutX="139.0" layoutY="63.0" text="Welcome ">
                <font>
                   <Font name="Impact" size="26.0" />
                </font>
@@ -22,12 +22,12 @@
                   <Font name="Ebrima Bold" size="14.0" />
                </font>
             </Label>
-            <ImageView fitHeight="81.0" fitWidth="89.0" layoutX="14.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="81.0" fitWidth="89.0" layoutX="34.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@src.IconPictures/logoNegro.png" />
+                  <Image url="@images/heart.png" />
                </image>
             </ImageView>
-            <Button fx:id="signUpButton" layoutX="227.0" layoutY="478.0" styleClass="starter_small_buttom" text="Signup" textFill="#4f90a5">
+            <Button fx:id="signUpButton" layoutX="227.0" layoutY="478.0" onAction="#createAccountForm" styleClass="starter_small_buttom" text="Signup" textFill="#4f90a5">
                <font>
                   <Font name="Ebrima Bold" size="14.0" />
                </font>
@@ -37,7 +37,7 @@
                   <Font name="Ebrima Bold" size="14.0" />
                </font>
             </PasswordField>
-            <Button fx:id="logInButton" layoutX="89.0" layoutY="368.0" prefHeight="60.0" prefWidth="210.0" styleClass="starter_buttom" text="Login" textFill="#000000b4">
+            <Button fx:id="logInButton" layoutX="89.0" layoutY="368.0" onAction="#loginButtonOnAction" prefHeight="60.0" prefWidth="210.0" styleClass="starter_buttom" text="Login" textFill="#000000b4">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -47,10 +47,10 @@
                   <Font name="Ebrima Bold" size="14.0" />
                </font>
             </TextField>
-            <ImageView fitHeight="28.0" fitWidth="40.0" layoutX="347.0" layoutY="14.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@src.IconPictures/window-close.png" />
-               </image>
-            </ImageView>
+      <Label fx:id="loginMessageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="318.0" prefHeight="45.0" prefWidth="387.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
