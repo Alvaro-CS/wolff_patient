@@ -11,6 +11,8 @@ createAccountForm--> opens registration view
  */
 package wolff_patient;
 
+import BITalino.BitalinoManager;
+import BITalino.Frame;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -28,10 +30,14 @@ import java.sql.Statement;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 
 public class LogInController implements Initializable {
 
+    BitalinoManager bitalinoManager = null;//Remove after clean
     @FXML
     private TextField userNameField;
     @FXML
@@ -54,6 +60,53 @@ public class LogInController implements Initializable {
 
     }
 
+    @FXML
+    public void connectBitalino(ActionEvent event) {
+        bitalinoManager = new BitalinoManager("98:D3:C1:FD:2F:EC"); //El user tiene que meterlo
+    }
+     @FXML
+    public void disconnectBitalino(ActionEvent event) {
+        bitalinoManager.disconnect();
+    }
+    @FXML
+
+    public void readECG(ActionEvent event) {
+        bitalinoManager.startManualECG();
+        showECG(event);
+    }
+    @FXML
+    Pane paneChart;
+    @FXML
+    public void showECG(ActionEvent event){
+        XYChart.Series series = new XYChart.Series();
+      //  series.setName("ECG data");
+        //populating the series with data
+        Frame[] frame=bitalinoManager.getFrame();
+        int min=Integer.MAX_VALUE;
+        int max=0;
+        for(int i=0;i<frame.length;i++){
+        series.getData().add(new XYChart.Data(i,frame[i].analog[0]));
+        if(min>frame[i].analog[0])min=frame[i].analog[0];
+        if(max<frame[i].analog[0])max=frame[i].analog[0];
+        }
+        
+        paneChart.getChildren().clear();
+        
+        final NumberAxis xAxis = new NumberAxis(0,frame.length,1);
+        final NumberAxis yAxis = new NumberAxis(min-5,max+5,0.1);//lower, upper, tick
+        LineChart<Number,Number> lineChart= new LineChart<>(xAxis,yAxis);
+        
+        lineChart.getXAxis().setLabel("Time");
+        lineChart.getYAxis().setLabel("Amplitude");
+
+        //creating the chart
+        lineChart.setTitle("ECG");
+        //defining a series
+        lineChart.getData().add(series);
+        paneChart.getChildren().add(lineChart);
+        System.out.println("Shown");
+    }
+    
     @FXML
     public void validateLogin() {
 
