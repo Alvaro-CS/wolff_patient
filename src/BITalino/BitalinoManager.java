@@ -112,7 +112,6 @@ public class BitalinoManager {
         }
 
     }
-
     public Frame[] getFrame() {
         return frame;
     }

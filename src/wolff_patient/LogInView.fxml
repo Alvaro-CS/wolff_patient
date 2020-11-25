@@ -57,5 +57,6 @@
       <Button layoutX="155.0" layoutY="134.0" mnemonicParsing="false" onAction="#readECG" text="Record ECG" />
       <Button layoutX="270.0" layoutY="134.0" mnemonicParsing="false" onAction="#disconnectBitalino" text="Close Bitalino" />
       <Pane fx:id="paneChart" layoutX="385.0" layoutY="134.0" prefHeight="276.0" prefWidth="449.0" />
+      <Button layoutX="544.0" layoutY="83.0" mnemonicParsing="false" onAction="#sendECG" prefHeight="28.0" prefWidth="131.0" text="Send ECG to server" />
     </children>
 </AnchorPane>

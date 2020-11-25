@@ -13,6 +13,10 @@ package wolff_patient;
 
 import BITalino.BitalinoManager;
 import BITalino.Frame;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -27,6 +31,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -105,6 +111,52 @@ public class LogInController implements Initializable {
         lineChart.getData().add(series);
         paneChart.getChildren().add(lineChart);
         System.out.println("Shown");
+    }
+ 
+    @FXML
+    public void sendECG(){
+         OutputStream outputStream = null;
+         ObjectOutputStream objectOutputStream = null;
+        System.out.println("Envia");
+        Socket socket = null;
+        try {
+            socket = new Socket("localhost", 9000);
+            outputStream = socket.getOutputStream();
+        } catch (IOException ex) {
+            System.out.println("It was not possible to connect to the server.");
+            System.exit(-1);
+            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+             objectOutputStream = new ObjectOutputStream(outputStream);
+            //We get the data (Frame class) from Bitalino, get the useful info (int) and send it.
+            Frame[] frame=bitalinoManager.getFrame();
+                int[]ecg_data= new int[frame.length];
+             for (int i=0;i<frame.length;i++) {
+                 ecg_data[i]=frame[i].analog[0];
+             }
+             objectOutputStream.writeObject(ecg_data);
+            
+        } catch (IOException ex) {
+            System.out.println("Unable to write the object on the server.");
+            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            releaseResources(outputStream, socket);
+
+        }
+    }
+    
+    private static void releaseResources(OutputStream outputStream, Socket socket) {
+        try {
+            outputStream.close();
+        } catch (IOException ex) {
+            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            socket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @FXML
