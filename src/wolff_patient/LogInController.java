@@ -41,6 +41,10 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 
+/**
+ *
+ * @author ALVARO
+ */
 public class LogInController implements Initializable {
 
     BitalinoManager bitalinoManager = null;//Remove after clean
@@ -55,6 +59,10 @@ public class LogInController implements Initializable {
     @FXML
     private Label loginMessageLabel;
 
+    /**
+     *
+     * @param event
+     */
     public void loginButtonOnAction(ActionEvent event) {
         if (userNameField.getText().isEmpty() == false && passwordField.getText().isEmpty() == false) {
             validateLogin();
@@ -66,14 +74,28 @@ public class LogInController implements Initializable {
 
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     public void connectBitalino(ActionEvent event) {
         bitalinoManager = new BitalinoManager("98:D3:C1:FD:2F:EC"); //El user tiene que meterlo
     }
-     @FXML
+
+    /**
+     *
+     * @param event
+     */
+    @FXML
     public void disconnectBitalino(ActionEvent event) {
         bitalinoManager.disconnect();
     }
+
+    /**
+     *
+     * @param event
+     */
     @FXML
 
     public void readECG(ActionEvent event) {
@@ -82,7 +104,16 @@ public class LogInController implements Initializable {
     }
     @FXML
     Pane paneChart;
+
+    /**
+     * This method shows a line chart on-screen  with the ECG that has been 
+     * received. It adjusts max and min values of the chart. Line chart is shown 
+     * in a pane.
+     * @param event The event that triggers the ECG to appear
+     * 
+     */
     @FXML
+    
     public void showECG(ActionEvent event){
         XYChart.Series series = new XYChart.Series();
       //  series.setName("ECG data");
@@ -113,6 +144,11 @@ public class LogInController implements Initializable {
         System.out.println("Shown");
     }
  
+    /**
+     *This method creates a socket  for sending an ECG to a server. It gets the
+     * ECG data from "bitalinoManager" object, gets the useful information, that
+     * is located in analog[0] and writes the int[] object with all ECG values.
+     */
     @FXML
     public void sendECG(){
          OutputStream outputStream = null;
@@ -159,6 +195,9 @@ public class LogInController implements Initializable {
         }
     }
     
+    /**
+     *
+     */
     @FXML
     public void validateLogin() {
 
@@ -188,6 +227,9 @@ public class LogInController implements Initializable {
 //        }
     }
 
+    /**
+     *
+     */
     @FXML
     //opens registration form
     public void createAccountForm() {
