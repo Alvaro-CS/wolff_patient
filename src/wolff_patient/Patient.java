@@ -6,18 +6,51 @@
 package wolff_patient;
 
 import java.util.Date;
+import java.io.Serializable;
 
 /**
  *
  * @author ALVARO
  */
-public class Patient implements Runnable {
-private Date birthdate;
-private enum gender{MALE,FEMALE,OTHER};
-private String address;//ARRAY PENSAR
-private int SSNumber;
-private int telf;
+public class Patient implements Runnable, Serializable{
+    
 private String DNI;
+private String password;
+private String name;
+private String lastName;
+
+//private Date birthdate;
+//private enum gender{MALE,FEMALE,OTHER};
+//private String address;//ARRAY PENSAR
+//private int SSNumber;
+//private int telf;
+
+    public Patient(String DNI, String password, String name, String lastName) {
+        this.DNI = DNI;
+        this.password = password;
+        this.name = name;
+        this.lastName = lastName;
+    }
+
+    
+    //getters
+    public String getDNI() {
+        return DNI;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public String getName() {
+        return name;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+
+    @Override
+    public String toString() {
+        return "Patient{" + "DNI=" + DNI + ", password=" + password + ", name=" + name + ", lastName=" + lastName + '}';
+    }
 
     @Override
     public void run() {
