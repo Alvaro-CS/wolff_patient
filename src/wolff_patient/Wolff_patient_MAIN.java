@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Wolff_patient extends Application {
+public class Wolff_patient_MAIN extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {

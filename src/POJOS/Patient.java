@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wolff_patient;
+package POJOS;
 
 import java.util.Date;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,12 +19,14 @@ private String DNI;
 private String password;
 private String name;
 private String lastName;
+private ArrayList<Clinical_record> clinical_record_list;
 
 //private Date birthdate;
 //private enum gender{MALE,FEMALE,OTHER};
 //private String address;//ARRAY PENSAR
 //private int SSNumber;
 //private int telf;
+//private enum blood_group
 
     public Patient(String DNI, String password, String name, String lastName) {
         this.DNI = DNI;
@@ -45,6 +48,22 @@ private String lastName;
     }
     public String getLastName() {
         return lastName;
+    }
+
+    public void setDNI(String DNI) {
+        this.DNI = DNI;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     @Override
