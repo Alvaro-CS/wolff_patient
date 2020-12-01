@@ -20,29 +20,32 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-public class PatientMenuController implements Initializable{
+public class PatientMenuController implements Initializable {
 
-    	private static PatientMenuController patientController;
-	private static Patient patientAccount;
+    private static PatientMenuController patientController;
+    private static Patient patientAccount;
 
     public PatientMenuController() {
     }
 
+    @FXML
+    private Label nameLabel;
 
-        
-       
-/**
- * This method needs to be @override
- * @param location
- * @param resources 
- */
+    /**
+     * This method needs to be @override
+     *
+     * @param location
+     * @param resources
+     */
     @Override
-    public void initialize(URL location, ResourceBundle resources){
-        
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
+
     /**
      * This method opens the Settings View
-     * @param event 
+     *
+     * @param event
      */
     public void openSettings(ActionEvent event) {
         try {
@@ -56,6 +59,26 @@ public class PatientMenuController implements Initializable{
             e.printStackTrace();
         }
     }
+    
+    	public static void setValues(Patient p) {
+		patientAccount = p;
+	}
 
- 
+    
+//    public void labelsMenu(Patient p) {
+//        System.out.println("ANTES");
+//        System.out.println(p.getName());
+//        System.out.println("DESPUES");
+//        nameLabel.setText(p.getName());
+//
+//        System.out.println("control nombre");
+//       
+//    }
+    	public void setPatientName(String name) {
+            System.out.println("Llega hasta aqui?");
+		nameLabel.setText("Patient's name: " + name );
+                System.out.println("Aqui no verdad?");
+
+	}
+    
 }

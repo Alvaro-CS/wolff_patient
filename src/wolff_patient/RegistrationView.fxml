@@ -36,27 +36,27 @@
             <Font name="Ebrima Bold" size="14.0" />
          </font>
       </PasswordField>
-      <TextField fx:id="SSNumberField" layoutX="306.0" layoutY="135.0" prefHeight="45.0" prefWidth="240.0" promptText="Social Security Number">
+      <TextField fx:id="ssNumberField" layoutX="306.0" layoutY="135.0" prefHeight="45.0" prefWidth="240.0" promptText="Social Security Number">
          <font>
             <Font name="Ebrima Bold" size="14.0" />
          </font>
       </TextField>
-      <TextField fx:id="NameField" layoutX="306.0" layoutY="180.0" prefHeight="45.0" prefWidth="240.0" promptText="Name">
+      <TextField fx:id="nameField" layoutX="306.0" layoutY="180.0" prefHeight="45.0" prefWidth="240.0" promptText="Name">
          <font>
             <Font name="Ebrima Bold" size="14.0" />
          </font>
       </TextField>
-      <TextField fx:id="SurnameField" layoutX="306.0" layoutY="225.0" prefHeight="45.0" prefWidth="240.0" promptText="Surname">
+      <TextField fx:id="surnameField" layoutX="306.0" layoutY="225.0" prefHeight="45.0" prefWidth="240.0" promptText="Surname">
          <font>
             <Font name="Ebrima Bold" size="14.0" />
          </font>
       </TextField>
-      <TextField fx:id="AdressField" layoutX="306.0" layoutY="270.0" prefHeight="45.0" prefWidth="240.0" promptText="Adress">
+      <TextField fx:id="adressField" layoutX="306.0" layoutY="270.0" prefHeight="45.0" prefWidth="240.0" promptText="Adress">
          <font>
             <Font name="Ebrima Bold" size="14.0" />
          </font>
       </TextField>
-      <TextField fx:id="PhoneField" layoutX="306.0" layoutY="315.0" prefHeight="45.0" prefWidth="240.0" promptText="Telephone">
+      <TextField fx:id="phoneField" layoutX="306.0" layoutY="315.0" prefHeight="45.0" prefWidth="240.0" promptText="Telephone">
          <font>
             <Font name="Ebrima Bold" size="14.0" />
          </font>

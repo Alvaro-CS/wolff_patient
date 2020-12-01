@@ -34,15 +34,15 @@ public class RegistrationController implements Initializable {
     @FXML
     private PasswordField repeatPasswordField;
     @FXML
-    private TextField SSNumberField;
+    private TextField ssNumberField;
     @FXML
-    private TextField NameField;
+    private TextField nameField;
     @FXML
-    private TextField SurnameField;
+    private TextField surnameField;
     @FXML
-    private TextField AdressField;
+    private TextField adressField;
     @FXML
-    private TextField PhoneField;
+    private TextField phoneField;
 
     //Patient[] patientsRead=new Patient[100];
 //    @FXML
@@ -57,7 +57,8 @@ public class RegistrationController implements Initializable {
     ArrayList<Patient> patients = new ArrayList<>();
     ArrayList<Patient> patients2 = new ArrayList<>();
 
-     String filename = "patientFiles";
+    String filename = "patientFiles";
+    //LogInController lc = new LogInController();
 
     /**
      * This method takes place when the createAccountButton is clicked. After
@@ -76,8 +77,7 @@ public class RegistrationController implements Initializable {
 
                 registerUser();
                 regStatusLabel.setText("Registration completed");
-                openMainMenu();
-
+                openLogin();
             } else {
                 confirmPasswordLabel.setText("Passwords don't match");
             }
@@ -94,8 +94,8 @@ public class RegistrationController implements Initializable {
     public void registerUser() {
         String ID = userNameField.getText();
         String password = passwordField.getText();
-        String name = NameField.getText();
-        String surname = SurnameField.getText();
+        String name = nameField.getText();
+        String surname = surnameField.getText();
 //        String ssnumber = SSNumberField.getText();
 //        String adress = AdressField.getText();
 //        String phone = PhoneField.getText();
@@ -162,47 +162,7 @@ public class RegistrationController implements Initializable {
         }
         return true;
     }
-        public Patient searchPatient() {
-            Patient patient;
-        try {
-            ObjectInputStream is = new ObjectInputStream(new FileInputStream(filename));
-            patients2 = (ArrayList<Patient>) is.readObject();
-            for (int i = 0; i < patients2.size(); i++) {
-                if (patients2.get(i).getDNI().equalsIgnoreCase(userNameField.getText())
-                        && patients2.get(i).getPassword().equals(passwordField.getText()))
-                {
-                    patient = patients2.get(i);
-                    return patient;
-                }
-            }
-            is.close();
-        } catch (EOFException ex) {
-            System.out.println("All data have been correctly read.");
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
 
-    /**
-     * this method opens the PatientMainMenu View
-     */
-    public void openMainMenu() {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("PatientMenuView.fxml"));
-            Scene scene = new Scene(root);
-            Stage registerStage = new Stage();
-            registerStage.setScene(scene);
-            registerStage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * this method needs the @override
@@ -215,7 +175,19 @@ public class RegistrationController implements Initializable {
 
     }
 
+    public void openLogin() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("LogInView.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public RegistrationController() {
     }
-    
+
 }
