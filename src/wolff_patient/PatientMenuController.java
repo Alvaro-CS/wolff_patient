@@ -9,6 +9,7 @@ package wolff_patient;
  *
  * @author susan
  */
+import POJOS.Patient;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
