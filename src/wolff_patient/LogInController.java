@@ -11,6 +11,7 @@ createAccountForm--> opens registration view
  */
 package wolff_patient;
 
+import POJOS.Patient;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
