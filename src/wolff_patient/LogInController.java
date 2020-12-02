@@ -17,6 +17,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -26,6 +29,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -112,6 +117,39 @@ public class LogInController implements Initializable {
     }
 
     public Patient searchPatient() {
+        OutputStream outputStream = null;
+        ObjectOutputStream objectOutputStream = null;
+        Socket socket = null;
+        try {
+            socket = new Socket("localhost", 9000);
+            outputStream = socket.getOutputStream();
+            objectOutputStream = new ObjectOutputStream(outputStream);
+            
+            //We send the order to server that we want to search for patients
+            String order = "SEARCH_PATIENT";
+            objectOutputStream.writeObject(order);
+            System.out.println("Order"+ order+ "sent");
+
+            //We send the query with ID + password combination to the server
+            objectOutputStream.writeObject(userNameField.getText());
+            objectOutputStream.writeObject(passwordField.getText());
+            System.out.println("Query sent");
+            
+            //We here need to receive from the server the patient found.
+            Patient p;
+            
+        } catch (IOException ex) {
+            System.out.println("Unable to write the object on the server.");
+            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            releaseResources(outputStream, socket);
+
+        }
+        return null;
+
+    }
+
+    public Patient searchPatientOld() {
         Patient patient;
         ArrayList<Patient> patients2 = new ArrayList<>();
         String filename = "patientFiles";
@@ -137,6 +175,19 @@ public class LogInController implements Initializable {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    private static void releaseResources(OutputStream outputStream, Socket socket) {
+        try {
+            outputStream.close();
+        } catch (IOException ex) {
+            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            socket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

@@ -9,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.Socket;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -55,7 +57,7 @@ public class RegistrationController implements Initializable {
     @FXML
     private Label regStatusLabel;
 
-    ArrayList<Patient> patients = new ArrayList<>();
+    ArrayList<Patient> patients = new ArrayList<>(); //remove
     ArrayList<Patient> patients2 = new ArrayList<>();
 
     String filename = "patientFiles";
@@ -64,7 +66,7 @@ public class RegistrationController implements Initializable {
     /**
      * This method takes place when the createAccountButton is clicked. After
      * checking that the username is free and the passwords match, it calls the
-     * registerUser method
+     * registerUserOld method
      *
      * @param event
      */
@@ -92,7 +94,7 @@ public class RegistrationController implements Initializable {
      * This method registers new user. It creates patient and stores it in
      * patientFile and then shows all the info stores in the file
      */
-    public void registerUser() {
+    public void registerUserOld() {
         String ID = userNameField.getText();
         String password = passwordField.getText();
         String name = nameField.getText();
@@ -134,14 +136,67 @@ public class RegistrationController implements Initializable {
         }
     }
 
-    /**
-     * this method checks each patient stored in the file to see if the username
-     * is already registered
-     *
-     * @return boolean
-     */
-    public boolean usernameIsFree() {
+    public void registerUser() {
+        String ID = userNameField.getText();
+        String password = passwordField.getText();
+        String name = nameField.getText();
+        String surname = surnameField.getText();
+//        String ssnumber = SSNumberField.getText();
+//        String adress = AdressField.getText();
+//        String phone = PhoneField.getText();
+        OutputStream outputStream = null;
+        ObjectOutputStream objectOutputStream = null;
+        Socket socket = null;
         try {
+            socket = new Socket("localhost", 9000);
+            outputStream = socket.getOutputStream();
+            objectOutputStream = new ObjectOutputStream(outputStream);
+            //Sending order
+            String order="REGISTER";
+            objectOutputStream.writeObject(order);
+            System.out.println("Order"+ order+ "sent");
+            
+            //Sending patient
+            Patient p = new Patient(ID, password, name, surname);
+            patients.add(p);
+            objectOutputStream.writeObject(p);
+            System.out.println("Patient data sent to register in server");
+
+        }
+            catch (IOException ex) {
+            System.out.println("Unable to write the object on the server.");
+            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            finally {
+            releaseResources(outputStream, socket);
+
+        }/*
+            try {
+                ObjectInputStream is = new ObjectInputStream(new FileInputStream(filename));
+                patients2 = (ArrayList<Patient>) is.readObject();
+                for (int i = 0; i < patients.size(); i++) {
+                    System.out.println(patients.get(i).toString());
+                }
+                is.close();
+            } catch (EOFException ex) {
+                System.out.println("All data have been correctly read.");
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+        */
+        }
+        /**
+         * this method checks each patient stored in the file to see if the
+         * username is already registered
+         *
+         * @return boolean
+         */
+    public boolean usernameIsFree() {//TODO
+/*        try {
 
             ObjectInputStream is = new ObjectInputStream(new FileInputStream(filename));
             patients2 = (ArrayList<Patient>) is.readObject();
@@ -160,10 +215,9 @@ public class RegistrationController implements Initializable {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
-        }
+        }*/
         return true;
     }
-
 
     /**
      * this method needs the @override
@@ -185,6 +239,19 @@ public class RegistrationController implements Initializable {
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    
+    private static void releaseResources(OutputStream outputStream, Socket socket) {
+        try {
+            outputStream.close();
+        } catch (IOException ex) {
+            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            socket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
