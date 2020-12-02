@@ -100,16 +100,17 @@ public class LogInController implements Initializable {
 
     public void openMainMenu(Patient p) {
         try {
-//
-
-            Parent root = FXMLLoader.load(getClass().getResource("PatientMenuView.fxml"));
+            PatientMenuController.setValues(p);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PatientMenuView.fxml"));
+            Parent root = (Parent) loader.load();
+            patientController = loader.getController();
+            patientController.setPatientName(p.getName());
+            PatientMenuController.setController(patientController);
             Scene scene = new Scene(root);
             Stage registerStage = new Stage();
             registerStage.setScene(scene);
             registerStage.show();
-            System.out.println("control 1");
             patientController.setPatientName(p.getName());
-            System.out.println("control 2");
 
         } catch (Exception e) {
             e.printStackTrace();

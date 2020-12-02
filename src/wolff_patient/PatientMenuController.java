@@ -76,10 +76,12 @@ public class PatientMenuController implements Initializable {
 //       
 //    }
     	public void setPatientName(String name) {
-            System.out.println("Llega hasta aqui?");
 		nameLabel.setText("Patient's name: " + name );
-                System.out.println("Aqui no verdad?");
 
+	}
+        	
+	public static void setController(PatientMenuController controller) {
+		patientController = controller;
 	}
     
 }
