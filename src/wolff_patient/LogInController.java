@@ -39,6 +39,7 @@ import javafx.stage.Stage;
 public class LogInController implements Initializable {
 
     private PatientMenuController patientController;
+    private ClientThreadsServer clientThreadsServer; //we create a reference for accesing different methods
 
     @FXML
     private TextField userNameField;
@@ -59,7 +60,7 @@ public class LogInController implements Initializable {
      */
     public void loginButtonOnAction(ActionEvent event) {
         if (userNameField.getText().isEmpty() == false && passwordField.getText().isEmpty() == false) {
-            Patient pat = validateLogin();
+            validateLogin();
 
         } else {
             //if Fields are empty
@@ -77,7 +78,7 @@ public class LogInController implements Initializable {
 
         } else {
             System.out.println("CONTROL VALIDATE NULL");
-            loginMessageLabel.setText("Please try again");
+            loginMessageLabel.setText("User no found.\nPlease try again");
         }
 
         return p;
@@ -129,27 +130,35 @@ public class LogInController implements Initializable {
             //We send the order to server that we want to search for patients
             String order = "SEARCH_PATIENT";
             objectOutputStream.writeObject(order);
-            System.out.println("Order"+ order+ "sent");
+            System.out.println("Order "+ order+ " sent to server");
 
             //We send the query with ID + password combination to the server
-            objectOutputStream.writeObject(userNameField.getText());
-            objectOutputStream.writeObject(passwordField.getText());
+            objectOutputStream.writeObject((Object)userNameField.getText());
+            objectOutputStream.writeObject((Object)passwordField.getText());
             System.out.println("Query sent");
             
             //We here need to receive from the server the patient found.
-            Patient p;
+            clientThreadsServer=new ClientThreadsServer();
+            new Thread(clientThreadsServer).start();
+         /*   while(!clientThreadsServer.isPatient_logged()){}; 
+            System.out.println("Patient logged in");*/
+            Thread.sleep(1000); //wait until patient logs in (if not, it returns null because not enough time to get it.
+            return clientThreadsServer.getPatient();
             
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
+            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
             Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             releaseResources(outputStream, socket);
 
         }
+        System.out.println("Final");
         return null;
 
     }
-
+/*
     public Patient searchPatientOld() {
         Patient patient;
         ArrayList<Patient> patients2 = new ArrayList<>();
@@ -176,7 +185,7 @@ public class LogInController implements Initializable {
             ex.printStackTrace();
         }
         return null;
-    }
+    }*/
 
     private static void releaseResources(OutputStream outputStream, Socket socket) {
         try {
