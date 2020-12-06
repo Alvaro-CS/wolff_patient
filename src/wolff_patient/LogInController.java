@@ -54,7 +54,7 @@ public class LogInController implements Initializable {
      */
     public void loginButtonOnAction(ActionEvent event) {
         if (userNameField.getText().isEmpty() == false && passwordField.getText().isEmpty() == false) {
-            Patient pat = validateLogin();
+           validateLogin();
 
         } else {
             //if Fields are empty
@@ -64,8 +64,8 @@ public class LogInController implements Initializable {
     }
 
     @FXML
-    public Patient validateLogin() {
-        Patient p = searchPatient();
+    public void validateLogin() {
+        Patient p = searchPatient(userNameField.getText(), passwordField.getText());
         if (p != null) {
             System.out.println("PATIENT EXISTS");
             openMainMenu(p);
@@ -75,7 +75,6 @@ public class LogInController implements Initializable {
             loginMessageLabel.setText("Please try again");
         }
 
-        return p;
     }
 
     @FXML
@@ -112,7 +111,7 @@ public class LogInController implements Initializable {
         }
     }
 
-    public Patient searchPatient() {
+    public Patient searchPatient(String username, String password ) {
         Patient patient;
         ArrayList<Patient> patients2 = new ArrayList<>();
         String filename = "patientFiles";
@@ -121,8 +120,8 @@ public class LogInController implements Initializable {
             ObjectInputStream is = new ObjectInputStream(new FileInputStream(filename));
             patients2 = (ArrayList<Patient>) is.readObject();
             for (int i = 0; i < patients2.size(); i++) {
-                if (patients2.get(i).getDNI().equalsIgnoreCase(userNameField.getText())
-                        && patients2.get(i).getPassword().equals(passwordField.getText())) {
+                if (patients2.get(i).getDNI().equalsIgnoreCase(username)
+                        && patients2.get(i).getPassword().equals(password)) {
                     patient = patients2.get(i);
                     return patient;
                 }

@@ -5,11 +5,13 @@
  */
 package wolff_patient;
 
+import POJOS.Patient;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -19,7 +21,10 @@ import javafx.scene.input.MouseEvent;
  *
  * @author susan
  */
-public class SettingsViewController implements Initializable {
+public class UserInfoController implements Initializable {
+        private static UserInfoController uc;
+    	private static Patient patientAccount;
+
 
     @FXML
     private PasswordField new_password_field;
@@ -44,11 +49,17 @@ public class SettingsViewController implements Initializable {
     @FXML
     private Button update_button;
     @FXML
-    private Button done_button;
+    private Button done_button;    
+    @FXML
+    private Label NameLabel;
 
     /**
      * Initializes the controller class.
      */
+    
+    public UserInfoController() {
+    }    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -60,6 +71,22 @@ public class SettingsViewController implements Initializable {
 
     @FXML
     private void update_information(MouseEvent event) {
-    }
-    
-}
+        if(name_field.getText().isEmpty()==false){
+            patientAccount.setName(name_field.getText());
+          //name_field.setText("");
+            System.out.println("no esta vacio");
+		} else {
+            //			this.name_field.setText("");
+            System.out.println("Esta vacio");
+		}
+		
+	}
+    	public static void setController(UserInfoController controller) {
+		uc = controller;
+	}
+            
+        }
+
+   
+
+

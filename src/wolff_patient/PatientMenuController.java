@@ -23,8 +23,10 @@ import javafx.stage.Stage;
 
 public class PatientMenuController implements Initializable {
 
-    private static PatientMenuController patientController;
+    private static PatientMenuController patientMenuController;
     private static Patient patientAccount;
+    private static UserInfoController userController;
+    private static LogInController loginController;
 
     public PatientMenuController() {
     }
@@ -48,13 +50,25 @@ public class PatientMenuController implements Initializable {
      *
      * @param event
      */
-    public void openSettings(ActionEvent event) {
+    public void openUserInfo(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("SettingsView.fxml"));
+            
+            Parent root = FXMLLoader.load(getClass().getResource("UserInfoView.fxml"));
             Scene scene = new Scene(root);
             Stage registerStage = new Stage();
             registerStage.setScene(scene);
             registerStage.show();
+           // Patient p=loginController.searchPatient();
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("UserInfoView.fxml"));
+//            Parent root = (Parent) loader.load();
+//            userController = loader.getController();
+////            patientMenuController.setPatientName(p.getName());
+//            UserInfoController.setController(userController);
+//            Scene scene = new Scene(root);
+//            Stage registerStage = new Stage();
+//            registerStage.setScene(scene);
+//            registerStage.show();
+          //  pc.setPatientName(p.getName());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,22 +80,14 @@ public class PatientMenuController implements Initializable {
 	}
 
     
-//    public void labelsMenu(Patient p) {
-//        System.out.println("ANTES");
-//        System.out.println(p.getName());
-//        System.out.println("DESPUES");
-//        nameLabel.setText(p.getName());
-//
-//        System.out.println("control nombre");
-//       
-//    }
+
     	public void setPatientName(String name) {
 		nameLabel.setText("Patient's name: " + name );
 
 	}
         	
 	public static void setController(PatientMenuController controller) {
-		patientController = controller;
+		patientMenuController = controller;
 	}
     
 }
