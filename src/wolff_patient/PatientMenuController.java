@@ -74,6 +74,19 @@ public class PatientMenuController implements Initializable {
             e.printStackTrace();
         }
     }
+      public void openMedicalHistory(ActionEvent event) {
+        try {
+            
+            Parent root = FXMLLoader.load(getClass().getResource("MedicalHistoryView.fxml"));
+            Scene scene = new Scene(root);
+            Stage registerStage = new Stage();
+            registerStage.setScene(scene);
+            registerStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
     	public static void setValues(Patient p) {
 		patientAccount = p;

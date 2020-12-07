@@ -13,13 +13,15 @@ import java.util.ArrayList;
  *
  * @author ALVARO
  */
-public class Patient implements Runnable, Serializable{
-    
-private String DNI;
-private String password;
-private String name;
-private String lastName;
-private ArrayList<Clinical_record> clinical_record_list;
+public class Patient implements Runnable, Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    private String DNI;
+    private String password;
+    private String name;
+    private String lastName;
+    private ArrayList<Clinical_record> clinical_record_list;
 
 //private Date birthdate;
 //private enum gender{MALE,FEMALE,OTHER};
@@ -27,7 +29,6 @@ private ArrayList<Clinical_record> clinical_record_list;
 //private int SSNumber;
 //private int telf;
 //private enum blood_group
-
     public Patient(String DNI, String password, String name, String lastName) {
         this.DNI = DNI;
         this.password = password;
@@ -35,17 +36,19 @@ private ArrayList<Clinical_record> clinical_record_list;
         this.lastName = lastName;
     }
 
-    
     //getters
     public String getDNI() {
         return DNI;
     }
+
     public String getPassword() {
         return password;
     }
+
     public String getName() {
         return name;
     }
+
     public String getLastName() {
         return lastName;
     }
@@ -75,7 +78,5 @@ private ArrayList<Clinical_record> clinical_record_list;
     public void run() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
-    
+
 }

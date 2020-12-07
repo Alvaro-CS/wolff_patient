@@ -17,6 +17,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -26,6 +29,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,6 +39,7 @@ import javafx.stage.Stage;
 public class LogInController implements Initializable {
 
     private PatientMenuController patientController;
+    private ClientThreadsServer clientThreadsServer; //we create a reference for accesing different methods
 
     @FXML
     private TextField userNameField;
@@ -54,7 +60,7 @@ public class LogInController implements Initializable {
      */
     public void loginButtonOnAction(ActionEvent event) {
         if (userNameField.getText().isEmpty() == false && passwordField.getText().isEmpty() == false) {
-           validateLogin();
+            validateLogin();
 
         } else {
             //if Fields are empty
@@ -65,14 +71,14 @@ public class LogInController implements Initializable {
 
     @FXML
     public void validateLogin() {
-        Patient p = searchPatient(userNameField.getText(), passwordField.getText());
+        Patient p = searchPatient();
         if (p != null) {
             System.out.println("PATIENT EXISTS");
             openMainMenu(p);
 
         } else {
             System.out.println("CONTROL VALIDATE NULL");
-            loginMessageLabel.setText("Please try again");
+            loginMessageLabel.setText("User no found.\nPlease try again");
         }
 
     }
@@ -111,7 +117,48 @@ public class LogInController implements Initializable {
         }
     }
 
-    public Patient searchPatient(String username, String password ) {
+    public Patient searchPatient() {
+        OutputStream outputStream = null;
+        ObjectOutputStream objectOutputStream = null;
+        Socket socket = null;
+        try {
+            socket = new Socket("localhost", 9000);
+            outputStream = socket.getOutputStream();
+            objectOutputStream = new ObjectOutputStream(outputStream);
+            
+            //We send the order to server that we want to search for patients
+            String order = "SEARCH_PATIENT";
+            objectOutputStream.writeObject(order);
+            System.out.println("Order "+ order+ " sent to server");
+
+            //We send the query with ID + password combination to the server
+            objectOutputStream.writeObject((Object)userNameField.getText());
+            objectOutputStream.writeObject((Object)passwordField.getText());
+            System.out.println("Query sent");
+            
+            //We here need to receive from the server the patient found.
+            clientThreadsServer=new ClientThreadsServer();
+            new Thread(clientThreadsServer).start();
+         /*   while(!clientThreadsServer.isPatient_logged()){}; 
+            System.out.println("Patient logged in");*/
+            Thread.sleep(1000); //wait until patient logs in (if not, it returns null because not enough time to get it.
+            return clientThreadsServer.getPatient();
+            
+        } catch (IOException ex) {
+            System.out.println("Unable to write the object on the server.");
+            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            releaseResources(outputStream, socket);
+
+        }
+        System.out.println("Final");
+        return null;
+
+    }
+/*
+    public Patient searchPatientOld() {
         Patient patient;
         ArrayList<Patient> patients2 = new ArrayList<>();
         String filename = "patientFiles";
@@ -137,6 +184,19 @@ public class LogInController implements Initializable {
             ex.printStackTrace();
         }
         return null;
+    }*/
+
+    private static void releaseResources(OutputStream outputStream, Socket socket) {
+        try {
+            outputStream.close();
+        } catch (IOException ex) {
+            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            socket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

@@ -7,11 +7,8 @@ package POJOS;
 
 import java.util.Date;
 
-/**
- *
- * @author ALVARO
- */
 public class Clinical_record {
+    private int id;
     private Date date;
     private boolean palpitations;
     private boolean dizziness;
@@ -29,11 +26,12 @@ public class Clinical_record {
     private int[] ECG;
     private String extra_info;
 
-    public Clinical_record(Date date, boolean palpitations, boolean dizziness, 
+    public Clinical_record(int id, Date date, boolean palpitations, boolean dizziness, 
             boolean fatigue, boolean anxiety, boolean chest_pain, boolean difficulty_breathing,
             boolean fainting, boolean gray_blue_skin, boolean irritability, 
             boolean rapid_breathing, boolean poor_eating, int[] ECG, 
             String extra_info) {
+        this.id=id;
         this.date = new Date(System.currentTimeMillis());
         this.palpitations = palpitations;
         this.dizziness = dizziness;
