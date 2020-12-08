@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1441.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.NewMedicalHistoryController">
+   <children>
+      <Pane prefHeight="1451.0" prefWidth="850.0" AnchorPane.bottomAnchor="-10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox layoutX="50.0" layoutY="150.0" prefHeight="1215.0" prefWidth="775.0" spacing="30.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                     <children>
+                        <Label prefHeight="80.0" prefWidth="417.0" text="Please .....">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="73.0" prefWidth="282.0" text="Record ECG">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="110.0" prefWidth="800.0" spacing="30.0">
+                     <children>
+                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                           <children>
+                              <Label text="Do you have palpitations?">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <RadioButton mnemonicParsing="false" text="Yes">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" text="No">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                           <children>
+                              <Label text="Do you have dizziness?">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <RadioButton mnemonicParsing="false" text="Yes">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" text="No">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="110.0" prefWidth="800.0" spacing="30.0">
+                     <children>
+                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                           <children>
+                              <Label text="Do you have fatigue?">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <RadioButton mnemonicParsing="false" text="Yes">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" text="No">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                           <children>
+                              <Label text="Do you have anxiety?">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <RadioButton mnemonicParsing="false" text="Yes">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" text="No">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="110.0" prefWidth="800.0" spacing="30.0">
+                     <children>
+                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                           <children>
+                              <Label text="Do you have chest pain?">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <RadioButton mnemonicParsing="false" text="Yes">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" text="No">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="130.0" prefWidth="384.0" spacing="20.0">
+                           <children>
+                              <Label text="Do you have difficulty breathing?">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <RadioButton mnemonicParsing="false" text="Yes">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" text="No">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="110.0" prefWidth="800.0" spacing="30.0">
+                     <children>
+                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                           <children>
+                              <Label text="Do you have fainting?">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <RadioButton mnemonicParsing="false" text="Yes">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" text="No">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                           <children>
+                              <Label text="Do you have gray blue skin?">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <RadioButton mnemonicParsing="false" text="Yes">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" text="No">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="440.0" prefHeight="110.0" prefWidth="800.0" spacing="30.0">
+                     <children>
+                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                           <children>
+                              <Label text="Do you have irritability?">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <RadioButton mnemonicParsing="false" text="Yes">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" text="No">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="130.0" prefWidth="384.0" spacing="20.0">
+                           <children>
+                              <Label text="Do you have rapid breathing?">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <RadioButton mnemonicParsing="false" text="Yes">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" text="No">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="600.0" prefHeight="110.0" prefWidth="800.0" spacing="30.0">
+                     <children>
+                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                           <children>
+                              <Label text="Do you have poor eating?">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <RadioButton mnemonicParsing="false" text="Yes">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" text="No">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                           <children>
+                              <Label text="Date">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker prefHeight="49.0" prefWidth="321.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="177.0" prefWidth="781.0" spacing="50.0">
+                     <children>
+                        <VBox prefHeight="155.0" prefWidth="772.0" spacing="30.0">
+                           <children>
+                              <Label prefHeight="0.0" prefWidth="1441.0" text="Extra information">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <TextArea prefHeight="146.0" prefWidth="771.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </Pane>
+      <Pane prefHeight="115.0" prefWidth="600.0" style="-fx-background-color: e3e4e5;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="137.0" layoutY="32.0" text="Medical History">
+               <font>
+                  <Font name="Ebrima Bold" size="40.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="104.0" fitWidth="105.0" layoutX="9.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/medical-history.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
