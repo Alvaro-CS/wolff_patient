@@ -17,21 +17,21 @@
             <Button alignment="CENTER" contentDisplay="CENTER" layoutX="459.0" layoutY="151.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" text="Add Clinical Record" />
             <TableView fx:id="table" layoutY="247.0" prefHeight="653.0" prefWidth="1198.0">
               <columns>
-                <TableColumn fx:id="id" prefWidth="75.0" text="ID" />
-                  <TableColumn fx:id="date" prefWidth="75.0" text="Date" />
-                  <TableColumn fx:id="palpitations" prefWidth="75.0" text="Palpitations" />
-                  <TableColumn fx:id="dizziness" prefWidth="75.0" text="Dizziness" />
-                  <TableColumn fx:id="fatigue" prefWidth="75.0" text="Fatigue" />
-                  <TableColumn fx:id="anxiety" prefWidth="75.0" text="Anxiety" />
-                  <TableColumn fx:id="chest_pain" prefWidth="75.0" text="Chest Pain" />
-                  <TableColumn fx:id="diff_breathing" prefWidth="75.0" text="Difficulty Breathing" />
-                  <TableColumn fx:id="fainting" prefWidth="75.0" text="Fainting" />
-                  <TableColumn fx:id="gray_blue_skin" prefWidth="75.0" text="Gray Blue Skin" />
-                  <TableColumn fx:id="irritability" prefWidth="75.0" text="Irritability" />
-                  <TableColumn fx:id="rapid_breathing" prefWidth="75.0" text="Rapid Breathing" />
-                  <TableColumn fx:id="poor_eating" prefWidth="75.0" text="Poor Eating" />
-                  <TableColumn fx:id="ecg" prefWidth="75.0" text="ECG" />
-                  <TableColumn fx:id="extra_info" prefWidth="75.0" text="Extra Info" />
+                <TableColumn id="id" fx:id="idColumn" prefWidth="75.0" text="ID" />
+                  <TableColumn id="date" fx:id="dateColumn" prefWidth="75.0" text="Date" />
+                  <TableColumn id="palpitation" fx:id="palpitationsColumn" prefWidth="75.0" text="Palpitations" />
+                  <TableColumn id="dizziness" fx:id="dizzinessColumn" prefWidth="75.0" text="Dizziness" />
+                  <TableColumn id="fatique" fx:id="fatigueColumn" prefWidth="75.0" text="Fatigue" />
+                  <TableColumn id="anxiety" fx:id="anxietyColumn" prefWidth="75.0" text="Anxiety" />
+                  <TableColumn id="chest_pain" fx:id="chest_painColumn" prefWidth="75.0" text="Chest Pain" />
+                  <TableColumn id="diff_breathing" fx:id="diff_breathingColumn" prefWidth="75.0" text="Difficulty Breathing" />
+                  <TableColumn id="fainting" fx:id="faintingColumn" prefWidth="75.0" text="Fainting" />
+                  <TableColumn id="gra_blue_skin" fx:id="gray_blue_skinColumn" prefWidth="75.0" text="Gray Blue Skin" />
+                  <TableColumn id="irritability" fx:id="irritabilityColumn" prefWidth="75.0" text="Irritability" />
+                  <TableColumn id="rapid_breathing" fx:id="rapid_breathingColumn" prefWidth="75.0" text="Rapid Breathing" />
+                  <TableColumn id="poor_eating" fx:id="poor_eatingColumn" prefWidth="75.0" text="Poor Eating" />
+                  <TableColumn id="ecg" fx:id="ecgColumn" prefWidth="75.0" text="ECG" />
+                  <TableColumn id="extra_info" fx:id="extra_infoColumn" prefWidth="75.0" text="Extra Info" />
               </columns>
             </TableView>
          </children>

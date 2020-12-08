@@ -69,6 +69,14 @@ public class Patient implements Runnable, Serializable {
         this.lastName = lastName;
     }
 
+    public ArrayList<Clinical_record> getClinical_record_list() {
+        return clinical_record_list;
+    }
+
+    public void setClinical_record_list(ArrayList<Clinical_record> clinical_record_list) {
+        this.clinical_record_list = clinical_record_list;
+    }
+
     @Override
     public String toString() {
         return "Patient{" + "DNI=" + DNI + ", password=" + password + ", name=" + name + ", lastName=" + lastName + '}';
