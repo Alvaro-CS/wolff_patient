@@ -2,18 +2,25 @@ package wolff_patient;
 
 import POJOS.Clinical_record;
 import POJOS.Patient;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 public class MedicalHistoryController implements Initializable {
     private Patient patientMoved;
@@ -121,6 +128,21 @@ public class MedicalHistoryController implements Initializable {
     }
     public ObservableList<Clinical_record> getList() {
         return list;
+    }
+    public void backToMenu(ActionEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("PatientMenuView.fxml"));
+        Parent patientMenuViewParent = loader.load();
+        Scene MainMenuViewScene = new Scene(patientMenuViewParent);
+        PatientMenuController controller = loader.getController();
+        controller.initData(patientMoved);
+        //this line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(MainMenuViewScene);
+        window.centerOnScreen();
+
+        window.show();
     }
 
 }

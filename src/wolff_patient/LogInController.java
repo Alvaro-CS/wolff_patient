@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 public class LogInController implements Initializable {
 
     private ClientThreadsServer clientThreadsServer; //we create a reference for accesing different methods
-    private Patient patient;
+    private Patient patientMoved;
 
     @FXML
     private TextField userNameField;
@@ -56,9 +56,9 @@ public class LogInController implements Initializable {
      */
     @FXML
     public void validateLogin(ActionEvent event) throws IOException {
-        this.patient = searchPatient();
-        System.out.println("Captured patient:"+patient);
-        if (this.patient != null) {
+        this.patientMoved = searchPatient();
+        System.out.println("Captured patient:"+patientMoved);
+        if (this.patientMoved != null) {
             System.out.println("PATIENT EXISTS");
             openMainMenuPatient(event);
 
@@ -98,7 +98,7 @@ public class LogInController implements Initializable {
         Scene MainMenuViewScene = new Scene(mainMenuViewParent);
 
         PatientMenuController controller = loader.getController();
-        controller.initData(patient);
+        controller.initData(patientMoved);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MainMenuViewScene);
