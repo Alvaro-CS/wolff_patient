@@ -1,22 +1,7 @@
-/*
-In this FXML login controller, we have this methods: 
-initialize-->need to override because we implement Initializable
-
-when Login is clicked
-loginButtonOnAction--> if the fields aren't empty, it checks if the id and password are correct (exist on the db). (calls validateLogin)
-validateLogin--> checks if account exists 
-
-when Signup is clicked
-createAccountForm--> opens registration view
- */
 package wolff_patient;
 
 import POJOS.Patient;
-import java.io.EOFException;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -28,18 +13,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class LogInController implements Initializable {
 
-    private PatientMenuController patientController;
     private ClientThreadsServer clientThreadsServer; //we create a reference for accesing different methods
+    private Patient patient;
 
     @FXML
     private TextField userNameField;
@@ -49,74 +34,94 @@ public class LogInController implements Initializable {
     private Label loginMessageLabel;
 
     /**
-     * class constructor
-     */
-    public LogInController() {
-    }
-
-    /**
-     *
+     *This method logins the patient
      * @param event
      */
-    public void loginButtonOnAction(ActionEvent event) {
+    public void loginButtonOnAction(ActionEvent event) throws IOException {
+
         if (userNameField.getText().isEmpty() == false && passwordField.getText().isEmpty() == false) {
-            validateLogin();
+            validateLogin(event);
 
         } else {
             //if Fields are empty
             loginMessageLabel.setText("Please enter ID and password");
         }
-
     }
 
+    /**
+     * This method validates login
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
-    public void validateLogin() {
-        Patient p = searchPatient();
-        if (p != null) {
+    public void validateLogin(ActionEvent event) throws IOException {
+        this.patient = searchPatient();
+        if (this.patient != null) {
             System.out.println("PATIENT EXISTS");
-            openMainMenu(p);
+            openMainMenuPatient(event);
 
         } else {
             System.out.println("CONTROL VALIDATE NULL");
             loginMessageLabel.setText("User no found.\nPlease try again");
         }
-
     }
 
-    @FXML
-    //opens registration form
-    public void createAccountForm() {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("RegistrationView.fxml"));
-            Scene scene = new Scene(root);
-            Stage registerStage = new Stage();
-            registerStage.setScene(scene);
-            registerStage.show();
+    /**
+     * This method opens the main menu for the patient
+     *
+     * @param event
+     * @throws IOException
+     */
+    public void createAccountForm(ActionEvent event) throws IOException {
+        Parent registrationViewParent = FXMLLoader.load(getClass().getResource("RegistrationView.fxml"));
+        Scene registrationViewScene = new Scene(registrationViewParent);
+        //this line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(registrationViewScene);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        window.show();
     }
 
-    public void openMainMenu(Patient p) {
-        try {
-            PatientMenuController.setValues(p);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("PatientMenuView.fxml"));
-            Parent root = (Parent) loader.load();
-            patientController = loader.getController();
-            patientController.setPatientName(p.getName());
-            PatientMenuController.setController(patientController);
-            Scene scene = new Scene(root);
-            Stage registerStage = new Stage();
-            registerStage.setScene(scene);
-            registerStage.show();
-            patientController.setPatientName(p.getName());
+    /**
+     * This method opens the main menu for the patient
+     *
+     * @param event
+     * @throws IOException
+     */
+    public void openMainMenuPatient(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("PatientMenuView.fxml"));
+        Parent mainMenuViewParent = loader.load();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Scene MainMenuViewScene = new Scene(mainMenuViewParent);
+
+        PatientMenuController controller = loader.getController();
+        controller.initData(patient);
+        //this line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(MainMenuViewScene);
+        window.centerOnScreen();
+
+        window.show();
     }
 
+//    generic open menu        
+//    public void openMainMenu(ActionEvent event)throws IOException{
+//        Parent mainMenuViewParent = FXMLLoader.load(getClass().getResource("PatientMenuView.fxml"));
+//        Scene MainMenuViewScene = new Scene(mainMenuViewParent);
+//        //this line gets the Stage information
+//        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        window.setScene(MainMenuViewScene);
+//        window.centerOnScreen();
+//
+//        window.show();
+//    }
+    /**
+     * This method searches for a patient
+     *
+     * @return
+     */
     public Patient searchPatient() {
         OutputStream outputStream = null;
         ObjectOutputStream objectOutputStream = null;
@@ -125,30 +130,34 @@ public class LogInController implements Initializable {
             socket = new Socket("localhost", 9000);
             outputStream = socket.getOutputStream();
             objectOutputStream = new ObjectOutputStream(outputStream);
-            
+
             //We send the order to server that we want to search for patients
             String order = "SEARCH_PATIENT";
             objectOutputStream.writeObject(order);
-            System.out.println("Order "+ order+ " sent to server");
+            System.out.println("Order " + order + " sent to server");
 
             //We send the query with ID + password combination to the server
-            objectOutputStream.writeObject((Object)userNameField.getText());
-            objectOutputStream.writeObject((Object)passwordField.getText());
+            objectOutputStream.writeObject((Object) userNameField.getText());
+            objectOutputStream.writeObject((Object) passwordField.getText());
             System.out.println("Query sent");
-            
+
             //We here need to receive from the server the patient found.
-            clientThreadsServer=new ClientThreadsServer();
+            clientThreadsServer = new ClientThreadsServer();
             new Thread(clientThreadsServer).start();
-         /*   while(!clientThreadsServer.isPatient_logged()){}; 
+            /*   while(!clientThreadsServer.isPatient_logged()){}; 
             System.out.println("Patient logged in");*/
             Thread.sleep(1000); //wait until patient logs in (if not, it returns null because not enough time to get it.
             return clientThreadsServer.getPatient();
-            
+
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
-            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger
+                    .getLogger(LogInController.class
+                            .getName()).log(Level.SEVERE, null, ex);
+
         } catch (InterruptedException ex) {
-            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LogInController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         } finally {
             releaseResources(outputStream, socket);
 
@@ -157,7 +166,8 @@ public class LogInController implements Initializable {
         return null;
 
     }
-/*
+
+    /*
     public Patient searchPatientOld() {
         Patient patient;
         ArrayList<Patient> patients2 = new ArrayList<>();
@@ -185,27 +195,26 @@ public class LogInController implements Initializable {
         }
         return null;
     }*/
-
     private static void releaseResources(OutputStream outputStream, Socket socket) {
         try {
             outputStream.close();
+
         } catch (IOException ex) {
-            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LogInController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         try {
             socket.close();
+
         } catch (IOException ex) {
-            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LogInController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-    }
-
-    public PatientMenuController getPatientController() {
-        return patientController;
     }
 
 }

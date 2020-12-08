@@ -93,6 +93,7 @@ ObservableList<Clinical_record> list = FXCollections.observableArrayList(
         table.setItems(list);
     }
    
+    
 
 }
 
