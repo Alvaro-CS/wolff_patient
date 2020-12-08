@@ -24,6 +24,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import java.util.ArrayList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -70,7 +71,7 @@ public class RegistrationController implements Initializable {
      *
      * @param event
      */
-    public void registerButtonOnAction(ActionEvent event) {
+    public void registerButtonOnAction(ActionEvent event)throws IOException {
 
         if (usernameIsFree()) {
             regMessageLabel.setText("Username available");
@@ -80,7 +81,7 @@ public class RegistrationController implements Initializable {
 
                 registerUser();
                 regStatusLabel.setText("Registration completed");
-                openLogin();
+                backtoLogin(event);
             } else {
                 confirmPasswordLabel.setText("Passwords don't match");
             }
@@ -89,6 +90,17 @@ public class RegistrationController implements Initializable {
         }
 
     }
+    
+        public void backtoLogin(ActionEvent event) throws IOException {
+        Parent registrationViewParent = FXMLLoader.load(getClass().getResource("LogInView.fxml"));
+        Scene registrationViewScene = new Scene(registrationViewParent);
+        //this line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(registrationViewScene);
+
+        window.show();
+    }
+
 
     /**
      * This method registers new user. It creates patient and stores it in
@@ -228,18 +240,6 @@ public class RegistrationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-    }
-
-    public void openLogin() {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("LogInView.fxml"));
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
     
     private static void releaseResources(OutputStream outputStream, Socket socket) {
