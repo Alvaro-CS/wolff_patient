@@ -23,17 +23,19 @@ public class PatientMenuController implements Initializable {
 
     /**
      * Thid method accets a person to initialize the view
+     *
      * @param patient
      */
     public void initData(Patient patient) {
-        
-        this.patientMoved = patient;  
-        nameLabel.setText("Patient's name: " + patientMoved.getName());
+
+        this.patientMoved = patient;
+        nameLabel.setText("Patient's name:\n " + patientMoved.getName());
 
     }
 
     /**
      * This method needs to be @override
+     *
      * @param location
      * @param resources
      */
@@ -44,6 +46,7 @@ public class PatientMenuController implements Initializable {
 
     /**
      * This method let's the patient change things
+     *
      * @param event
      * @throws IOException
      */
@@ -59,17 +62,38 @@ public class PatientMenuController implements Initializable {
 
     /**
      * This method opens the Medical History
+     *
      * @param event
      * @throws IOException
      */
     public void openMedicalHistory(ActionEvent event) throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("MedicalHistoryView.fxml"));
+        /*  Parent root = FXMLLoader.load(getClass().getResource("MedicalHistoryView.fxml"));
         Scene scene = new Scene(root);
+        
+        MedicalHistoryController controller = loader.getController();
+        controller.initData(patient);
+        
         Stage registerStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         registerStage.setScene(scene);
         registerStage.centerOnScreen();
-        registerStage.show();
+        registerStage.show();*/
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(getClass().getResource("MedicalHistoryView.fxml"));
+
+
+        Parent medicalHistoryViewParent = loader.load();
+        Scene MedicalHistoryViewScene = new Scene(medicalHistoryViewParent);
+        
+                MedicalHistoryController controller = loader.getController();
+        controller.initData(patientMoved);
+        //this line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(MedicalHistoryViewScene);
+        window.centerOnScreen();
+
+        window.show();
 
     }
 

@@ -57,6 +57,7 @@ public class LogInController implements Initializable {
     @FXML
     public void validateLogin(ActionEvent event) throws IOException {
         this.patient = searchPatient();
+        System.out.println("Captured patient:"+patient);
         if (this.patient != null) {
             System.out.println("PATIENT EXISTS");
             openMainMenuPatient(event);

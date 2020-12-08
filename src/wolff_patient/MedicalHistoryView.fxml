@@ -24,7 +24,7 @@
                   <TableColumn id="fatique" fx:id="fatigueColumn" prefWidth="75.0" text="Fatigue" />
                   <TableColumn id="anxiety" fx:id="anxietyColumn" prefWidth="75.0" text="Anxiety" />
                   <TableColumn id="chest_pain" fx:id="chest_painColumn" prefWidth="75.0" text="Chest Pain" />
-                  <TableColumn id="diff_breathing" fx:id="diff_breathingColumn" prefWidth="75.0" text="Difficulty Breathing" />
+                  <TableColumn id="diff_breathing" fx:id="difficulty_breathingColumn" prefWidth="75.0" text="Difficulty Breathing" />
                   <TableColumn id="fainting" fx:id="faintingColumn" prefWidth="75.0" text="Fainting" />
                   <TableColumn id="gra_blue_skin" fx:id="gray_blue_skinColumn" prefWidth="75.0" text="Gray Blue Skin" />
                   <TableColumn id="irritability" fx:id="irritabilityColumn" prefWidth="75.0" text="Irritability" />
@@ -48,6 +48,11 @@
                   <Image url="@images/medical-history.png" />
                </image>
             </ImageView>
+            <Label fx:id="nameLabel" layoutX="468.0" layoutY="31.0" prefHeight="58.0" prefWidth="226.0">
+               <font>
+                  <Font name="Footlight MT Light" size="20.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

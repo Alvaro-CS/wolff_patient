@@ -11,10 +11,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class MedicalHistoryController implements Initializable {
+    private Patient patientMoved;
 
     @FXML
     private TableView<Clinical_record> table;
@@ -65,7 +67,9 @@ public class MedicalHistoryController implements Initializable {
     private TableColumn<Clinical_record, String> extra_infoColumn;
 
     private ObservableList<Clinical_record> list;
-
+    
+    @FXML
+    private Label nameLabel;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -83,31 +87,38 @@ public class MedicalHistoryController implements Initializable {
         poor_eatingColumn.setCellValueFactory(new PropertyValueFactory<>("poor_eating"));
         ecgColumn.setCellValueFactory(new PropertyValueFactory<>("ecg"));
         extra_infoColumn.setCellValueFactory(new PropertyValueFactory<>("extra_info"));
-        loadClinical_records();
     }
 
     public void loadClinical_records() {
         list = FXCollections.observableArrayList();
-        //TODO load data with real patient form login
-        Clinical_record record1 = new Clinical_record(0, new Date(), true, true, true, true, true, true, true, true, true, true, true, null, "hello");
-        Clinical_record record2 = new Clinical_record(1, new Date(), true, true, true, true, true, true, true, true, true, true, true, null, "hello");
-        Clinical_record record3 = new Clinical_record(2, new Date(), true, true, true, true, true, true, true, true, true, true, true, null, "hello");
+
+        Clinical_record record1 = new Clinical_record(0, new Date(), false, true, true, true, false, true, true, true, true, true, true, null, "hello I'm 1");
+        Clinical_record record2 = new Clinical_record(1, new Date(), true, false, true, false, true, true, true, true, false, true, true, null, " I'm 2");
+        Clinical_record record3 = new Clinical_record(2, new Date(), true, true, false, true, true, true, false, true, true, true, true, null, "hello3");
         ArrayList<Clinical_record> records = new ArrayList<>();
 
         records.add(record1);
         records.add(record2);
         records.add(record3);
-
-        Patient p = new Patient("09873782L", "Contraseña", "Pedro", "Alonso");
-        p.setClinical_record_list(records);
-        //From here, common when Patient works
+        patientMoved.setClinical_record_list(records);
         
-        ArrayList<Clinical_record> recordsP = p.getClinical_record_list();
+        ArrayList<Clinical_record> recordsP = patientMoved.getClinical_record_list();
         list.addAll(recordsP);
         table.setItems(list);
 
     }
+    /**
+     * Thid method gets the patient got from the login to show the data.
+     * @param patient
+     */
+    public void initData(Patient patient) {
+        
+        this.patientMoved = patient;  
+        nameLabel.setText("Patient's name:\n " + patientMoved.getName());
+        loadClinical_records();
 
+
+    }
     public ObservableList<Clinical_record> getList() {
         return list;
     }
