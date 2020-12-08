@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,285 +14,334 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1441.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.NewMedicalHistoryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="807.0" prefWidth="763.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.NewMedicalHistoryController">
    <children>
-      <Pane prefHeight="1451.0" prefWidth="850.0" AnchorPane.bottomAnchor="-10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane prefHeight="1451.0" prefWidth="850.0" AnchorPane.bottomAnchor="644.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox layoutX="50.0" layoutY="150.0" prefHeight="1215.0" prefWidth="775.0" spacing="30.0">
+            <HBox layoutX="40.0" layoutY="522.0" prefHeight="184.0" prefWidth="705.0" spacing="50.0">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                  <VBox prefHeight="155.0" prefWidth="772.0" spacing="30.0">
                      <children>
-                        <Label prefHeight="80.0" prefWidth="417.0" text="Please .....">
+                        <Label prefHeight="0.0" prefWidth="1441.0" text="Extra information (optional)">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="73.0" prefWidth="282.0" text="Record ECG">
+                        <TextArea fx:id="infoArea" prefHeight="146.0" prefWidth="771.0" promptText="Write here any observation about any sympton that you experience that is not shown above or any observation you want to transmit to your doctor.">
                            <font>
-                              <Font size="24.0" />
+                              <Font size="14.0" />
                            </font>
-                        </Button>
+                        </TextArea>
                      </children>
-                  </HBox>
-                  <HBox prefHeight="110.0" prefWidth="800.0" spacing="30.0">
-                     <children>
-                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
-                           <children>
-                              <Label text="Do you have palpitations?">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <RadioButton mnemonicParsing="false" text="Yes">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                              <RadioButton mnemonicParsing="false" text="No">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
-                           <children>
-                              <Label text="Do you have dizziness?">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <RadioButton mnemonicParsing="false" text="Yes">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                              <RadioButton mnemonicParsing="false" text="No">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="110.0" prefWidth="800.0" spacing="30.0">
-                     <children>
-                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
-                           <children>
-                              <Label text="Do you have fatigue?">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <RadioButton mnemonicParsing="false" text="Yes">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                              <RadioButton mnemonicParsing="false" text="No">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
-                           <children>
-                              <Label text="Do you have anxiety?">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <RadioButton mnemonicParsing="false" text="Yes">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                              <RadioButton mnemonicParsing="false" text="No">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="110.0" prefWidth="800.0" spacing="30.0">
-                     <children>
-                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
-                           <children>
-                              <Label text="Do you have chest pain?">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <RadioButton mnemonicParsing="false" text="Yes">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                              <RadioButton mnemonicParsing="false" text="No">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="130.0" prefWidth="384.0" spacing="20.0">
-                           <children>
-                              <Label text="Do you have difficulty breathing?">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <RadioButton mnemonicParsing="false" text="Yes">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                              <RadioButton mnemonicParsing="false" text="No">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="110.0" prefWidth="800.0" spacing="30.0">
-                     <children>
-                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
-                           <children>
-                              <Label text="Do you have fainting?">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <RadioButton mnemonicParsing="false" text="Yes">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                              <RadioButton mnemonicParsing="false" text="No">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
-                           <children>
-                              <Label text="Do you have gray blue skin?">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <RadioButton mnemonicParsing="false" text="Yes">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                              <RadioButton mnemonicParsing="false" text="No">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox layoutX="10.0" layoutY="440.0" prefHeight="110.0" prefWidth="800.0" spacing="30.0">
-                     <children>
-                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
-                           <children>
-                              <Label text="Do you have irritability?">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <RadioButton mnemonicParsing="false" text="Yes">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                              <RadioButton mnemonicParsing="false" text="No">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="130.0" prefWidth="384.0" spacing="20.0">
-                           <children>
-                              <Label text="Do you have rapid breathing?">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <RadioButton mnemonicParsing="false" text="Yes">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                              <RadioButton mnemonicParsing="false" text="No">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox layoutX="10.0" layoutY="600.0" prefHeight="110.0" prefWidth="800.0" spacing="30.0">
-                     <children>
-                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
-                           <children>
-                              <Label text="Do you have poor eating?">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <RadioButton mnemonicParsing="false" text="Yes">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                              <RadioButton mnemonicParsing="false" text="No">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </RadioButton>
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
-                           <children>
-                              <Label text="Date">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <DatePicker prefHeight="49.0" prefWidth="321.0" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="177.0" prefWidth="781.0" spacing="50.0">
-                     <children>
-                        <VBox prefHeight="155.0" prefWidth="772.0" spacing="30.0">
-                           <children>
-                              <Label prefHeight="0.0" prefWidth="1441.0" text="Extra information">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <TextArea prefHeight="146.0" prefWidth="771.0" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
+                  </VBox>
                </children>
-            </VBox>
+            </HBox>
+            <HBox layoutX="39.0" layoutY="125.0" prefHeight="72.0" prefWidth="325.0" spacing="30.0">
+               <children>
+                  <Label prefHeight="80.0" prefWidth="417.0" text="Please, answer the questions.">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Button layoutX="563.0" layoutY="722.0" mnemonicParsing="false" onAction="#saveRecord" text="Save record">
+               <font>
+                  <Font name="Goudy Old Style Bold" size="28.0" />
+               </font>
+            </Button>
+            <ScrollPane layoutX="40.0" layoutY="197.0" prefHeight="318.0" prefWidth="705.0">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="950.0" prefWidth="702.0">
+                     <children>
+                        <VBox prefHeight="1215.0" prefWidth="775.0" spacing="30.0">
+                           <children>
+                              <HBox prefHeight="110.0" prefWidth="800.0" spacing="30.0">
+                                 <children>
+                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                                       <children>
+                                          <Label text="Do you have palpitations?*">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <RadioButton mnemonicParsing="false" text="Yes">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="palpitations" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="palpitations_no" mnemonicParsing="false" selected="true" text="No" toggleGroup="$palpitations">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </RadioButton>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                                       <children>
+                                          <Label text="Do you have dizziness?*">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <RadioButton mnemonicParsing="false" text="Yes">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="dizziness" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="dizziness_no" mnemonicParsing="false" selected="true" text="No" toggleGroup="$dizziness">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </RadioButton>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="110.0" prefWidth="800.0" spacing="30.0">
+                                 <children>
+                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                                       <children>
+                                          <Label text="Do you have fatigue?*">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <RadioButton mnemonicParsing="false" text="Yes">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="fatigue" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="fatigue_no" mnemonicParsing="false" selected="true" text="No" toggleGroup="$fatigue">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </RadioButton>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                                       <children>
+                                          <Label text="Do you have anxiety?*">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <RadioButton mnemonicParsing="false" text="Yes">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="anxiety" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="anxiety_no" mnemonicParsing="false" selected="true" text="No" toggleGroup="$anxiety">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </RadioButton>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="110.0" prefWidth="800.0" spacing="30.0">
+                                 <children>
+                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                                       <children>
+                                          <Label text="Do you have chest pain?*">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <RadioButton mnemonicParsing="false" text="Yes">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="chest_pain" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="chest_pain_no" mnemonicParsing="false" selected="true" text="No" toggleGroup="$chest_pain">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </RadioButton>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="130.0" prefWidth="384.0" spacing="20.0">
+                                       <children>
+                                          <Label text="Do you have difficulty breathing?*">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <RadioButton mnemonicParsing="false" text="Yes">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="difficulty_breathing" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="difficulty_breathing_no" mnemonicParsing="false" selected="true" text="No" toggleGroup="$difficulty_breathing">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </RadioButton>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="110.0" prefWidth="800.0" spacing="30.0">
+                                 <children>
+                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                                       <children>
+                                          <Label text="Do you have fainting?*">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <RadioButton mnemonicParsing="false" text="Yes">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="fainting" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="fainting_no" mnemonicParsing="false" selected="true" text="No" toggleGroup="$fainting">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </RadioButton>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                                       <children>
+                                          <Label text="Do you have gray blue skin?*">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <RadioButton mnemonicParsing="false" text="Yes">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="grayblueskin" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="gray_blue_skin_no" mnemonicParsing="false" selected="true" text="No" toggleGroup="$grayblueskin">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </RadioButton>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="10.0" layoutY="440.0" prefHeight="110.0" prefWidth="800.0" spacing="30.0">
+                                 <children>
+                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                                       <children>
+                                          <Label text="Do you have irritability?*">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <RadioButton mnemonicParsing="false" text="Yes">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="irritability" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="irritability_no" mnemonicParsing="false" selected="true" text="No" toggleGroup="$irritability">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </RadioButton>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="130.0" prefWidth="384.0" spacing="20.0">
+                                       <children>
+                                          <Label text="Do you have rapid breathing?*">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <RadioButton mnemonicParsing="false" text="Yes">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="rapid_breathing" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="rapid_breathing_no" mnemonicParsing="false" selected="true" text="No" toggleGroup="$rapid_breathing">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </RadioButton>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="10.0" layoutY="600.0" prefHeight="110.0" prefWidth="800.0" spacing="30.0">
+                                 <children>
+                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                                       <children>
+                                          <Label text="Do you have poor eating?*">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <RadioButton mnemonicParsing="false" text="Yes">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="poor_eating" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="poor_eating_no" mnemonicParsing="false" selected="true" text="No" toggleGroup="$poor_eating">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </RadioButton>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="130.0" prefWidth="345.0" spacing="20.0">
+                                       <children>
+                                          <Label prefHeight="95.0" prefWidth="332.0" text="Do you want to record an ECG?&#10;(Optional but recommended)">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="21.0" prefWidth="142.0" scaleShape="false" text="Record ECG">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
          </children>
       </Pane>
       <Pane prefHeight="115.0" prefWidth="600.0" style="-fx-background-color: e3e4e5;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

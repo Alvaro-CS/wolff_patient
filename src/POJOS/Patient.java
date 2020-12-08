@@ -34,6 +34,7 @@ public class Patient implements Runnable, Serializable {
         this.password = password;
         this.name = name;
         this.lastName = lastName;
+        clinical_record_list= new ArrayList<>();
     }
 
     //getters

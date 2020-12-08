@@ -67,17 +67,6 @@ public class PatientMenuController implements Initializable {
      * @throws IOException
      */
     public void openMedicalHistory(ActionEvent event) throws IOException {
-
-        /*  Parent root = FXMLLoader.load(getClass().getResource("MedicalHistoryView.fxml"));
-        Scene scene = new Scene(root);
-        
-        MedicalHistoryController controller = loader.getController();
-        controller.initData(patient);
-        
-        Stage registerStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        registerStage.setScene(scene);
-        registerStage.centerOnScreen();
-        registerStage.show();*/
         FXMLLoader loader = new FXMLLoader();
 
         loader.setLocation(getClass().getResource("MedicalHistoryView.fxml"));

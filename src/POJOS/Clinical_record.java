@@ -5,6 +5,7 @@
  */
 package POJOS;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -18,7 +19,11 @@ import javafx.beans.property.StringProperty;
 public class Clinical_record {
 
     private IntegerProperty id;
-    private ObjectProperty date;
+    
+    private Date date;
+    private final SimpleDateFormat formatter; 
+    private final StringProperty dateString; //For UI showing purposes
+    
     private BooleanProperty palpitations;
     private BooleanProperty dizziness;
     private BooleanProperty fatigue;
@@ -34,14 +39,17 @@ public class Clinical_record {
 
     private Integer[] ECG;
     private StringProperty extra_info;
+    
 
-    public Clinical_record(Integer id, Object date, Boolean palpitations, Boolean dizziness, Boolean fatigue
+    public Clinical_record(Integer id, Boolean palpitations, Boolean dizziness, Boolean fatigue
             , Boolean anxiety, Boolean chest_pain, Boolean difficulty_breathing,
             Boolean fainting, Boolean gray_blue_skin, Boolean irritability,
             Boolean rapid_breathing, Boolean poor_eating, Integer[] ECG,
             String extra_info) {
         this.id = new SimpleIntegerProperty(id);
-        this.date = new SimpleObjectProperty(date);
+        this.date = new Date();
+        formatter= new SimpleDateFormat("dd-MM-yyyy\nHH:mm:ss");
+        this.dateString=new SimpleStringProperty(formatter.format(date));
         this.palpitations = new SimpleBooleanProperty(palpitations);
         this.dizziness = new SimpleBooleanProperty(dizziness);
         this.fatigue = new SimpleBooleanProperty(fatigue);
@@ -67,12 +75,16 @@ public class Clinical_record {
         return id.get();
     }
 
-    public ObjectProperty DateProperty() {
-        return date;
+    public StringProperty DateStringProperty() {
+        return dateString;
     }
+     public String getDateString() {
+        return dateString.get();
+    }
+    
 
-    public Object getDate() {
-        return date.get();
+    public Date getDate() {
+        return date;
     }
 
     public BooleanProperty PalpitationsProperty() {

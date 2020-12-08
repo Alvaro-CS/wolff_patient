@@ -14,7 +14,7 @@
    <children>
       <Pane prefHeight="610.0" prefWidth="910.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="459.0" layoutY="151.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" text="Add Clinical Record" />
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="459.0" layoutY="151.0" mnemonicParsing="false" onAction="#addRecord" prefHeight="50.0" prefWidth="250.0" text="Add Clinical Record" />
             <TableView fx:id="table" layoutY="247.0" prefHeight="653.0" prefWidth="1198.0">
               <columns>
                 <TableColumn id="id" fx:id="idColumn" prefWidth="75.0" text="ID" />
