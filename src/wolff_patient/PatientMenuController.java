@@ -52,12 +52,21 @@ public class PatientMenuController implements Initializable {
      */
     public void openUserInfo(ActionEvent event) throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("UserInfoView.fxml"));
-        Scene scene = new Scene(root);
-        Stage registerStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        registerStage.setScene(scene);
-        registerStage.centerOnScreen();
-        registerStage.show();
+        
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("UserInfoView.fxml"));
+        Parent userInfoViewParent = loader.load();
+
+        Scene MainMenuViewScene = new Scene(userInfoViewParent);
+
+        UserInfoController controller = loader.getController();
+        controller.initData(patientMoved);
+        //this line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(MainMenuViewScene);
+        window.centerOnScreen();
+
+        window.show();
     }
 
     /**

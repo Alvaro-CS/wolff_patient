@@ -125,6 +125,21 @@ public class MedicalHistoryController implements Initializable {
     public ObservableList<Clinical_record> getList() {
         return list;
     }
+    public void backToMenu(ActionEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("PatientMenuView.fxml"));
+        Parent patientMenuViewParent = loader.load();
+        Scene MainMenuViewScene = new Scene(patientMenuViewParent);
+        PatientMenuController controller = loader.getController();
+        controller.initData(patientMoved);
+        //this line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(MainMenuViewScene);
+        window.centerOnScreen();
+
+        window.show();
+    }
 
     /**
      * This method loads the scene which lets the user add a new clinical record
