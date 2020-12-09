@@ -58,18 +58,6 @@ public class MedicalHistoryController implements Initializable {
     private TableColumn<Clinical_record, Boolean> faintingColumn;
 
     @FXML
-    private TableColumn<Clinical_record, Boolean> gray_blue_skinColumn;
-
-    @FXML
-    private TableColumn<Clinical_record, Boolean> irritabilityColumn;
-
-    @FXML
-    private TableColumn<Clinical_record, Boolean> rapid_breathingColumn;
-
-    @FXML
-    private TableColumn<Clinical_record, Boolean> poor_eatingColumn;
-
-    @FXML
     private TableColumn<Clinical_record, Integer[]> ecgColumn;
 
     @FXML
@@ -92,10 +80,6 @@ public class MedicalHistoryController implements Initializable {
         chest_painColumn.setCellValueFactory(new PropertyValueFactory<>("chest_pain"));
         difficulty_breathingColumn.setCellValueFactory(new PropertyValueFactory<>("difficulty_breathing"));
         faintingColumn.setCellValueFactory(new PropertyValueFactory<>("fainting"));
-        gray_blue_skinColumn.setCellValueFactory(new PropertyValueFactory<>("gray_blue_skin"));
-        irritabilityColumn.setCellValueFactory(new PropertyValueFactory<>("irritability"));
-        rapid_breathingColumn.setCellValueFactory(new PropertyValueFactory<>("rapid_breathing"));
-        poor_eatingColumn.setCellValueFactory(new PropertyValueFactory<>("poor_eating"));
         ecgColumn.setCellValueFactory(new PropertyValueFactory<>("ecg"));
         extra_infoColumn.setCellValueFactory(new PropertyValueFactory<>("extra_info"));
     }

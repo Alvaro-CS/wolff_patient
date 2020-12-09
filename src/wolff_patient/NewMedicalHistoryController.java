@@ -35,20 +35,13 @@ public class NewMedicalHistoryController implements Initializable {
     RadioButton difficulty_breathing_no;
     @FXML
     RadioButton fainting_no;
-    @FXML
-    RadioButton gray_blue_skin_no;
-    @FXML
-    RadioButton irritability_no;
-    @FXML
-    RadioButton rapid_breathing_no;
-    @FXML
-    RadioButton poor_eating_no;
+    
 
     @FXML
     TextArea infoArea;
 
     boolean palpitations, dizziness, fatigue, anxiety, chest_pain, difficulty_breathing,
-            fainting, gray_blue_skin, irritability, rapid_breathing, poor_eating;
+            fainting;
 
     private Clinical_record clinical_record;
 
@@ -69,10 +62,7 @@ public class NewMedicalHistoryController implements Initializable {
         chest_pain = !chest_pain_no.isSelected();
         difficulty_breathing = !difficulty_breathing_no.isSelected();
         fainting = !fainting_no.isSelected();
-        gray_blue_skin = !gray_blue_skin_no.isSelected();
-        irritability = !irritability_no.isSelected();
-        rapid_breathing = !rapid_breathing_no.isSelected();
-        poor_eating = !poor_eating_no.isSelected();
+       
 
         Integer id = patientMoved.getClinical_record_list().size() + 1;
         String extra_info = infoArea.getText();
@@ -80,8 +70,7 @@ public class NewMedicalHistoryController implements Initializable {
         //Date is created automatically in the constructor.
         //Check out the order of parameters if changed in constructor of the class.
         clinical_record = new Clinical_record(id, palpitations, dizziness, fatigue, anxiety,
-                chest_pain, difficulty_breathing, fainting, gray_blue_skin, irritability,
-                rapid_breathing, poor_eating, ECG, extra_info);
+                chest_pain, difficulty_breathing, fainting,ECG, extra_info);
         patientMoved.getClinical_record_list().add(clinical_record);
         //TODO send the new patient to the server and replace it by this new version.
         
