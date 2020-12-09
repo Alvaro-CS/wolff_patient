@@ -58,8 +58,6 @@ public class RegistrationController implements Initializable {
     @FXML
     private Label regStatusLabel;
 
-    ArrayList<Patient> patients = new ArrayList<>(); //remove
-    ArrayList<Patient> patients2 = new ArrayList<>();
 
     String filename = "patientFiles";
     //LogInController lc = new LogInController();
@@ -105,48 +103,48 @@ public class RegistrationController implements Initializable {
     /**
      * This method registers new user. It creates patient and stores it in
      * patientFile and then shows all the info stores in the file
-     */
-    public void registerUserOld() {
-        String ID = userNameField.getText();
-        String password = passwordField.getText();
-        String name = nameField.getText();
-        String surname = surnameField.getText();
-//        String ssnumber = SSNumberField.getText();
-//        String adress = AdressField.getText();
-//        String phone = PhoneField.getText();
-
-        try {
-            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(filename));
-            Patient p = new Patient(ID, password, name, surname);
-            patients.add(p);
-            os.writeObject(patients);
-            os.close();
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
-            ex.printStackTrace();
-        }
-
-        try {
-            ObjectInputStream is = new ObjectInputStream(new FileInputStream(filename));
-            patients2 = (ArrayList<Patient>) is.readObject();
-            for (int i = 0; i < patients.size(); i++) {
-                System.out.println(patients.get(i).toString());
-            }
-            is.close();
-        } catch (EOFException ex) {
-            System.out.println("All data have been correctly read.");
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-    }
+//     */
+//    public void registerUserOld() {
+//        String ID = userNameField.getText();
+//        String password = passwordField.getText();
+//        String name = nameField.getText();
+//        String surname = surnameField.getText();
+////        String ssnumber = SSNumberField.getText();
+////        String adress = AdressField.getText();
+////        String phone = PhoneField.getText();
+//
+//        try {
+//            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(filename));
+//            Patient p = new Patient(ID, password, name, surname);
+//            patients.add(p);
+//            os.writeObject(patients);
+//            os.close();
+//
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
+//            ex.printStackTrace();
+//        } catch (IOException ex) {
+//            Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
+//            ex.printStackTrace();
+//        }
+//
+//        try {
+//            ObjectInputStream is = new ObjectInputStream(new FileInputStream(filename));
+//            patients2 = (ArrayList<Patient>) is.readObject();
+//            for (int i = 0; i < patients.size(); i++) {
+//                System.out.println(patients.get(i).toString());
+//            }
+//            is.close();
+//        } catch (EOFException ex) {
+//            System.out.println("All data have been correctly read.");
+//        } catch (FileNotFoundException ex) {
+//            ex.printStackTrace();
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        } catch (ClassNotFoundException ex) {
+//            ex.printStackTrace();
+//        }
+//    }
 
     public void registerUser() {
         String ID = userNameField.getText();
@@ -170,7 +168,7 @@ public class RegistrationController implements Initializable {
             
             //Sending patient
             Patient p = new Patient(ID, password, name, surname);
-            patients.add(p);
+            
             objectOutputStream.writeObject(p);
             System.out.println("Patient data sent to register in server");
 

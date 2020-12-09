@@ -32,7 +32,7 @@ public class ClientThreadsServer implements Runnable {
     @Override
     public void run() {
         try {
-            serverSocket = new ServerSocket(9001);
+            serverSocket = new ServerSocket(9001); //TODO dynamic ports?
             try {
                 System.out.println("Before accepting");
                 Socket socket = serverSocket.accept();
