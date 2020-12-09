@@ -19,7 +19,12 @@
                   <Font size="40.0" />
                </font>
             </Label>
-            <Label fx:id="nameLabel" layoutX="466.0" layoutY="14.0" prefHeight="58.0" prefWidth="141.0" />
+            <Label fx:id="nameLabel" layoutX="14.0" layoutY="20.0" prefHeight="58.0" prefWidth="141.0" />
+            <Button layoutX="517.0" layoutY="32.0" mnemonicParsing="false" onAction="#logOut" text="Log Out">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
       <Group layoutX="67.0" layoutY="129.0">
@@ -117,5 +122,15 @@
                </graphic>
             </Button>
          </children></Group>
+      <Label layoutX="77.0" layoutY="464.0" text="Medical records">
+         <font>
+            <Font name="Berlin Sans FB" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="98.0" layoutY="254.0" text="My profile">
+         <font>
+            <Font name="Berlin Sans FB" size="19.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

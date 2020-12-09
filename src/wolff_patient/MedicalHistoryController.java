@@ -125,6 +125,14 @@ public class MedicalHistoryController implements Initializable {
     public ObservableList<Clinical_record> getList() {
         return list;
     }
+    
+    /**
+     * This method takes the user back to the main menu
+     *
+     * @param event
+     * @throws IOException
+     */
+    @FXML
     public void backToMenu(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();

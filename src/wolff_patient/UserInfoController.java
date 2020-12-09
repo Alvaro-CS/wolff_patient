@@ -83,6 +83,7 @@ public class UserInfoController implements Initializable {
      * @param event
      * @throws IOException
      */
+    @FXML
     private void changePassword(ActionEvent event) throws IOException {
         if (password_field.getText().equals(patientMoved.getPassword()) && new_password_field.getText().equals(repeat_password_field.getText())) {
             patientMoved.setPassword(new_password_field.getText());
@@ -98,6 +99,7 @@ public class UserInfoController implements Initializable {
      * @param event
      * @throws IOException
      */
+    @FXML
     private void updateInformation(ActionEvent event) throws IOException {
         if (name_field.getText().isEmpty() == false && name_field.getText().equals(patientMoved.getName()) == false) {
             patientMoved.setName(name_field.getText());
@@ -116,6 +118,7 @@ public class UserInfoController implements Initializable {
      * @param event
      * @throws IOException
      */
+    @FXML
     public void backToMenu(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();

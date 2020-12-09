@@ -94,5 +94,28 @@ public class PatientMenuController implements Initializable {
         window.show();
 
     }
+    
+    /**
+     * This method logs out and returns to log In screen.
+     *
+     * @param event
+     * @throws IOException
+     */
+    public void logOut(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
 
+        loader.setLocation(getClass().getResource("LogInView.fxml"));
+
+
+        Parent LogInViewParent = loader.load();
+        Scene LogInViewScene = new Scene(LogInViewParent);
+
+        //this line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(LogInViewScene);
+        window.centerOnScreen();
+
+        window.show();
+
+    }
 }
