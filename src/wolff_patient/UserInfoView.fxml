@@ -2,12 +2,14 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -31,95 +33,119 @@
       </Pane>
       <Pane prefHeight="497.0" prefWidth="910.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <VBox layoutX="10.0" layoutY="20.0" prefHeight="335.0" prefWidth="275.0" spacing="50.0">
+            <VBox prefHeight="497.0" prefWidth="910.0">
                <children>
-                  <Label text="Update account information" textFill="#00000080">
-                     <font>
-                        <Font name="Ebrima Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="name_field" prefHeight="45.0" prefWidth="240.0" promptText="New name">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="surname_field" prefHeight="45.0" prefWidth="240.0" promptText="New Surname">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="telephone_field" prefHeight="45.0" prefWidth="240.0" promptText="New telephone">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </TextField>
-               </children>
-            </VBox>
-            <VBox layoutX="300.0" layoutY="20.0" prefHeight="335.0" prefWidth="275.0" spacing="50.0">
-               <children>
-                  <Label fx:id="nameLabel" prefHeight="23.0" prefWidth="279.0" textFill="#00000080">
-                     <font>
-                        <Font name="Ebrima Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="name_field2" prefHeight="45.0" prefWidth="240.0" promptText="New name">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="email_field2" prefHeight="45.0" prefWidth="240.0" promptText="New Email">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="telephone_field2" prefHeight="45.0" prefWidth="240.0" promptText="New telephone">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </TextField>
-               </children>
-            </VBox>
-            <VBox layoutX="620.0" layoutY="20.0" prefHeight="422.0" prefWidth="275.0" spacing="50.0">
-               <children>
-                  <Label text="Change password" textFill="#00000080">
-                     <font>
-                        <Font name="Ebrima Bold" size="18.0" />
-                     </font>
+                  <HBox prefHeight="100.0" prefWidth="910.0">
+                     <children>
+                        <Label text="Update account information" textFill="#00000080">
+                           <font>
+                              <Font name="Ebrima Bold" size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="30.0" top="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label text="Change password" textFill="#00000080">
+                           <font>
+                              <Font name="Ebrima Bold" size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="350.0" top="20.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
                      <VBox.margin>
-                        <Insets left="60.0" />
+                        <Insets />
                      </VBox.margin>
-                  </Label>
-                  <PasswordField fx:id="new_password_field" prefHeight="45.0" prefWidth="240.0" promptText="New password">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </PasswordField>
-                  <PasswordField fx:id="repeat_password_field" prefHeight="45.0" prefWidth="240.0" promptText="Repeat new password">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </PasswordField>
-                  <PasswordField fx:id="password_field" prefHeight="45.0" prefWidth="240.0" promptText="Old password (Mandatory)">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </PasswordField>
-                  <Button fx:id="change_button" onAction="#changePassword" prefHeight="60.0" prefWidth="210.0" styleClass="starter_buttom" text="Change" textFill="#000000b5">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="33.0" />
-                     </VBox.margin>
-                  </Button>
+                  </HBox>
+                  <HBox prefHeight="497.0" prefWidth="910.0">
+                     <children>
+                        <VBox prefHeight="335.0" prefWidth="275.0" spacing="10.0">
+                           <children>
+                              <Label fx:id="nameLabel" prefHeight="45.0" prefWidth="288.0" />
+                              <TextField fx:id="nameField" prefHeight="45.0" prefWidth="240.0" promptText="Change name">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </TextField>
+                              <Label fx:id="surnameLabel" prefHeight="45.0" prefWidth="288.0" />
+                              <TextField fx:id="surnameField" prefHeight="45.0" prefWidth="240.0" promptText="Change Surname">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </TextField>
+                              <Label fx:id="genderLabel" prefHeight="45.0" prefWidth="288.0" />
+                              <ComboBox fx:id="genderComboBox" prefHeight="45.0" prefWidth="279.0" promptText="Change Gender" />
+                           </children>
+                           <HBox.margin>
+                              <Insets left="20.0" right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox prefHeight="335.0" prefWidth="275.0" spacing="10.0">
+                           <children>
+                              <Label fx:id="telephoneLabel" prefHeight="45.0" prefWidth="288.0" />
+                              <TextField fx:id="telephoneField" prefHeight="45.0" prefWidth="240.0" promptText="Change Telephone">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </TextField>
+                              <Label fx:id="adressLabel" prefHeight="45.0" prefWidth="288.0" />
+                              <TextField fx:id="adressField" prefHeight="45.0" prefWidth="240.0" promptText="Change Adress">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="10.0" right="20.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox prefHeight="422.0" prefWidth="275.0" spacing="50.0">
+                           <children>
+                              <PasswordField fx:id="new_password_field" prefHeight="45.0" prefWidth="240.0" promptText="New password">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="55.0" />
+                                 </VBox.margin>
+                              </PasswordField>
+                              <PasswordField fx:id="repeat_password_field" prefHeight="45.0" prefWidth="240.0" promptText="Repeat new password">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin>
+                              </PasswordField>
+                              <PasswordField fx:id="password_field" prefHeight="45.0" prefWidth="240.0" promptText="Old password (Mandatory)">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin>
+                              </PasswordField>
+                              <Button fx:id="change_button" onAction="#changePassword" prefHeight="40.0" prefWidth="200.0" styleClass="starter_buttom" text="Change" textFill="#000000b5">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="33.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
-            <Button fx:id="done_button" layoutX="394.0" layoutY="382.0" onAction="#updateInformation" prefHeight="60.0" prefWidth="122.0" styleClass="starter_small_buttom" text="Done" textFill="#000000b5">
+            <Button fx:id="done_button" layoutX="394.0" layoutY="421.0" onAction="#updateInformation" prefHeight="60.0" prefWidth="122.0" styleClass="starter_small_buttom" text="Done" textFill="#000000b5">
                <font>
                   <Font name="Ebrima Bold" size="14.0" />
                </font>
             </Button>
-            <Label fx:id="passwordLabel" layoutX="589.0" layoutY="456.0" prefHeight="28.0" prefWidth="240.0" />
+            <Label fx:id="passwordLabel" layoutX="631.0" layoutY="396.0" prefHeight="28.0" prefWidth="240.0" />
          </children>
       </Pane>
    </children>

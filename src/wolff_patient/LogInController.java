@@ -80,7 +80,7 @@ public class LogInController implements Initializable {
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(registrationViewScene);
-
+        window.centerOnScreen();
         window.show();
     }
 

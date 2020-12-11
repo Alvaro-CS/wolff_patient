@@ -9,10 +9,6 @@ import java.util.Date;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- *
- * @author ALVARO
- */
 public class Patient implements Runnable, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -23,18 +19,35 @@ public class Patient implements Runnable, Serializable {
     private String lastName;
     private ArrayList<Clinical_record> clinical_record_list;
 
-//private Date birthdate;
-//private enum gender{MALE,FEMALE,OTHER};
-//private String address;//ARRAY PENSAR
-//private int SSNumber;
-//private int telf;
-//private enum blood_group
+    private Date birthdate;
+
+    public enum Gender {
+        MALE, FEMALE, OTHER
+    };
+    private Gender gender;
+    private String address;//ARRAY PENSAR
+    private int SSNumber;
+    private int telf;
+
     public Patient(String DNI, String password, String name, String lastName) {
         this.DNI = DNI;
         this.password = password;
         this.name = name;
         this.lastName = lastName;
-        clinical_record_list= new ArrayList<>();
+        clinical_record_list = new ArrayList<>();
+    }
+
+    public Patient(String DNI, String password, String name, String lastName,
+            Gender gender, Date birthdate, String address, int SSNumber, int telf) {
+        this.DNI = DNI;
+        this.password = password;
+        this.name = name;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.birthdate = birthdate;
+        this.address = address;
+        this.SSNumber = SSNumber;
+        this.telf = telf;
     }
 
     //getters
@@ -78,10 +91,56 @@ public class Patient implements Runnable, Serializable {
         this.clinical_record_list = clinical_record_list;
     }
 
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public int getSSNumber() {
+        return SSNumber;
+    }
+
+    public void setSSNumber(int SSNumber) {
+        this.SSNumber = SSNumber;
+    }
+
+    public int getTelf() {
+        return telf;
+    }
+
+    public void setTelf(int telf) {
+        this.telf = telf;
+    }
+
+//    @Override
+//    public String toString() {
+//        return "Patient{" + "DNI=" + DNI + ", password=" + password + ", name=" + name + ", lastName=" + lastName + '}';
+//    }
+
     @Override
     public String toString() {
-        return "Patient{" + "DNI=" + DNI + ", password=" + password + ", name=" + name + ", lastName=" + lastName + '}';
+        return "Patient{" + "DNI=" + DNI + ", password=" + password + ", name=" + name + ", lastName=" + lastName + ", birthdate=" + birthdate + ", gender=" + gender + ", address=" + address + ", SSNumber=" + SSNumber + ", telf=" + telf + '}';
     }
+    
 
     @Override
     public void run() {

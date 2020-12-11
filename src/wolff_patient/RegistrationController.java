@@ -2,6 +2,7 @@ package wolff_patient;
 //for files:
 
 import POJOS.Patient;
+import POJOS.Patient.Gender;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,6 +14,9 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,10 +27,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import java.util.ArrayList;
+import java.util.Date;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
 
 public class RegistrationController implements Initializable {
@@ -38,19 +45,21 @@ public class RegistrationController implements Initializable {
     @FXML
     private PasswordField repeatPasswordField;
     @FXML
-    private TextField ssNumberField;
-    @FXML
     private TextField nameField;
     @FXML
     private TextField surnameField;
     @FXML
+    private ComboBox genderComboBox;
+    @FXML
+    private DatePicker dobDatePicker;
+    @FXML
     private TextField adressField;
     @FXML
+    private TextField ssNumberField;
+    @FXML
     private TextField phoneField;
-
-    //Patient[] patientsRead=new Patient[100];
-//    @FXML
-//    private Button createAccountButton;
+    @FXML
+    private ComboBox bloodGroupComboBox;
     @FXML
     private Label regMessageLabel;
     @FXML
@@ -58,9 +67,7 @@ public class RegistrationController implements Initializable {
     @FXML
     private Label regStatusLabel;
 
-
     String filename = "patientFiles";
-    //LogInController lc = new LogInController();
 
     /**
      * This method takes place when the createAccountButton is clicked. After
@@ -69,7 +76,7 @@ public class RegistrationController implements Initializable {
      *
      * @param event
      */
-    public void registerButtonOnAction(ActionEvent event)throws IOException {
+    public void registerButtonOnAction(ActionEvent event) throws IOException {
 
         if (usernameIsFree()) {
             regMessageLabel.setText("Username available");
@@ -88,22 +95,21 @@ public class RegistrationController implements Initializable {
         }
 
     }
-    
-        public void backtoLogin(ActionEvent event) throws IOException {
+
+    public void backtoLogin(ActionEvent event) throws IOException {
         Parent registrationViewParent = FXMLLoader.load(getClass().getResource("LogInView.fxml"));
         Scene registrationViewScene = new Scene(registrationViewParent);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(registrationViewScene);
-
+        window.centerOnScreen();
         window.show();
     }
 
-
     /**
      * This method registers new user. It creates patient and stores it in
-     * patientFile and then shows all the info stores in the file
-//     */
+     * patientFile and then shows all the info stores in the file //
+     */
 //    public void registerUserOld() {
 //        String ID = userNameField.getText();
 //        String password = passwordField.getText();
@@ -145,42 +151,56 @@ public class RegistrationController implements Initializable {
 //            ex.printStackTrace();
 //        }
 //    }
-
     public void registerUser() {
         String ID = userNameField.getText();
         String password = passwordField.getText();
         String name = nameField.getText();
         String surname = surnameField.getText();
-//        String ssnumber = SSNumberField.getText();
-//        String adress = AdressField.getText();
-//        String phone = PhoneField.getText();
+
+        Gender gender = null;
+        if (genderComboBox.getValue().equals("Male")) {
+            gender = Gender.MALE;
+        } else if (genderComboBox.getValue().equals("Female")) {
+            gender = Gender.FEMALE;
+        } else if (genderComboBox.getValue().equals("Other")) {
+            gender = Gender.OTHER;
+        }
+        LocalDate localDate = dobDatePicker.getValue();
+        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+        Date dob = Date.from(instant);
+//        Date date= dobDatePicker.getValue();
+        int ssnumber = Integer.parseInt(ssNumberField.getText());
+        String adress = adressField.getText();
+        int phone = Integer.parseInt(phoneField.getText());
+      
         OutputStream outputStream = null;
         ObjectOutputStream objectOutputStream = null;
         Socket socket = null;
+
         try {
             socket = new Socket("localhost", 9000);
             outputStream = socket.getOutputStream();
             objectOutputStream = new ObjectOutputStream(outputStream);
             //Sending order
-            String order="REGISTER";
+            String order = "REGISTER";
             objectOutputStream.writeObject(order);
-            System.out.println("Order"+ order+ "sent");
-            
-            //Sending patient
-            Patient p = new Patient(ID, password, name, surname);
-            
-            objectOutputStream.writeObject(p);
-            System.out.println("Patient data sent to register in server");
+            System.out.println("Order" + order + "sent");
 
-        }
-            catch (IOException ex) {
+            //Sending patient
+            //Patient p = new Patient(ID, password, name, surname);
+            Patient p1 = new Patient(ID, password, name, surname, gender, dob, adress, ssnumber, phone);
+
+            objectOutputStream.writeObject(p1);
+            System.out.println("Patient data sent to register in server");
+            p1.toString();
+        } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
             Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            finally {
+        } finally {
             releaseResources(outputStream, socket);
 
-        }/*
+        }
+    }/*
             try {
                 ObjectInputStream is = new ObjectInputStream(new FileInputStream(filename));
                 patients2 = (ArrayList<Patient>) is.readObject();
@@ -197,14 +217,14 @@ public class RegistrationController implements Initializable {
             } catch (ClassNotFoundException ex) {
                 ex.printStackTrace();
             }
-        */
-        }
-        /**
-         * this method checks each patient stored in the file to see if the
-         * username is already registered
-         *
-         * @return boolean
-         */
+     */
+
+    /**
+     * this method checks each patient stored in the file to see if the username
+     * is already registered
+     *
+     * @return boolean
+     */
     public boolean usernameIsFree() {//TODO
 /*        try {
 
@@ -238,18 +258,34 @@ public class RegistrationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        genderComboBox.getItems().add("Male");
+        genderComboBox.getItems().add("Female");
+        genderComboBox.getItems().add("Other");
+
+        bloodGroupComboBox.getItems().add("A+");
+        bloodGroupComboBox.getItems().add("A-");
+        bloodGroupComboBox.getItems().add("B+");
+        bloodGroupComboBox.getItems().add("B-");
+        bloodGroupComboBox.getItems().add("AB+");
+        bloodGroupComboBox.getItems().add("AB-");
+        bloodGroupComboBox.getItems().add("0+");
+        bloodGroupComboBox.getItems().add("0-");
     }
-    
+
     private static void releaseResources(OutputStream outputStream, Socket socket) {
         try {
             outputStream.close();
+
         } catch (IOException ex) {
-            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LogInController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         try {
             socket.close();
+
         } catch (IOException ex) {
-            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LogInController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 

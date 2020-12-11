@@ -22,6 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -38,50 +39,72 @@ public class UserInfoController implements Initializable {
     private static Patient patientMoved;
 
     @FXML
+    private Label nameLabel;
+
+    @FXML
+    private TextField nameField;
+
+    @FXML
+    private Label surnameLabel;
+
+    @FXML
+    private TextField surnameField;
+
+    @FXML
+    private Label genderLabel;
+
+    @FXML
+    private ComboBox genderComboBox;
+
+    @FXML
+    private Label telephoneLabel;
+
+    @FXML
+    TextField telephoneField;
+
+    @FXML
+    private Label adressLabel;
+
+    @FXML
+    private TextField adressField;
+    @FXML
     private PasswordField new_password_field;
+
     @FXML
     private PasswordField repeat_password_field;
+
     @FXML
     private PasswordField password_field;
+
     @FXML
     private Button change_button;
-    @FXML
-    private TextField name_field;
-    @FXML
-    private TextField surname_field;
-    @FXML
-    private TextField email_field;
-    @FXML
-    private TextField telephone_field;
-    @FXML
-    private TextField name_field1;
-    @FXML
-    private TextField email_field1;
-    @FXML
-    private TextField telephone_field1;
-    @FXML
-    private Button update_button;
+
     @FXML
     private Button done_button;
-    @FXML
-    private Label nameLabel;
+
     @FXML
     private Label passwordLabel;
 
     /**
      * Initializes the controller class.
+     *
      * @param patient
      */
     public void initData(Patient patient) {
 
         patientMoved = patient;
         nameLabel.setText("Patient's name: " + patientMoved.getName());
-        
+        surnameLabel.setText("Patient's surname: " + patientMoved.getLastName());
+        telephoneLabel.setText("Patient's phone: " + patientMoved.getTelf());
+        adressLabel.setText("Patient's adress: " + patientMoved.getAddress());
+        genderLabel.setText("Patient's gender: " + patientMoved.getGender());
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    public void initialize(URL url, ResourceBundle rb) {        
+        genderComboBox.getItems().add("Male");
+        genderComboBox.getItems().add("Female");
+        genderComboBox.getItems().add("Other");
     }
 
     /**
@@ -111,16 +134,34 @@ public class UserInfoController implements Initializable {
      */
     @FXML
     private void updateInformation(ActionEvent event) throws IOException {
-        if (!name_field.getText().isEmpty() && !name_field.getText().equals(patientMoved.getName())) {
-            patientMoved.setName(name_field.getText());
+        if (!nameField.getText().isEmpty() && !nameField.getText().equals(patientMoved.getName())) {
+            patientMoved.setName(nameField.getText());
             nameLabel.setText("Patient's name: " + patientMoved.getName());
-
             System.out.println("Name updated");
         }
-        if (!surname_field.getText().isEmpty() && !surname_field.getText().equals(patientMoved.getLastName())) {
-            patientMoved.setName(name_field.getText());
+        if (!surnameField.getText().isEmpty() && !surnameField.getText().equals(patientMoved.getLastName())) {
+            patientMoved.setName(nameField.getText());
             System.out.println("Last Name updated");
         }
+        if (!telephoneField.getText().isEmpty()
+                && Integer.parseInt(telephoneField.getText()) != patientMoved.getTelf()) {
+            patientMoved.setTelf(Integer.parseInt(telephoneField.getText()));
+            System.out.println("Telephone updated");
+        }
+        if (!adressField.getText().isEmpty() && !adressField.getText().equals(patientMoved.getAddress())) {
+            patientMoved.setAddress(adressField.getText());
+            System.out.println("Adress updated");
+        }
+        if (genderComboBox.getValue().equals(patientMoved.getGender()) == false && genderComboBox.getValue().equals("Female")) {
+            patientMoved.setGender(Patient.Gender.FEMALE);
+        }
+        if (genderComboBox.getValue().equals(patientMoved.getGender()) == false && genderComboBox.getValue().equals("Male")) {
+            patientMoved.setGender(Patient.Gender.MALE);
+        }
+        if (genderComboBox.getValue().equals(patientMoved.getGender()) == false && genderComboBox.getValue().equals("Other")) {
+            patientMoved.setGender(Patient.Gender.OTHER);
+        }
+
         updatePatient();
     }
 
