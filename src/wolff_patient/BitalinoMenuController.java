@@ -25,19 +25,43 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class BitalinoMenuController implements Initializable {
 
     BitalinoManager bitalinoManager = null;//Remove after clean
+    @FXML
+    private TextField secondsLabel;
+    @FXML
+    void openManualECGoptions(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(getClass().getResource("ManualECG.fxml"));
+
+        Parent ManualECGViewParent = loader.load();
+        Scene ManualECGViewScene = new Scene(ManualECGViewParent);
+
+        //this line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(ManualECGViewScene);
+        window.centerOnScreen();
+
+        window.show();
+
+    }
 
     /**
      *
      * @param event
      */
-    @FXML
     public void connectBitalino(ActionEvent event) {
         bitalinoManager = new BitalinoManager("98:D3:C1:FD:2F:EC"); //El user tiene que meterlo
     }
@@ -46,7 +70,6 @@ public class BitalinoMenuController implements Initializable {
      *
      * @param event
      */
-    @FXML
     public void disconnectBitalino(ActionEvent event) {
         bitalinoManager.disconnect();
     }
@@ -55,13 +78,10 @@ public class BitalinoMenuController implements Initializable {
      *
      * @param event
      */
-    @FXML
-
     public void readECG(ActionEvent event) {
         bitalinoManager.startManualECG();
         showECG(event);
     }
-    @FXML
     Pane paneChart;
 
     /**
@@ -71,8 +91,6 @@ public class BitalinoMenuController implements Initializable {
      * @param event The event that triggers the ECG to appear
      * 
      */
-    @FXML
-    
     public void showECG(ActionEvent event){
         XYChart.Series series = new XYChart.Series();
       //  series.setName("ECG data");
@@ -108,7 +126,6 @@ public class BitalinoMenuController implements Initializable {
      * ECG data from "bitalinoManager" object, gets the useful information, that
      * is located in analog[0] and writes the int[] object with all ECG values.
      */
-    @FXML
     public void sendECG(){
          OutputStream outputStream = null;
          ObjectOutputStream objectOutputStream = null;
@@ -152,6 +169,23 @@ public class BitalinoMenuController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    @FXML
+    void backToRecord(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(getClass().getResource("NewMedicalHistoryView.fxml"));
+
+        Parent newmedicalHistoryViewParent = loader.load();
+        Scene NewMedicalHistoryViewScene = new Scene(newmedicalHistoryViewParent);
+
+        NewMedicalHistoryController controller = loader.getController();
+        //this line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(NewMedicalHistoryViewScene);
+        window.centerOnScreen();
+
+        window.show();
     }
 
 
