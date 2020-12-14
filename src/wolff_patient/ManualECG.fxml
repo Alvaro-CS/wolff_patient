@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxWidth="500.0" prefHeight="250.0" prefWidth="360.0" style="-fx-background-color: #e3e4e5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.ManualECGController">
+<AnchorPane id="AnchorPane" maxWidth="500.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #e3e4e5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.ManualECGController">
     
          <children>
       <Pane prefHeight="250.0" prefWidth="400.0">
@@ -69,5 +69,6 @@
             </VBox>
          </children>
       </Pane>
+      <Label fx:id="msgLabel" layoutX="108.0" layoutY="258.0" prefHeight="18.0" prefWidth="200.0" textAlignment="CENTER" />
     </children>
 </AnchorPane>

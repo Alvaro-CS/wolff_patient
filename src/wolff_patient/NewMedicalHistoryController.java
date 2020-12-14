@@ -148,34 +148,19 @@ public class NewMedicalHistoryController implements Initializable {
         window.show();
 
     }
-@FXML
-public void backToRecord(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-
-        loader.setLocation(getClass().getResource("MedicalHistoryView.fxml"));
-
-        Parent medicalHistoryViewParent = loader.load();
-        Scene MedicalHistoryViewScene = new Scene(medicalHistoryViewParent);
-
-        MedicalHistoryController controller = loader.getController();
-        //this line gets the Stage information
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(MedicalHistoryViewScene);
-        window.centerOnScreen();
-
-        window.show();
-
-    }
     
     @FXML
-    public void BackToECGMenu(ActionEvent event) throws IOException {
+    public void ECGMenu(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
 
         loader.setLocation(getClass().getResource("BitalinoMenuView.fxml"));
 
         Parent ECGMenuParent = loader.load();
         Scene ECGMenuViewScene = new Scene(ECGMenuParent);
-
+        
+        BitalinoMenuController controller = loader.getController();
+        controller.initData(patientMoved);
+        
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(ECGMenuViewScene);

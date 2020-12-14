@@ -231,7 +231,7 @@
                                                 <Font size="24.0" />
                                              </font>
                                           </Label>
-                                          <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#BackToECGMenu" prefHeight="21.0" prefWidth="142.0" scaleShape="false" text="Record ECG">
+                                          <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#ECGMenu" prefHeight="21.0" prefWidth="142.0" scaleShape="false" text="Record ECG">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
@@ -260,7 +260,7 @@
                   <Image url="@images/medical-history.png" />
                </image>
             </ImageView>
-            <Button layoutX="645.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToRecord" prefHeight="35.0" prefWidth="104.0" text="Go back" />
+            <Button layoutX="645.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBackMedicalHistory" prefHeight="35.0" prefWidth="104.0" text="Go back" />
          </children>
       </Pane>
    </children>
