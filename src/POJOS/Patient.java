@@ -48,6 +48,8 @@ public class Patient implements Runnable, Serializable {
         this.address = address;
         this.SSNumber = SSNumber;
         this.telf = telf;
+        clinical_record_list = new ArrayList<>();
+
     }
 
     //getters
