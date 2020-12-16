@@ -125,7 +125,7 @@ public class LogInController implements Initializable {
      */
     public Patient searchPatient() {
         OutputStream outputStream = null;
-        ObjectOutputStream objectOutputStream = null;
+        ObjectOutputStream objectOutputStream;
         Socket socket = null;
         try {
             socket = new Socket("localhost", 9000);
@@ -145,9 +145,10 @@ public class LogInController implements Initializable {
             //We here need to receive from the server the patient found.
             clientThreadsServer = new ClientThreadsServer();
             new Thread(clientThreadsServer).start();
-            /*   while(!clientThreadsServer.isPatient_logged()){}; 
-            System.out.println("Patient logged in");*/
-            Thread.sleep(1000); //wait until patient logs in (if not, it returns null because not enough time to get it.
+            
+            synchronized(clientThreadsServer){
+            clientThreadsServer.wait(); //wait until patient logs in (if not, it returns null because not enough time to get it.
+            }
             return clientThreadsServer.getPatient();
 
         } catch (IOException ex) {

@@ -30,7 +30,7 @@ public class ClientThreadsServer implements Runnable {
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
         try {
             serverSocket = new ServerSocket(9001); //TODO dynamic ports?
             try {
@@ -57,10 +57,8 @@ public class ClientThreadsServer implements Runnable {
 
                             tmp = objectInputStream.readObject();//we receive the patient
                             patient = (Patient) tmp;
-
                             System.out.println("Patient received: " + patient.getDNI());
-                          //  patient_logged=true;
-                            //TODO do something with the patient, take it.
+                            notify(); //we awake thread to get data
                             break;
                         }
                         default: {

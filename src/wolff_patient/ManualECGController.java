@@ -38,6 +38,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class ManualECGController implements Initializable {
+    private ManualECGThread manualECGThread; //we create a reference for accesing different methods
 
     private Patient patientMoved;
     private BitalinoManager bitalinoManager;
@@ -75,11 +76,15 @@ public class ManualECGController implements Initializable {
     }
 
     @FXML
-    void startManualECG(ActionEvent event) throws InterruptedException {
+    public synchronized void startManualECG(ActionEvent event) throws InterruptedException {
         msgLabel.setText("Recording, please don't move...");
         msgLabel.setTextFill(Color.CADETBLUE);
-        Thread.sleep(500);
-        bitalinoManager.startManualECG();
+        manualECGThread = new ManualECGThread(bitalinoManager);
+            new Thread(manualECGThread).start();
+            synchronized(manualECGThread){
+            manualECGThread.wait(); //wait until ECG is done
+            }
+            //bitalinoManager is updated so we can use getECG?
         msgLabel.setText("ECG recorded!");
         msgLabel.setTextFill(Color.SEAGREEN);
         //getECG(); FINISH WHEN DIFFERENT SCREENS
@@ -94,6 +99,10 @@ public class ManualECGController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+    }
+
+    public BitalinoManager getBitalinoManager() {
+        return bitalinoManager;
     }
 
 }
