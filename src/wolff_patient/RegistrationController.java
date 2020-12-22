@@ -76,7 +76,7 @@ public class RegistrationController implements Initializable {
      */
     public void registerButtonOnAction(ActionEvent event) throws IOException {
 
-        if (usernameIsFree(userNameField.getText())) {
+        if (true/*usernameIsFree(userNameField.getText())*/) {//FINISH
             regMessageLabel.setText("Username available");
 
             if (passwordField.getText().equals(repeatPasswordField.getText())) {
