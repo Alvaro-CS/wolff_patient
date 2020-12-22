@@ -253,7 +253,9 @@ public class BitalinoMenuController implements Initializable {
 
     @FXML
     void backToRecord(ActionEvent event) throws IOException {
+        if (bitalinoManager != null && bitalinoManager.isConnected()) {
         disconnectBitalino(event); //We disconnect bitalino if we go back
+        }
         FXMLLoader loader = new FXMLLoader();
 
         loader.setLocation(getClass().getResource("NewMedicalHistoryView.fxml"));

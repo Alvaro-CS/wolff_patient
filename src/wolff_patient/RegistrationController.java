@@ -59,8 +59,6 @@ public class RegistrationController implements Initializable {
     @FXML
     private TextField phoneField;
     @FXML
-    private ComboBox bloodGroupComboBox;
-    @FXML
     private Label regMessageLabel;
     @FXML
     private Label confirmPasswordLabel;
@@ -78,7 +76,7 @@ public class RegistrationController implements Initializable {
      */
     public void registerButtonOnAction(ActionEvent event) throws IOException {
 
-        if (usernameIsFree()) {
+        if (usernameIsFree(userNameField.getText())) {
             regMessageLabel.setText("Username available");
 
             if (passwordField.getText().equals(repeatPasswordField.getText())) {
@@ -105,52 +103,7 @@ public class RegistrationController implements Initializable {
         window.centerOnScreen();
         window.show();
     }
-
-    /**
-     * This method registers new user. It creates patient and stores it in
-     * patientFile and then shows all the info stores in the file //
-     */
-//    public void registerUserOld() {
-//        String ID = userNameField.getText();
-//        String password = passwordField.getText();
-//        String name = nameField.getText();
-//        String surname = surnameField.getText();
-////        String ssnumber = SSNumberField.getText();
-////        String adress = AdressField.getText();
-////        String phone = PhoneField.getText();
-//
-//        try {
-//            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(filename));
-//            Patient p = new Patient(ID, password, name, surname);
-//            patients.add(p);
-//            os.writeObject(patients);
-//            os.close();
-//
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
-//            ex.printStackTrace();
-//        } catch (IOException ex) {
-//            Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
-//            ex.printStackTrace();
-//        }
-//
-//        try {
-//            ObjectInputStream is = new ObjectInputStream(new FileInputStream(filename));
-//            patients2 = (ArrayList<Patient>) is.readObject();
-//            for (int i = 0; i < patients.size(); i++) {
-//                System.out.println(patients.get(i).toString());
-//            }
-//            is.close();
-//        } catch (EOFException ex) {
-//            System.out.println("All data have been correctly read.");
-//        } catch (FileNotFoundException ex) {
-//            ex.printStackTrace();
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        } catch (ClassNotFoundException ex) {
-//            ex.printStackTrace();
-//        }
-//    }
+    
     public void registerUser() {
         String ID = userNameField.getText();
         String password = passwordField.getText();
@@ -200,52 +153,37 @@ public class RegistrationController implements Initializable {
             releaseResources(outputStream, socket);
 
         }
-    }/*
-            try {
-                ObjectInputStream is = new ObjectInputStream(new FileInputStream(filename));
-                patients2 = (ArrayList<Patient>) is.readObject();
-                for (int i = 0; i < patients.size(); i++) {
-                    System.out.println(patients.get(i).toString());
-                }
-                is.close();
-            } catch (EOFException ex) {
-                System.out.println("All data have been correctly read.");
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (ClassNotFoundException ex) {
-                ex.printStackTrace();
-            }
-     */
-
+    }
     /**
      * this method checks each patient stored in the file to see if the username
      * is already registered
      *
      * @return boolean
      */
-    public boolean usernameIsFree() {//TODO
-/*        try {
+    public boolean usernameIsFree(String id) {//TODO
+        OutputStream outputStream = null;
+        ObjectOutputStream objectOutputStream = null;
+        Socket socket = null;
+        try {
+            socket = new Socket("localhost", 9000);
+            outputStream = socket.getOutputStream();
+            objectOutputStream = new ObjectOutputStream(outputStream);
+            //Sending order
+            String order = "EXISTS";
+            objectOutputStream.writeObject(order);
+            System.out.println("Order" + order + "sent");
 
-            ObjectInputStream is = new ObjectInputStream(new FileInputStream(filename));
-            patients2 = (ArrayList<Patient>) is.readObject();
-            for (int i = 0; i < patients2.size(); i++) {
-                if (patients2.get(i).getDNI().equalsIgnoreCase(userNameField.getText())) {
-                    //username already in use
-                    return false;
-                }
-            }
-            is.close();
-        } catch (EOFException ex) {
-            System.out.println("All data have been correctly read.");
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            //Sending patient
+            objectOutputStream.writeObject(id);
+            System.out.println("Patient name sent to server");
+            //TODO receive patient from server. If received, return false. If received null, return true. 
         } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }*/
+            System.out.println("Unable to write the object on the server.");
+            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            releaseResources(outputStream, socket);
+
+        }
         return true;
     }
 
@@ -261,15 +199,6 @@ public class RegistrationController implements Initializable {
         genderComboBox.getItems().add("Male");
         genderComboBox.getItems().add("Female");
         genderComboBox.getItems().add("Other");
-
-        bloodGroupComboBox.getItems().add("A+");
-        bloodGroupComboBox.getItems().add("A-");
-        bloodGroupComboBox.getItems().add("B+");
-        bloodGroupComboBox.getItems().add("B-");
-        bloodGroupComboBox.getItems().add("AB+");
-        bloodGroupComboBox.getItems().add("AB-");
-        bloodGroupComboBox.getItems().add("0+");
-        bloodGroupComboBox.getItems().add("0-");
     }
 
     private static void releaseResources(OutputStream outputStream, Socket socket) {
