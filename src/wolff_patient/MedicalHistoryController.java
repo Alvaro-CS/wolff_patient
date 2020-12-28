@@ -1,11 +1,11 @@
 package wolff_patient;
 
 import POJOS.Clinical_record;
+import POJOS.Com_data_client;
 import POJOS.Patient;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,14 +17,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class MedicalHistoryController implements Initializable {
-
+    
+    private Com_data_client com_data_client;
     private Patient patientMoved;
 
     @FXML
@@ -98,8 +98,8 @@ public class MedicalHistoryController implements Initializable {
      *
      * @param patient
      */
-    public void initData(Patient patient) {
-
+    public void initData(Patient patient,Com_data_client com_data_client) {
+        this.com_data_client=com_data_client;
         this.patientMoved = patient;
         nameLabel.setText("Patient's name:\n " + patientMoved.getName());
         loadClinical_records();
@@ -124,7 +124,7 @@ public class MedicalHistoryController implements Initializable {
         Parent patientMenuViewParent = loader.load();
         Scene MainMenuViewScene = new Scene(patientMenuViewParent);
         PatientMenuController controller = loader.getController();
-        controller.initData(patientMoved);
+        controller.initData(patientMoved,com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MainMenuViewScene);
@@ -150,7 +150,7 @@ public class MedicalHistoryController implements Initializable {
         Scene NewMedicalHistoryViewScene = new Scene(newmedicalHistoryViewParent);
 
         NewMedicalHistoryController controller = loader.getController();
-        controller.initData(patientMoved);
+        controller.initData(patientMoved,com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(NewMedicalHistoryViewScene);

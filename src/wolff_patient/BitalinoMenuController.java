@@ -13,6 +13,7 @@ package wolff_patient;
 
 import BITalino.BitalinoManager;
 import BITalino.Frame;
+import POJOS.Com_data_client;
 import POJOS.Patient;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -39,7 +40,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class BitalinoMenuController implements Initializable {
-
+    
+    private Com_data_client com_data_client;
     private Patient patientMoved;
     BitalinoManager bitalinoManager = null;//Remove after clean
     private Integer[] ecg_data;
@@ -54,9 +56,10 @@ public class BitalinoMenuController implements Initializable {
      * This method gets the patient got from the login to show the data.
      *
      * @param patient
+     * @param com_data_client
      */
-    public void initData(Patient patient) {
-
+    public void initData(Patient patient,Com_data_client com_data_client) {
+        this.com_data_client=com_data_client;
         this.patientMoved = patient;
 
     }
@@ -73,7 +76,7 @@ public class BitalinoMenuController implements Initializable {
             Scene ManualECGViewScene = new Scene(ManualECGViewParent);
 
             ManualECGController controller = loader.getController();
-            controller.initData(patientMoved,bitalinoManager);
+            controller.initData(patientMoved,bitalinoManager,com_data_client);
 
             //this line gets the Stage information
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -264,7 +267,7 @@ public class BitalinoMenuController implements Initializable {
         Scene NewMedicalHistoryViewScene = new Scene(newmedicalHistoryViewParent);
 
         NewMedicalHistoryController controller = loader.getController();
-        controller.initData(patientMoved);
+        controller.initData(patientMoved,com_data_client);
 
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();

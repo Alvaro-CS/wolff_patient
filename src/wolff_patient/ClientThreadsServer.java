@@ -5,6 +5,7 @@
  */
 package wolff_patient;
 
+import POJOS.Com_data_client;
 import POJOS.Patient;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,9 +21,11 @@ import java.util.logging.Logger;
  */
 public class ClientThreadsServer implements Runnable {
 
+    private Com_data_client com_data_client;
     ServerSocket serverSocket;
     private Patient patient; //Patient that is going to be got from the server when login
     //private boolean patient_logged;
+
     /**
      * Empty (default) constructor.
      */
@@ -32,56 +35,38 @@ public class ClientThreadsServer implements Runnable {
     @Override
     public synchronized void run() {
         try {
-            serverSocket = new ServerSocket(9001); //TODO dynamic ports?
-            try {
-                System.out.println("Before accepting");
-                Socket socket = serverSocket.accept();
-                System.out.println("Client connected");
-                InputStream inputStream;
-                ObjectInputStream objectInputStream = null;
 
-                try {
-                    inputStream = socket.getInputStream();
-                    objectInputStream = new ObjectInputStream(inputStream);
-                    Object tmp;
-                    System.out.println("Before order");
-                    //Instruction received
-                    String instruction;
-                    tmp = objectInputStream.readObject();//we receive the instruction
-                    instruction = (String) tmp;
+            ObjectInputStream objectInputStream = com_data_client.getObjectInputStream();
+            Object tmp;
+            System.out.println("Before order");
+            //Instruction received
+            String instruction;
+            tmp = objectInputStream.readObject();//we receive the instruction
+            instruction = (String) tmp;
 
-                    System.out.println("Order received");
-                    switch (instruction) {
-                        case "RECEIVE_PATIENT": {
-                            System.out.println(instruction + " option running");
+            System.out.println("Order received");
+            switch (instruction) {
+                case "RECEIVE_PATIENT": { //For login
+                    System.out.println(instruction + " option running");
 
-                            tmp = objectInputStream.readObject();//we receive the patient
-                            patient = (Patient) tmp;
-                            System.out.println("Patient received: " + patient.getDNI());
-                            notify(); //we awake thread to get data
-                            break;
-                        }
-                        default: {
-                            System.out.println("Error");
-                            break;
-                        }
-                    }
-
-                } catch (IOException | ClassNotFoundException e) {
-                    System.out.println("Client closed");
-                } finally {
-                    releaseResourcesClient(objectInputStream, socket);
-                    
+                    tmp = objectInputStream.readObject();//we receive the patient
+                    patient = (Patient) tmp;
+                    System.out.println("Patient received: " + patient.getDNI());
+                    notify(); //we awake thread to get data
+                    break;
                 }
-
-            } catch (IOException ex) {
-                Logger.getLogger(ClientThreadsServer.class.getName()).log(Level.SEVERE, null, ex);
+                default: {
+                    System.out.println("Error");
+                    break;
+                }
             }
-        } catch (IOException ex) {
-            Logger.getLogger(ClientThreadsServer.class.getName()).log(Level.SEVERE, null, ex);
+
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Client closed");
         }
     }
 
+/*
     private static void releaseResourcesClient(ObjectInputStream objectInputStream, Socket socket) {
         try {
             objectInputStream.close();
@@ -94,14 +79,18 @@ public class ClientThreadsServer implements Runnable {
         } catch (IOException ex) {
             Logger.getLogger(ClientThreadsServer.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }*/
 
-    public Patient getPatient() {
+public Patient getPatient() {
         return patient;
     }
 
    /*public boolean isPatient_logged() {
         return patient_logged;
     }*/
+
+    public void setCom_data_client(Com_data_client com_data_client) {
+        this.com_data_client = com_data_client;
+    }
     
 }

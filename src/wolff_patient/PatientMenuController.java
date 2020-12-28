@@ -1,5 +1,6 @@
 package wolff_patient;
 
+import POJOS.Com_data_client;
 import POJOS.Patient;
 import java.io.IOException;
 import java.net.URL;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 public class PatientMenuController implements Initializable {
 
     private Patient patientMoved;
+    private Com_data_client com_data_client;
 
     @FXML
     private Label nameLabel;
@@ -26,9 +28,10 @@ public class PatientMenuController implements Initializable {
      *
      * @param patient
      */
-    public void initData(Patient patient) {
+    public void initData(Patient patient,Com_data_client com_data_client) {
 
         this.patientMoved = patient;
+        this.com_data_client=com_data_client;
         nameLabel.setText("Patient's name:\n " + patientMoved.getName());
 
     }
@@ -60,7 +63,7 @@ public class PatientMenuController implements Initializable {
         Scene MainMenuViewScene = new Scene(userInfoViewParent);
 
         UserInfoController controller = loader.getController();
-        controller.initData(patientMoved);
+        controller.initData(patientMoved,com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MainMenuViewScene);
@@ -85,7 +88,7 @@ public class PatientMenuController implements Initializable {
         Scene MedicalHistoryViewScene = new Scene(medicalHistoryViewParent);
         
                 MedicalHistoryController controller = loader.getController();
-        controller.initData(patientMoved);
+        controller.initData(patientMoved,com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MedicalHistoryViewScene);
@@ -118,4 +121,6 @@ public class PatientMenuController implements Initializable {
         window.show();
 
     }
+
+    
 }

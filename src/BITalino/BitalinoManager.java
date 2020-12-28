@@ -17,7 +17,7 @@ public class BitalinoManager {
             bitalino = new BITalino();
 
             //Sampling rate, should be 10, 100 or 1000
-            int SamplingRate = 1000;
+            int SamplingRate = 100;
             System.out.println("Connecting with " + macAddress);
             bitalino.open(macAddress, SamplingRate);
             System.out.println("Bitalino connected.");
@@ -74,11 +74,11 @@ public class BitalinoManager {
     public void startAutoECG(int seconds) {
         try {
             //Read in total x times
-            for (int j = 0; j < seconds; j++) {//TODO SECONDS
+            for (int j = 0; j < seconds; j++) {//TODO QUITAR BUCLE ASI NO SOBREESCRIBE
                 try {
                     //Each time read a block of 10 samples
-                    int block_size = 10;
-                    frame = bitalino.read(block_size);
+                    int block_size = 100;
+                    frame = bitalino.read(block_size*seconds);
                     System.out.println("J" + j);
                     System.out.println("size block: " + frame.length);
 

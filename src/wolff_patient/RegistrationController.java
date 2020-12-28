@@ -1,6 +1,7 @@
 package wolff_patient;
 //for files:
 
+import POJOS.Com_data_client;
 import POJOS.Patient;
 import POJOS.Patient.Gender;
 import java.io.EOFException;
@@ -8,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
@@ -38,6 +40,8 @@ import javafx.stage.Stage;
 
 public class RegistrationController implements Initializable {
 
+    private Com_data_client com_data_client;
+    
     @FXML
     private TextField userNameField;
     @FXML
@@ -76,7 +80,7 @@ public class RegistrationController implements Initializable {
      */
     public void registerButtonOnAction(ActionEvent event) throws IOException {
 
-        if (true/*usernameIsFree(userNameField.getText())*/) {//FINISH
+        if (usernameIsFree(userNameField.getText())) {//FINISH
             regMessageLabel.setText("Username available");
 
             if (passwordField.getText().equals(repeatPasswordField.getText())) {
@@ -94,16 +98,22 @@ public class RegistrationController implements Initializable {
 
     }
 
-    public void backtoLogin(ActionEvent event) throws IOException {
-        Parent registrationViewParent = FXMLLoader.load(getClass().getResource("LogInView.fxml"));
-        Scene registrationViewScene = new Scene(registrationViewParent);
+    public void backtoLogin(ActionEvent event) throws IOException { 
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("LogInView.fxml"));
+        Parent LogInViewParent = loader.load();
+        Scene LogInViewScene = new Scene(LogInViewParent);
+
+
+        LogInController controller = loader.getController();
+        controller.initData(com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(registrationViewScene);
+        window.setScene(LogInViewScene);
         window.centerOnScreen();
         window.show();
     }
-    
+
     public void registerUser() {
         String ID = userNameField.getText();
         String password = passwordField.getText();
@@ -125,17 +135,13 @@ public class RegistrationController implements Initializable {
         int ssnumber = Integer.parseInt(ssNumberField.getText());
         String adress = adressField.getText();
         int phone = Integer.parseInt(phoneField.getText());
-      
-        OutputStream outputStream = null;
-        ObjectOutputStream objectOutputStream = null;
-        Socket socket = null;
+
+        
 
         try {
-            socket = new Socket("localhost", 9000);
-            outputStream = socket.getOutputStream();
-            objectOutputStream = new ObjectOutputStream(outputStream);
             //Sending order
             String order = "REGISTER";
+            ObjectOutputStream objectOutputStream= com_data_client.getObjectOutputStream();
             objectOutputStream.writeObject(order);
             System.out.println("Order" + order + "sent");
 
@@ -149,11 +155,9 @@ public class RegistrationController implements Initializable {
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
             Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            releaseResources(outputStream, socket);
-
         }
     }
+
     /**
      * this method checks each patient stored in the file to see if the username
      * is already registered
@@ -161,15 +165,26 @@ public class RegistrationController implements Initializable {
      * @return boolean
      */
     public boolean usernameIsFree(String id) {//TODO
-        OutputStream outputStream = null;
-        ObjectOutputStream objectOutputStream = null;
-        Socket socket = null;
+
         try {
-            socket = new Socket("localhost", 9000);
-            outputStream = socket.getOutputStream();
-            objectOutputStream = new ObjectOutputStream(outputStream);
+            if (!com_data_client.isSocket_created()) {
+                Socket socket=new Socket(com_data_client.getIp_address(), 9000);
+                com_data_client.setSocket(socket);
+                OutputStream outputStream = socket.getOutputStream();
+                com_data_client.setOutputStream(outputStream);
+                ObjectOutputStream objectOutputStream= new ObjectOutputStream(outputStream);
+                com_data_client.setObjectOutputStream(objectOutputStream);
+                InputStream inputStream = socket.getInputStream();
+                com_data_client.setInputStream(inputStream);
+                ObjectInputStream objectInputStream= new ObjectInputStream(inputStream);
+                com_data_client.setObjectInputStream(objectInputStream);
+                
+                com_data_client.setSocket_created(true);
+       
+            }/*
             //Sending order
             String order = "EXISTS";
+            ObjectOutputStream objectOutputStream= com_data_client.getObjectOutputStream();
             objectOutputStream.writeObject(order);
             System.out.println("Order" + order + "sent");
 
@@ -177,14 +192,12 @@ public class RegistrationController implements Initializable {
             objectOutputStream.writeObject(id);
             System.out.println("Patient name sent to server");
             //TODO receive patient from server. If received, return false. If received null, return true. 
+            */
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
             Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            releaseResources(outputStream, socket);
-
-        }
-        return true;
+        } 
+        return true; //TODO finish
     }
 
     /**
@@ -200,7 +213,7 @@ public class RegistrationController implements Initializable {
         genderComboBox.getItems().add("Female");
         genderComboBox.getItems().add("Other");
     }
-
+/*
     private static void releaseResources(OutputStream outputStream, Socket socket) {
         try {
             outputStream.close();
@@ -216,9 +229,13 @@ public class RegistrationController implements Initializable {
             Logger.getLogger(LogInController.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }*/
 
     public RegistrationController() {
+    }
+
+    void initData(Com_data_client com_data) {
+        this.com_data_client=com_data;
     }
 
 }

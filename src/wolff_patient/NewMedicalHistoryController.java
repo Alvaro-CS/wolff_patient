@@ -1,6 +1,7 @@
 package wolff_patient;
 
 import POJOS.Clinical_record;
+import POJOS.Com_data_client;
 import POJOS.Patient;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -23,7 +24,7 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 public class NewMedicalHistoryController implements Initializable {
-
+    private Com_data_client com_data_client;
     private Patient patientMoved;
 
     @FXML
@@ -139,7 +140,7 @@ public class NewMedicalHistoryController implements Initializable {
         Scene MedicalHistoryViewScene = new Scene(medicalHistoryViewParent);
 
         MedicalHistoryController controller = loader.getController();
-        controller.initData(patientMoved);
+        controller.initData(patientMoved,com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MedicalHistoryViewScene);
@@ -159,7 +160,7 @@ public class NewMedicalHistoryController implements Initializable {
         Scene ECGMenuViewScene = new Scene(ECGMenuParent);
         
         BitalinoMenuController controller = loader.getController();
-        controller.initData(patientMoved);
+        controller.initData(patientMoved,com_data_client);
         
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -172,9 +173,10 @@ public class NewMedicalHistoryController implements Initializable {
      * Thid method gets the patient got from the login to show the data.
      *
      * @param patient
+     * @param com_data_client
      */
-    public void initData(Patient patient) {
-
+    public void initData(Patient patient,Com_data_client com_data_client) {
+        this.com_data_client=com_data_client;
         this.patientMoved = patient;
 
     }

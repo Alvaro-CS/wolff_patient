@@ -5,6 +5,7 @@
  */
 package wolff_patient;
 
+import POJOS.Com_data_client;
 import POJOS.Patient;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -35,7 +36,8 @@ import javafx.stage.Stage;
  * @author susan
  */
 public class UserInfoController implements Initializable {
-
+    
+    private Com_data_client com_data_client;
     private static Patient patientMoved;
 
     @FXML
@@ -89,9 +91,10 @@ public class UserInfoController implements Initializable {
      * Initializes the controller class.
      *
      * @param patient
+     * @param com_data_client
      */
-    public void initData(Patient patient) {
-
+    public void initData(Patient patient, Com_data_client com_data_client) {
+        this.com_data_client=com_data_client;
         patientMoved = patient;
         nameLabel.setText("Patient's name: " + patientMoved.getName());
         surnameLabel.setText("Patient's surname: " + patientMoved.getLastName());
@@ -152,16 +155,17 @@ public class UserInfoController implements Initializable {
             patientMoved.setAddress(adressField.getText());
             System.out.println("Adress updated");
         }
-        if (genderComboBox.getValue().equals(patientMoved.getGender()) == false && genderComboBox.getValue().equals("Female")) {
+        if(genderComboBox.getValue()!=null){
+        if (!genderComboBox.getValue().equals(patientMoved.getGender())  && genderComboBox.getValue().equals("Female")) {
             patientMoved.setGender(Patient.Gender.FEMALE);
         }
-        if (genderComboBox.getValue().equals(patientMoved.getGender()) == false && genderComboBox.getValue().equals("Male")) {
+        if (!genderComboBox.getValue().equals(patientMoved.getGender())  && genderComboBox.getValue().equals("Male")) {
             patientMoved.setGender(Patient.Gender.MALE);
         }
-        if (genderComboBox.getValue().equals(patientMoved.getGender()) == false && genderComboBox.getValue().equals("Other")) {
+        if (!genderComboBox.getValue().equals(patientMoved.getGender())  && genderComboBox.getValue().equals("Other")) {
             patientMoved.setGender(Patient.Gender.OTHER);
         }
-
+        }
         updatePatient();
     }
 
@@ -206,7 +210,7 @@ public class UserInfoController implements Initializable {
         Parent patientMenuViewParent = loader.load();
         Scene MainMenuViewScene = new Scene(patientMenuViewParent);
         PatientMenuController controller = loader.getController();
-        controller.initData(patientMoved);
+        controller.initData(patientMoved,com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MainMenuViewScene);

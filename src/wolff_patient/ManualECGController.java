@@ -13,6 +13,7 @@ package wolff_patient;
 
 import BITalino.BitalinoManager;
 import BITalino.Frame;
+import POJOS.Com_data_client;
 import POJOS.Patient;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -39,7 +40,8 @@ import javafx.stage.Stage;
 
 public class ManualECGController implements Initializable {
     private ManualECGThread manualECGThread; //we create a reference for accesing different methods
-
+    
+    private Com_data_client com_data_client;
     private Patient patientMoved;
     private BitalinoManager bitalinoManager;
     @FXML
@@ -50,8 +52,8 @@ public class ManualECGController implements Initializable {
      *
      * @param patient
      */
-    public void initData(Patient patient, BitalinoManager bitalinoManager) {
-
+    public void initData(Patient patient, BitalinoManager bitalinoManager,Com_data_client com_data_client) {
+        this.com_data_client=com_data_client;
         this.patientMoved = patient;
         this.bitalinoManager = bitalinoManager;
     }
@@ -66,7 +68,7 @@ public class ManualECGController implements Initializable {
         Scene ECGMenuViewScene = new Scene(BitalinoMenuParent);
 
         BitalinoMenuController controller = loader.getController();
-        controller.initData(patientMoved);
+        controller.initData(patientMoved,com_data_client);
 
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -92,7 +94,7 @@ public class ManualECGController implements Initializable {
     }
 
     @FXML
-    void stopManualECG(ActionEvent event) {
+    void stopManualECG(ActionEvent event) {//GET ECG of manual here
         bitalinoManager.setStop(true);
     }
 

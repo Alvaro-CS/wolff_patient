@@ -1,7 +1,10 @@
 package wolff_patient;
 
+import POJOS.Com_data_client;
 import POJOS.Patient;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -23,6 +26,7 @@ import javafx.stage.Stage;
 
 public class LogInController implements Initializable {
 
+    private Com_data_client com_data_client;
     private ClientThreadsServer clientThreadsServer; //we create a reference for accesing different methods
     private Patient patientMoved;
 
@@ -75,8 +79,16 @@ public class LogInController implements Initializable {
      * @throws IOException
      */
     public void createAccountForm(ActionEvent event) throws IOException {
-        Parent registrationViewParent = FXMLLoader.load(getClass().getResource("RegistrationView.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(getClass().getResource("RegistrationView.fxml"));
+        Parent registrationViewParent = loader.load();
+        
         Scene registrationViewScene = new Scene(registrationViewParent);
+        
+        RegistrationController controller = loader.getController();
+        controller.initData(com_data_client);
+        
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(registrationViewScene);
@@ -98,7 +110,7 @@ public class LogInController implements Initializable {
         Scene MainMenuViewScene = new Scene(mainMenuViewParent);
 
         PatientMenuController controller = loader.getController();
-        controller.initData(patientMoved);
+        controller.initData(patientMoved,com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MainMenuViewScene);
@@ -124,16 +136,27 @@ public class LogInController implements Initializable {
      * @return
      */
     public Patient searchPatient() {
-        OutputStream outputStream = null;
-        ObjectOutputStream objectOutputStream;
-        Socket socket = null;
+
         try {
-            socket = new Socket("localhost", 9000);
-            outputStream = socket.getOutputStream();
-            objectOutputStream = new ObjectOutputStream(outputStream);
+            if (!com_data_client.isSocket_created()) {
+                Socket socket=new Socket(com_data_client.getIp_address(), 9000);
+                com_data_client.setSocket(socket);
+                OutputStream outputStream = socket.getOutputStream();
+                com_data_client.setOutputStream(outputStream);
+                ObjectOutputStream objectOutputStream= new ObjectOutputStream(outputStream);
+                com_data_client.setObjectOutputStream(objectOutputStream);
+                InputStream inputStream = socket.getInputStream();
+                com_data_client.setInputStream(inputStream);
+                ObjectInputStream objectInputStream= new ObjectInputStream(inputStream);
+                com_data_client.setObjectInputStream(objectInputStream);
+                
+                com_data_client.setSocket_created(true);
+       
+            }
 
             //We send the order to server that we want to search for patients
             String order = "SEARCH_PATIENT";
+            ObjectOutputStream objectOutputStream= com_data_client.getObjectOutputStream();
             objectOutputStream.writeObject(order);
             System.out.println("Order " + order + " sent to server");
 
@@ -144,6 +167,7 @@ public class LogInController implements Initializable {
 
             //We here need to receive from the server the patient found.
             clientThreadsServer = new ClientThreadsServer();
+            clientThreadsServer.setCom_data_client(com_data_client);
             new Thread(clientThreadsServer).start();
             
             synchronized(clientThreadsServer){
@@ -160,10 +184,7 @@ public class LogInController implements Initializable {
         } catch (InterruptedException ex) {
             Logger.getLogger(LogInController.class
                     .getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            releaseResources(outputStream, socket);
-
-        }
+        } 
         System.out.println("Final");
         return null;
 
@@ -197,6 +218,8 @@ public class LogInController implements Initializable {
         }
         return null;
     }*/
+    
+/*
     private static void releaseResources(OutputStream outputStream, Socket socket) {
         try {
             outputStream.close();
@@ -212,11 +235,15 @@ public class LogInController implements Initializable {
             Logger.getLogger(LogInController.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }*/
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        com_data_client=new Com_data_client();
+    }
 
+    void initData(Com_data_client com_data) {
+        this.com_data_client=com_data;
     }
 
 }
