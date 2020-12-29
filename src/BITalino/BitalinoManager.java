@@ -5,7 +5,8 @@ import java.util.logging.Logger;
 
 public class BitalinoManager {
 
-    public Frame[] frame;
+    private Frame[] frame;
+    private Integer[] ecg_data;
     private boolean connected;
     private BITalino bitalino = null;
     private boolean stop;
@@ -19,7 +20,7 @@ public class BitalinoManager {
             //Sampling rate, should be 10, 100 or 1000
             int SamplingRate = 100;
             System.out.println("Connecting with " + macAddress);
-            bitalino.open(macAddress, SamplingRate);
+            bitalino.open(macAddress, SamplingRate); //TODO como manejar si falla esto
             System.out.println("Bitalino connected.");
             int[] channelsToAcquire = {1};
             bitalino.start(channelsToAcquire);
@@ -33,26 +34,20 @@ public class BitalinoManager {
         }
     }
 
-    public void startManualECG() { //TODO Infinite, until user presses "STOP"
+    public void startManualECG() { //TODO not overwrite
         try {
             stop=false;
-            //Read in total 200 times
             for (int j = 0; j < Integer.MAX_VALUE; j++) { //infinite?
                 try {
-                    //Each time read a block of 10 samples
-                    int block_size = 50;
+                    int block_size = 100;
                     frame = bitalino.read(block_size);
                     System.out.println("size block: " + frame.length);
 
                     //Print the samples
                     for (int i = 0; i < frame.length; i++) {
+                        
                         System.out.println((j * block_size + i) + " seq: " + frame[i].seq + " "
                                 + frame[i].analog[0] + " "
-                                + frame[i].analog[1] + " "
-                        //+ frame[i].analog[2] + " "
-                        //+ frame[i].analog[3] + " "
-                        //+ frame[i].analog[4] + " "
-                        //+ frame[i].analog[5]
                         );
 
                     }
@@ -74,23 +69,17 @@ public class BitalinoManager {
     public void startAutoECG(int seconds) {
         try {
             //Read in total x times
-            for (int j = 0; j < seconds; j++) {//TODO QUITAR BUCLE ASI NO SOBREESCRIBE
+            
                 try {
-                    //Each time read a block of 10 samples
+                    //With sampling rate=100 and block_size=100, we record 1 second. We multiply be the number of seconds we want.
                     int block_size = 100;
                     frame = bitalino.read(block_size*seconds);
-                    System.out.println("J" + j);
                     System.out.println("size block: " + frame.length);
 
                     //Print the samples
                     for (int i = 0; i < frame.length; i++) {
-                        System.out.println((j * block_size + i) + " seq: " + frame[i].seq + " "
+                        System.out.println((block_size + i) + " seq: " + frame[i].seq + " "
                                 + frame[i].analog[0] + " "
-                                + frame[i].analog[1] + " "
-                        //+ frame[i].analog[2] + " "
-                        //+ frame[i].analog[3] + " "
-                        //+ frame[i].analog[4] + " "
-                        //+ frame[i].analog[5]
                         );
 
                     }
@@ -98,7 +87,7 @@ public class BitalinoManager {
                 catch (BITalinoException ex) {
                     Logger.getLogger(BitalinoManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
+            
 
             bitalino.stop();
         } catch (BITalinoException ex) {

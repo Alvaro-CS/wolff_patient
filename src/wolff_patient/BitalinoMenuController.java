@@ -12,21 +12,15 @@ createAccountForm--> opens registration view
 package wolff_patient;
 
 import BITalino.BitalinoManager;
-import BITalino.Frame;
 import POJOS.Com_data_client;
 import POJOS.Patient;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -40,7 +34,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class BitalinoMenuController implements Initializable {
-    
+
     private Com_data_client com_data_client;
     private Patient patientMoved;
     BitalinoManager bitalinoManager = null;//Remove after clean
@@ -53,42 +47,30 @@ public class BitalinoMenuController implements Initializable {
     private Pane paneChart;
 
     /**
-     * This method gets the patient got from the login to show the data.
+     * This method gets the patient got from the login to show the data and com
+     * data.
      *
      * @param patient
      * @param com_data_client
      */
-    public void initData(Patient patient,Com_data_client com_data_client) {
-        this.com_data_client=com_data_client;
+    public void initData(Patient patient, Com_data_client com_data_client) {
+        this.com_data_client = com_data_client;
         this.patientMoved = patient;
-
     }
 
-    @FXML
-    void openManualECGoptions(ActionEvent event) throws IOException {
-        if (bitalinoManager != null) {
-
-            FXMLLoader loader = new FXMLLoader();
-
-            loader.setLocation(getClass().getResource("ManualECG.fxml"));
-
-            Parent ManualECGViewParent = loader.load();
-            Scene ManualECGViewScene = new Scene(ManualECGViewParent);
-
-            ManualECGController controller = loader.getController();
-            controller.initData(patientMoved,bitalinoManager,com_data_client);
-
-            //this line gets the Stage information
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(ManualECGViewScene);
-            window.centerOnScreen();
-
-            window.show();
-        } else {
-            autoLabel.setTextFill(Color.RED);
-            autoLabel.setText("You need to connect to a Bitalino device first");
-        }
-
+    /**
+     * Same as initData, but called from Manual with actual ECG
+     *
+     * @param patient
+     * @param com_data_client
+     * @param bitalinoManager
+     * @param ecg_data
+     */
+    public void initDataManual(Patient patient, Com_data_client com_data_client,BitalinoManager bitalinoManager, Integer[] ecg_data) {
+        this.com_data_client = com_data_client;
+        this.patientMoved = patient;
+        this.ecg_data = ecg_data;
+        this.bitalinoManager=bitalinoManager;
     }
 
     /**
@@ -123,12 +105,40 @@ public class BitalinoMenuController implements Initializable {
 
     }
 
+    @FXML
+    void openManualECGoptions(ActionEvent event) throws IOException {
+        if (bitalinoManager != null) {
+
+            FXMLLoader loader = new FXMLLoader();
+
+            loader.setLocation(getClass().getResource("ManualECG.fxml"));
+
+            Parent ManualECGViewParent = loader.load();
+            Scene ManualECGViewScene = new Scene(ManualECGViewParent);
+
+            ManualECGController controller = loader.getController();
+            controller.initData(patientMoved, bitalinoManager, com_data_client);
+
+            //this line gets the Stage information
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(ManualECGViewScene);
+            window.centerOnScreen();
+
+            window.show();
+        } else {
+            autoLabel.setTextFill(Color.RED);
+            autoLabel.setText("You need to connect to a Bitalino device first");
+        }
+
+    }
+
     /**
      *
      * @param event
      */
     public void readECGAuto(ActionEvent event) throws InterruptedException {
         Integer seconds;
+        ECGThread autoECGThread;
         if (bitalinoManager != null) {
             try {
                 seconds = Integer.parseInt(secondsField.getText()); //If it is not Integer, will throw Exception.
@@ -136,11 +146,13 @@ public class BitalinoMenuController implements Initializable {
                 if (seconds > 0) {
                     autoLabel.setText("Recording, please don't move...");
                     autoLabel.setTextFill(Color.CADETBLUE);
-                    Thread.sleep(500);
-                    bitalinoManager.startAutoECG(seconds);
+                    autoECGThread = new ECGThread(bitalinoManager, "AUTO", seconds);
+                    new Thread(autoECGThread).start();
+                    //como hacemos
+                    ecg_data = autoECGThread.getEcg_data();
                     autoLabel.setText("ECG recorded!");
                     autoLabel.setTextFill(Color.SEAGREEN);
-                    getECG();
+                    showECG();
 
                 } else {
                     autoLabel.setTextFill(Color.RED);
@@ -155,16 +167,7 @@ public class BitalinoMenuController implements Initializable {
             autoLabel.setTextFill(Color.RED);
             autoLabel.setText("You need to connect to a Bitalino device first");
         }
-        showECG(event);
-    }
 
-    public void getECG() {
-        //We get the data (Frame class) from Bitalino, get the useful info (int) and send it.
-        Frame[] frame = bitalinoManager.getFrame();
-        ecg_data = new Integer[frame.length];
-        for (int i = 0; i < frame.length; i++) {
-            ecg_data[i] = frame[i].analog[0];
-        }
     }
 
     /**
@@ -172,10 +175,9 @@ public class BitalinoMenuController implements Initializable {
      * received. It adjusts max and min values of the chart. Line chart is shown
      * in a pane.
      *
-     * @param event The event that triggers the ECG to appear
      *
      */
-    public void showECG(ActionEvent event) {
+    public void showECG() {
         XYChart.Series series = new XYChart.Series();
         //  series.setName("ECG data");
         //populating the series with data
@@ -213,7 +215,7 @@ public class BitalinoMenuController implements Initializable {
      * ECG data from "bitalinoManager" object, gets the useful information, that
      * is located in analog[0] and writes the int[] object with all ECG values.
      */
-    public void sendECG() {
+    /*  public void sendECG() {
         OutputStream outputStream = null;
         ObjectOutputStream objectOutputStream = null;
         System.out.println("Envia");
@@ -240,24 +242,11 @@ public class BitalinoMenuController implements Initializable {
 
         }
     }
-
-    private static void releaseResources(OutputStream outputStream, Socket socket) {
-        try {
-            outputStream.close();
-        } catch (IOException ex) {
-            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            socket.close();
-        } catch (IOException ex) {
-            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
+     */
     @FXML
     void backToRecord(ActionEvent event) throws IOException {
         if (bitalinoManager != null && bitalinoManager.isConnected()) {
-        disconnectBitalino(event); //We disconnect bitalino if we go back
+            disconnectBitalino(event); //We disconnect bitalino if we go back
         }
         FXMLLoader loader = new FXMLLoader();
 
@@ -267,7 +256,7 @@ public class BitalinoMenuController implements Initializable {
         Scene NewMedicalHistoryViewScene = new Scene(newmedicalHistoryViewParent);
 
         NewMedicalHistoryController controller = loader.getController();
-        controller.initData(patientMoved,com_data_client);
+        controller.initData(patientMoved, com_data_client);
 
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -279,7 +268,10 @@ public class BitalinoMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
+        if (ecg_data != null) {
+            showECG();
+        }
     }
 
 }

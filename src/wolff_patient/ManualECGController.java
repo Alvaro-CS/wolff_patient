@@ -39,11 +39,15 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class ManualECGController implements Initializable {
-    private ManualECGThread manualECGThread; //we create a reference for accesing different methods
-    
+
+    private ECGThread manualECGThread; //we create a reference for accesing different methods
+
     private Com_data_client com_data_client;
     private Patient patientMoved;
     private BitalinoManager bitalinoManager;
+    private Integer[] ecg_data=null;
+    boolean start=false;
+
     @FXML
     private Label msgLabel;
 
@@ -51,9 +55,11 @@ public class ManualECGController implements Initializable {
      * This method gets the patient got from the login to show the data.
      *
      * @param patient
+     * @param bitalinoManager
+     * @param com_data_client
      */
-    public void initData(Patient patient, BitalinoManager bitalinoManager,Com_data_client com_data_client) {
-        this.com_data_client=com_data_client;
+    public void initData(Patient patient, BitalinoManager bitalinoManager, Com_data_client com_data_client) {
+        this.com_data_client = com_data_client;
         this.patientMoved = patient;
         this.bitalinoManager = bitalinoManager;
     }
@@ -68,7 +74,9 @@ public class ManualECGController implements Initializable {
         Scene ECGMenuViewScene = new Scene(BitalinoMenuParent);
 
         BitalinoMenuController controller = loader.getController();
-        controller.initData(patientMoved,com_data_client);
+        
+        controller.initDataManual(patientMoved, com_data_client,bitalinoManager,ecg_data); //ecg_data can be null if not recorded.
+        
 
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -78,24 +86,29 @@ public class ManualECGController implements Initializable {
     }
 
     @FXML
-    public synchronized void startManualECG(ActionEvent event) throws InterruptedException {
+    public void startManualECG(ActionEvent event) throws InterruptedException {
+        start=true;
         msgLabel.setText("Recording, please don't move...");
         msgLabel.setTextFill(Color.CADETBLUE);
-        manualECGThread = new ManualECGThread(bitalinoManager);
-            new Thread(manualECGThread).start();
-            synchronized(manualECGThread){
-            manualECGThread.wait(); //wait until ECG is done
-            }
-            //bitalinoManager is updated so we can use getECG?
-        msgLabel.setText("ECG recorded!");
-        msgLabel.setTextFill(Color.SEAGREEN);
-        //getECG(); FINISH WHEN DIFFERENT SCREENS
+        manualECGThread = new ECGThread(bitalinoManager, "MANUAL");
+        new Thread(manualECGThread).start();
 
     }
 
     @FXML
     void stopManualECG(ActionEvent event) {//GET ECG of manual here
+        if(start){
         bitalinoManager.setStop(true);
+        msgLabel.setText("ECG recorded!");
+        msgLabel.setTextFill(Color.SEAGREEN);
+        ecg_data=manualECGThread.getEcg_data();
+            System.out.println(ecg_data);
+        start=false;
+        }
+        else{
+        msgLabel.setText("Press START first");
+        msgLabel.setTextFill(Color.RED);
+        }
     }
 
     @Override
