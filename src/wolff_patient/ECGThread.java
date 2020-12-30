@@ -32,11 +32,14 @@ public class ECGThread implements Runnable{
     public void run() {
         if(mode.equals("MANUAL")){
        bitalinoManager.startManualECG();
+       ecg_data=bitalinoManager.getEcg_data();
         }
         else if (mode.equals("AUTO")){
         bitalinoManager.startAutoECG(seconds);
+        ecg_data=bitalinoManager.getEcg_data();
+
         }
-        saveECG();
+       // saveECG();
     }
     public void saveECG() {
         //We get the data (Frame class) from Bitalino, get the useful info (int) and send it.

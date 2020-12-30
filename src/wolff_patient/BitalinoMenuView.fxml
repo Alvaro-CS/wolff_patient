@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxWidth="500.0" prefHeight="510.0" prefWidth="500.0" style="-fx-background-color: #e3e4e5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.BitalinoMenuController">
+<AnchorPane id="AnchorPane" maxWidth="500.0" prefHeight="608.0" prefWidth="500.0" style="-fx-background-color: #e3e4e5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.BitalinoMenuController">
     
          <children>
       <Pane prefHeight="306.0" prefWidth="500.0">

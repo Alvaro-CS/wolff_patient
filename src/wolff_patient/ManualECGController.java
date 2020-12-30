@@ -74,9 +74,7 @@ public class ManualECGController implements Initializable {
         Scene ECGMenuViewScene = new Scene(BitalinoMenuParent);
 
         BitalinoMenuController controller = loader.getController();
-        
         controller.initDataManual(patientMoved, com_data_client,bitalinoManager,ecg_data); //ecg_data can be null if not recorded.
-        
 
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -96,13 +94,19 @@ public class ManualECGController implements Initializable {
     }
 
     @FXML
-    void stopManualECG(ActionEvent event) {//GET ECG of manual here
+    void stopManualECG(ActionEvent event) throws InterruptedException {//GET ECG of manual here
         if(start){
+        msgLabel.setText("Finishing, please wait...");
+        msgLabel.setTextFill(Color.ORANGE);
         bitalinoManager.setStop(true);
+       
+        
+        Thread.sleep(2000); //some seconds to make sure it finish properly
+        
         msgLabel.setText("ECG recorded!");
         msgLabel.setTextFill(Color.SEAGREEN);
         ecg_data=manualECGThread.getEcg_data();
-            System.out.println(ecg_data);
+        System.out.println(ecg_data);
         start=false;
         }
         else{

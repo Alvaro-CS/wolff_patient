@@ -66,11 +66,14 @@ public class BitalinoMenuController implements Initializable {
      * @param bitalinoManager
      * @param ecg_data
      */
-    public void initDataManual(Patient patient, Com_data_client com_data_client,BitalinoManager bitalinoManager, Integer[] ecg_data) {
+    public void initDataManual(Patient patient, Com_data_client com_data_client, BitalinoManager bitalinoManager, Integer[] ecg_data) {
         this.com_data_client = com_data_client;
         this.patientMoved = patient;
+        this.bitalinoManager = bitalinoManager;
         this.ecg_data = ecg_data;
-        this.bitalinoManager=bitalinoManager;
+        if (ecg_data != null) {
+            showECG();
+        }
     }
 
     /**
@@ -149,7 +152,9 @@ public class BitalinoMenuController implements Initializable {
                     autoECGThread = new ECGThread(bitalinoManager, "AUTO", seconds);
                     new Thread(autoECGThread).start();
                     //como hacemos
-                    ecg_data = autoECGThread.getEcg_data();
+                    while (ecg_data == null) {
+                        ecg_data = autoECGThread.getEcg_data();
+                    }
                     autoLabel.setText("ECG recorded!");
                     autoLabel.setTextFill(Color.SEAGREEN);
                     showECG();
@@ -178,12 +183,14 @@ public class BitalinoMenuController implements Initializable {
      *
      */
     public void showECG() {
+        System.out.println("Dentro show " + ecg_data);
         XYChart.Series series = new XYChart.Series();
         //  series.setName("ECG data");
         //populating the series with data
         int min = Integer.MAX_VALUE;
         int max = 0;
         for (int i = 0; i < ecg_data.length; i++) {
+            System.out.println(i);
             series.getData().add(new XYChart.Data(i, ecg_data[i]));
             if (min > ecg_data[i]) {
                 min = ecg_data[i];
@@ -204,6 +211,8 @@ public class BitalinoMenuController implements Initializable {
 
         //creating the chart
         lineChart.setTitle("ECG");
+        //Removing the symbols of the line chart
+        lineChart.setCreateSymbols(false);
         //defining a series
         lineChart.getData().add(series);
         paneChart.getChildren().add(lineChart);
@@ -268,10 +277,6 @@ public class BitalinoMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        if (ecg_data != null) {
-            showECG();
-        }
     }
 
 }
