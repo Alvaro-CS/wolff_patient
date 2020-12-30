@@ -10,12 +10,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="964.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.MedicalHistoryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.MedicalHistoryController">
    <children>
-      <Pane prefHeight="610.0" prefWidth="910.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="459.0" layoutY="151.0" mnemonicParsing="false" onAction="#addRecord" prefHeight="50.0" prefWidth="250.0" text="Add Clinical Record" />
-            <TableView fx:id="table" layoutY="247.0" prefHeight="653.0" prefWidth="963.0">
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="313.0" layoutY="158.0" mnemonicParsing="false" onAction="#addRecord" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #8FBC8F; -fx-border-color: #000000;" text="Add Clinical Record">
+               <font>
+                  <Font name="Book Antiqua Bold" size="17.0" />
+               </font></Button>
+            <TableView fx:id="table" layoutY="247.0">
               <columns>
                 <TableColumn id="id" fx:id="idColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="ID" />
                   <TableColumn id="date" fx:id="dateColumn" prefWidth="76.0" style="-fx-alignment: CENTER;" text="Date" />
@@ -26,8 +29,8 @@
                   <TableColumn id="chest_pain" fx:id="chest_painColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Chest Pain" />
                   <TableColumn id="diff_breathing" fx:id="difficulty_breathingColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Difficulty Breathing" />
                   <TableColumn id="fainting" fx:id="faintingColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Fainting" />
-                  <TableColumn id="ecg" fx:id="ecgColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="ECG" />
                   <TableColumn id="extra_info" fx:id="extra_infoColumn" prefWidth="123.199951171875" style="-fx-alignment: CENTER;" text="Extra Info" />
+                  <TableColumn id="ecg" fx:id="ecgColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="ECG" />
               </columns>
             </TableView>
          </children>
@@ -49,7 +52,7 @@
                   <Font name="Footlight MT Light" size="20.0" />
                </font>
             </Label>
-            <Button alignment="CENTER" layoutX="794.0" layoutY="43.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="45.0" prefWidth="131.0" text="Back to menu" />
+            <Button alignment="CENTER" layoutX="733.0" layoutY="44.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="45.0" text="Back to menu" />
          </children>
       </Pane>
    </children>

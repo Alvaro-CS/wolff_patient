@@ -275,6 +275,36 @@ public class BitalinoMenuController implements Initializable {
         window.show();
     }
 
+    //Similar to go back, but here we return the ecg. We could reuse the previous method, but done for clarity for the user
+    @FXML
+    void saveECG(ActionEvent event) throws IOException {
+
+        if (ecg_data != null) {
+            if (bitalinoManager != null && bitalinoManager.isConnected()) {
+                disconnectBitalino(event); //We disconnect bitalino if we go back
+            }
+            FXMLLoader loader = new FXMLLoader();
+
+            loader.setLocation(getClass().getResource("NewMedicalHistoryView.fxml"));
+
+            Parent newmedicalHistoryViewParent = loader.load();
+            Scene NewMedicalHistoryViewScene = new Scene(newmedicalHistoryViewParent);
+
+            NewMedicalHistoryController controller = loader.getController();
+            controller.initDataECG(patientMoved, com_data_client, ecg_data);
+
+            //this line gets the Stage information
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(NewMedicalHistoryViewScene);
+            window.centerOnScreen();
+
+            window.show();
+        } else {
+            autoLabel.setTextFill(Color.RED);
+            autoLabel.setText("No ECG recorded");
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }

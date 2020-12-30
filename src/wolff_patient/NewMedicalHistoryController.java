@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 public class NewMedicalHistoryController implements Initializable {
     private Com_data_client com_data_client;
     private Patient patientMoved;
-
+    private Integer[] ecg_data=null;
     @FXML
     RadioButton palpitations_no;
     @FXML
@@ -55,6 +55,7 @@ public class NewMedicalHistoryController implements Initializable {
      * Clinical Record object.
      *
      * @param event
+     * @throws java.io.IOException
      */
     @FXML
     public void saveRecord(ActionEvent event) throws IOException {
@@ -70,13 +71,11 @@ public class NewMedicalHistoryController implements Initializable {
 
         Integer id = patientMoved.getClinical_record_list().size() + 1;
         String extra_info = infoArea.getText();
-        Integer[] ECG = null;//TODO save REAL ECG
         //Date is created automatically in the constructor.
         //Check out the order of parameters if changed in constructor of the class.
         clinical_record = new Clinical_record(id, palpitations, dizziness, fatigue, anxiety,
-                chest_pain, difficulty_breathing, fainting, ECG, extra_info);
+                chest_pain, difficulty_breathing, fainting, ecg_data, extra_info);
         patientMoved.getClinical_record_list().add(clinical_record);
-        //TODO send the new patient to the server and replace it by this new version.
         updatePatient();
         goBackMedicalHistory(event);
     }
@@ -179,5 +178,10 @@ public class NewMedicalHistoryController implements Initializable {
         this.com_data_client=com_data_client;
         this.patientMoved = patient;
 
+    }
+    public void initDataECG(Patient patient,Com_data_client com_data_client, Integer[] ecg_data) {
+        this.com_data_client=com_data_client;
+        this.patientMoved = patient;
+        this.ecg_data=ecg_data;
     }
 }

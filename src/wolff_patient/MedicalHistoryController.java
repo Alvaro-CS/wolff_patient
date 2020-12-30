@@ -58,7 +58,7 @@ public class MedicalHistoryController implements Initializable {
     private TableColumn<Clinical_record, Boolean> faintingColumn;
 
     @FXML
-    private TableColumn<Clinical_record, Integer[]> ecgColumn;
+    private TableColumn ecgColumn;
 
     @FXML
     private TableColumn<Clinical_record, String> extra_infoColumn;
@@ -80,7 +80,7 @@ public class MedicalHistoryController implements Initializable {
         chest_painColumn.setCellValueFactory(new PropertyValueFactory<>("chest_pain"));
         difficulty_breathingColumn.setCellValueFactory(new PropertyValueFactory<>("difficulty_breathing"));
         faintingColumn.setCellValueFactory(new PropertyValueFactory<>("fainting"));
-        ecgColumn.setCellValueFactory(new PropertyValueFactory<>("ecg"));
+        ecgColumn.setCellValueFactory(new PropertyValueFactory<>("ecgShow_button"));
         extra_infoColumn.setCellValueFactory(new PropertyValueFactory<>("extra_info"));
     }
 
@@ -97,6 +97,7 @@ public class MedicalHistoryController implements Initializable {
      * Thid method gets the patient got from the login to show the data.
      *
      * @param patient
+     * @param com_data_client
      */
     public void initData(Patient patient,Com_data_client com_data_client) {
         this.com_data_client=com_data_client;

@@ -14,10 +14,10 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Button;
 
 public class Clinical_record implements Serializable {
 
-    private transient StringProperty dateString; //For UI showing purposes
 
     //For showing in table
     private transient IntegerProperty id_prop;
@@ -29,10 +29,12 @@ public class Clinical_record implements Serializable {
     private transient BooleanProperty difficulty_breathing_prop;
     private transient BooleanProperty fainting_prop;
     private transient StringProperty extra_info_prop;
+    private transient Button ecgShow_button; //transient?
+    private transient StringProperty dateString_prop; 
 
     private final SimpleDateFormat formatter;
     private Integer id;
-    private Date date;
+    private final String dateString;
     private Boolean palpitations;
     private Boolean dizziness;
     private Boolean fatigue;
@@ -40,7 +42,7 @@ public class Clinical_record implements Serializable {
     private Boolean chest_pain;
     private Boolean difficulty_breathing;
     private Boolean fainting;
-    private transient String extra_info;
+    private String extra_info;
 
     private Integer[] ECG;
     private static final long serialVersionUID = 2L;
@@ -50,8 +52,9 @@ public class Clinical_record implements Serializable {
             Boolean fainting, Integer[] ECG,
             String extra_info) {
         this.id = id;
-        this.date = new Date();
+        Date date = new Date();
         formatter = new SimpleDateFormat("dd-MM-yyyy\nHH:mm:ss");
+        dateString=formatter.format(date);
         this.palpitations = palpitations;
         this.dizziness = dizziness;
         this.fatigue = fatigue;
@@ -74,7 +77,8 @@ public class Clinical_record implements Serializable {
         this.difficulty_breathing_prop = new SimpleBooleanProperty(difficulty_breathing);
         this.fainting_prop = new SimpleBooleanProperty(fainting);
         this.extra_info_prop = new SimpleStringProperty(extra_info);
-        this.dateString = new SimpleStringProperty(formatter.format(date));
+        this.dateString_prop = new SimpleStringProperty(dateString);
+        this.ecgShow_button= new Button("VIEW"); //TODO FUNCTIONAL VIEW BUTTON FROM TABLE
     }
 
     public IntegerProperty IdProperty() {
@@ -82,7 +86,7 @@ public class Clinical_record implements Serializable {
     }
 
     public StringProperty DateStringProperty() {
-        return dateString;
+        return dateString_prop;
     }    public BooleanProperty PalpitationsProperty() {
         return palpitations_prop;
     }    public BooleanProperty DizzinessProperty() {
@@ -166,13 +170,10 @@ public class Clinical_record implements Serializable {
     }
 
 
-//    public String getDateString() {
-//        return dateString.get();
-//    }
+    public String getDateString() {
+        return dateString;
+   }
 
-    public Date getDate() {
-        return date;
-    }
 
 
 
@@ -235,10 +236,6 @@ public class Clinical_record implements Serializable {
         this.id = id;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public void setPalpitations(Boolean palpitations) {
         this.palpitations = palpitations;
     }
@@ -269,6 +266,10 @@ public class Clinical_record implements Serializable {
 
     public void setExtra_info(String extra_info) {
         this.extra_info = extra_info;
+    }
+
+    public Button getEcgShow_button() {
+        return ecgShow_button;
     }
 
 }
