@@ -23,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import utilities.Hashmaker;
 
 public class LogInController implements Initializable {
 
@@ -162,7 +163,7 @@ public class LogInController implements Initializable {
 
             //We send the query with ID + password combination to the server
             objectOutputStream.writeObject((Object) userNameField.getText());
-            objectOutputStream.writeObject((Object) passwordField.getText());
+            objectOutputStream.writeObject((Object) Hashmaker.getSHA256(passwordField.getText()));
             System.out.println("Query sent");
 
             //We here need to receive from the server the patient found.
@@ -171,7 +172,7 @@ public class LogInController implements Initializable {
             new Thread(clientThreadsServer).start();
             
             synchronized(clientThreadsServer){
-            clientThreadsServer.wait(); //wait until patient logs in (if not, it returns null because not enough time to get it.
+            clientThreadsServer.wait(); //wait until patient logs in (if not, it returns null because not enough time to get it).
             }
             return clientThreadsServer.getPatient();
 

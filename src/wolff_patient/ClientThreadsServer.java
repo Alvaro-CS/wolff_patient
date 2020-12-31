@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 public class ClientThreadsServer implements Runnable {
 
     private Com_data_client com_data_client;
-    ServerSocket serverSocket;
     private Patient patient; //Patient that is going to be got from the server when login
     //private boolean patient_logged;
 

@@ -152,9 +152,9 @@ public class BitalinoMenuController implements Initializable {
                     autoECGThread = new ECGThread(bitalinoManager, "AUTO", seconds);
                     new Thread(autoECGThread).start();
                     //como hacemos
-                    while (ecg_data == null) {
-                        ecg_data = autoECGThread.getEcg_data();
-                    }
+                    
+                    ecg_data = autoECGThread.getEcg_data();
+                    
                     autoLabel.setText("ECG recorded!");
                     autoLabel.setTextFill(Color.SEAGREEN);
                     showECG();

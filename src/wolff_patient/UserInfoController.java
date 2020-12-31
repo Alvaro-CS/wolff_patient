@@ -27,8 +27,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import utilities.Hashmaker;
 
 /**
  * FXML Controller class
@@ -79,12 +79,6 @@ public class UserInfoController implements Initializable {
     private PasswordField password_field;
 
     @FXML
-    private Button change_button;
-
-    @FXML
-    private Button done_button;
-
-    @FXML
     private Label passwordLabel;
 
     /**
@@ -118,8 +112,8 @@ public class UserInfoController implements Initializable {
      */
     @FXML
     private void changePassword(ActionEvent event) throws IOException {
-        if (password_field.getText().equals(patientMoved.getPassword()) && new_password_field.getText().equals(repeat_password_field.getText())) {
-            patientMoved.setPassword(new_password_field.getText());
+        if (Hashmaker.getSHA256(password_field.getText()).equals(patientMoved.getPassword()) && new_password_field.getText().equals(repeat_password_field.getText())) {
+            patientMoved.setPassword(Hashmaker.getSHA256(new_password_field.getText()));
             updatePatient();
 
             passwordLabel.setText("Password Updated");

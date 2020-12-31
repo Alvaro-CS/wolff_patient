@@ -13,9 +13,13 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.net.Socket;
 
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -37,11 +41,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
+import utilities.Hashmaker;
 
 public class RegistrationController implements Initializable {
 
     private Com_data_client com_data_client;
-    
+
     @FXML
     private TextField userNameField;
     @FXML
@@ -98,12 +103,11 @@ public class RegistrationController implements Initializable {
 
     }
 
-    public void backtoLogin(ActionEvent event) throws IOException { 
+    public void backtoLogin(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("LogInView.fxml"));
         Parent LogInViewParent = loader.load();
         Scene LogInViewScene = new Scene(LogInViewParent);
-
 
         LogInController controller = loader.getController();
         controller.initData(com_data_client);
@@ -116,7 +120,7 @@ public class RegistrationController implements Initializable {
 
     public void registerUser() {
         String ID = userNameField.getText();
-        String password = passwordField.getText();
+        String password = Hashmaker.getSHA256(passwordField.getText());
         String name = nameField.getText();
         String surname = surnameField.getText();
 
@@ -131,17 +135,14 @@ public class RegistrationController implements Initializable {
         LocalDate localDate = dobDatePicker.getValue();
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
         Date dob = Date.from(instant);
-//        Date date= dobDatePicker.getValue();
         int ssnumber = Integer.parseInt(ssNumberField.getText());
         String adress = adressField.getText();
         int phone = Integer.parseInt(phoneField.getText());
 
-        
-
         try {
             //Sending order
             String order = "REGISTER";
-            ObjectOutputStream objectOutputStream= com_data_client.getObjectOutputStream();
+            ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
             objectOutputStream.writeObject(order);
             System.out.println("Order" + order + "sent");
 
@@ -162,25 +163,26 @@ public class RegistrationController implements Initializable {
      * this method checks each patient stored in the file to see if the username
      * is already registered
      *
+     * @param id
      * @return boolean
      */
     public boolean usernameIsFree(String id) {//TODO
 
         try {
             if (!com_data_client.isSocket_created()) {
-                Socket socket=new Socket(com_data_client.getIp_address(), 9000);
+                Socket socket = new Socket(com_data_client.getIp_address(), 9000);
                 com_data_client.setSocket(socket);
                 OutputStream outputStream = socket.getOutputStream();
                 com_data_client.setOutputStream(outputStream);
-                ObjectOutputStream objectOutputStream= new ObjectOutputStream(outputStream);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
                 com_data_client.setObjectOutputStream(objectOutputStream);
                 InputStream inputStream = socket.getInputStream();
                 com_data_client.setInputStream(inputStream);
-                ObjectInputStream objectInputStream= new ObjectInputStream(inputStream);
+                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
                 com_data_client.setObjectInputStream(objectInputStream);
-                
+
                 com_data_client.setSocket_created(true);
-       
+
             }/*
             //Sending order
             String order = "EXISTS";
@@ -192,11 +194,11 @@ public class RegistrationController implements Initializable {
             objectOutputStream.writeObject(id);
             System.out.println("Patient name sent to server");
             //TODO receive patient from server. If received, return false. If received null, return true. 
-            */
+             */
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
             Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
         return true; //TODO finish
     }
 
@@ -213,7 +215,8 @@ public class RegistrationController implements Initializable {
         genderComboBox.getItems().add("Female");
         genderComboBox.getItems().add("Other");
     }
-/*
+
+    /*
     private static void releaseResources(OutputStream outputStream, Socket socket) {
         try {
             outputStream.close();
@@ -230,12 +233,11 @@ public class RegistrationController implements Initializable {
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }*/
-
     public RegistrationController() {
     }
 
     void initData(Com_data_client com_data) {
-        this.com_data_client=com_data;
+        this.com_data_client = com_data;
     }
 
 }
