@@ -82,10 +82,11 @@ public class RegistrationController implements Initializable {
      * registerUserOld method
      *
      * @param event
+     * @throws java.io.IOException
      */
     public void registerButtonOnAction(ActionEvent event) throws IOException {
 
-        if (usernameIsFree(userNameField.getText())) {//FINISH
+        if (usernameIsFree(userNameField.getText())) {
             regMessageLabel.setText("Username available");
 
             if (passwordField.getText().equals(repeatPasswordField.getText())) {
@@ -98,7 +99,7 @@ public class RegistrationController implements Initializable {
                 confirmPasswordLabel.setText("Passwords don't match");
             }
         } else {
-            regMessageLabel.setText("That username already exists");
+            regMessageLabel.setText("That username already exists.\nChoose another one.");
         }
 
     }
@@ -167,7 +168,7 @@ public class RegistrationController implements Initializable {
      * @return boolean
      */
     public boolean usernameIsFree(String id) {//TODO
-
+        Patient p = null;
         try {
             if (!com_data_client.isSocket_created()) {
                 Socket socket = new Socket(com_data_client.getIp_address(), 9000);
@@ -183,23 +184,33 @@ public class RegistrationController implements Initializable {
 
                 com_data_client.setSocket_created(true);
 
-            }/*
+            }
             //Sending order
             String order = "EXISTS";
-            ObjectOutputStream objectOutputStream= com_data_client.getObjectOutputStream();
+            ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
             objectOutputStream.writeObject(order);
             System.out.println("Order" + order + "sent");
 
             //Sending patient
             objectOutputStream.writeObject(id);
-            System.out.println("Patient name sent to server");
-            //TODO receive patient from server. If received, return false. If received null, return true. 
-             */
+            System.out.println("Patient name sent to server, will check if it exists.");
+
+            ObjectInputStream objectInputStream = com_data_client.getObjectInputStream();
+            objectInputStream.readObject();//We read the ORDER. We don't need it for nothing, so we don't save it to a variable.
+            Object tmp = objectInputStream.readObject();//we receive the new patient from client
+            p = (Patient) tmp;
+
+            if (p != null) {//If received, it will not be null. Username is NOT free.
+                return false;
+            }
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
-            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return true; //TODO finish
+        return true; //If patient is null, username IS free.
+
     }
 
     /**
