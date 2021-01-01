@@ -42,7 +42,7 @@ public class BitalinoMenuController implements Initializable {
     @FXML
     private TextField secondsField;
     @FXML
-    private Label autoLabel;
+    private Label messageLabel;
     @FXML
     private Pane paneChart;
 
@@ -84,17 +84,22 @@ public class BitalinoMenuController implements Initializable {
         if (bitalinoManager == null) {
             bitalinoManager = new BitalinoManager("98:D3:C1:FD:2F:EC"); //El user tiene que meterlo
             if (bitalinoManager != null) {
-                autoLabel.setText("Bitalino connected.");
+                messageLabel.setTextFill(Color.GREEN);
+                messageLabel.setText("Bitalino connected.");
             } else {
-                autoLabel.setText("Bitalino connection failed.");
+                messageLabel.setTextFill(Color.RED);
+                messageLabel.setText("Bitalino connection failed.");
 
             }
 
         } else if (bitalinoManager.isConnected()) {
-            autoLabel.setText("Bitalino already connected. Disconnect it to connect a different device.");
-        } else {
+            messageLabel.setTextFill(Color.RED);
+            messageLabel.setText("Bitalino already connected. Disconnect it to connect a different device.");
+        } else { //pURPOSE OF THIS?
             bitalinoManager = new BitalinoManager("98:D3:C1:FD:2F:EC"); //El user tiene que meterlo
-            autoLabel.setText("Bitalino connected.");
+            messageLabel.setTextFill(Color.GREEN);
+
+            messageLabel.setText("Bitalino connected.");
         }
     }
 
@@ -103,8 +108,13 @@ public class BitalinoMenuController implements Initializable {
      * @param event
      */
     public void disconnectBitalino(ActionEvent event) {
-        bitalinoManager.disconnect();
-        autoLabel.setText("Bitalino disconnected.");
+        if (bitalinoManager == null) {
+            messageLabel.setTextFill(Color.RED);
+            messageLabel.setText("You need to connect to a Bitalino device first");
+        } else {
+            bitalinoManager.disconnect();
+            messageLabel.setText("Bitalino disconnected.");
+        }
 
     }
 
@@ -129,8 +139,8 @@ public class BitalinoMenuController implements Initializable {
 
             window.show();
         } else {
-            autoLabel.setTextFill(Color.RED);
-            autoLabel.setText("You need to connect to a Bitalino device first");
+            messageLabel.setTextFill(Color.RED);
+            messageLabel.setText("You need to connect to a Bitalino device first");
         }
 
     }
@@ -138,6 +148,7 @@ public class BitalinoMenuController implements Initializable {
     /**
      *
      * @param event
+     * @throws java.lang.InterruptedException
      */
     public void readECGAuto(ActionEvent event) throws InterruptedException {
         Integer seconds;
@@ -147,30 +158,34 @@ public class BitalinoMenuController implements Initializable {
                 seconds = Integer.parseInt(secondsField.getText()); //If it is not Integer, will throw Exception.
 
                 if (seconds > 0) {
-                    autoLabel.setText("Recording, please don't move...");
-                    autoLabel.setTextFill(Color.CADETBLUE);
+                    messageLabel.setText("Recording, please don't move..."); //Why this is not shown
+                    messageLabel.setTextFill(Color.CADETBLUE);
+
                     autoECGThread = new ECGThread(bitalinoManager, "AUTO", seconds);
-                    new Thread(autoECGThread).start();
-                    //como hacemos
-                    
+                    Thread tAuto=new Thread(autoECGThread);
+                    tAuto.start();
+                    tAuto.join();
+                   
+                    //Thread.sleep((seconds + 2) * 1000);
+
                     ecg_data = autoECGThread.getEcg_data();
-                    
-                    autoLabel.setText("ECG recorded!");
-                    autoLabel.setTextFill(Color.SEAGREEN);
+                    System.out.println("Before show " + ecg_data);
+                    messageLabel.setText("ECG recorded!");
+                    messageLabel.setTextFill(Color.SEAGREEN);
                     showECG();
 
                 } else {
-                    autoLabel.setTextFill(Color.RED);
-                    autoLabel.setText("The number of seconds must be bigger \nthan 0");
+                    messageLabel.setTextFill(Color.RED);
+                    messageLabel.setText("The number of seconds must be bigger \nthan 0");
 
                 }
             } catch (NumberFormatException e) {
-                autoLabel.setTextFill(Color.RED);
-                autoLabel.setText("You need to enter a NUMBER of seconds");
+                messageLabel.setTextFill(Color.RED);
+                messageLabel.setText("You need to enter a NUMBER of seconds");
             }
         } else {
-            autoLabel.setTextFill(Color.RED);
-            autoLabel.setText("You need to connect to a Bitalino device first");
+            messageLabel.setTextFill(Color.RED);
+            messageLabel.setText("You need to connect to a Bitalino device first");
         }
 
     }
@@ -300,8 +315,8 @@ public class BitalinoMenuController implements Initializable {
 
             window.show();
         } else {
-            autoLabel.setTextFill(Color.RED);
-            autoLabel.setText("No ECG recorded");
+            messageLabel.setTextFill(Color.RED);
+            messageLabel.setText("No ECG recorded");
         }
     }
 

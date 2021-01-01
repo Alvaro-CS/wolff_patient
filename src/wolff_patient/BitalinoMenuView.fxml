@@ -91,7 +91,7 @@
                   </HBox>
                </children>
             </VBox>
-            <Label fx:id="autoLabel" layoutX="28.0" layoutY="284.0" prefHeight="44.0" textAlignment="CENTER">
+            <Label fx:id="messageLabel" layoutX="28.0" layoutY="284.0" prefHeight="44.0" textAlignment="CENTER">
                <font>
                   <Font size="13.0" />
                </font>
