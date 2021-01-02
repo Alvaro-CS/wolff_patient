@@ -76,6 +76,8 @@ public class RegistrationController implements Initializable {
 
     String filename = "patientFiles";
 
+    private String bitalinoMac;
+    private String ipAddress;
     /**
      * This method takes place when the createAccountButton is clicked. After
      * checking that the username is free and the passwords match, it calls the
@@ -183,6 +185,9 @@ public class RegistrationController implements Initializable {
                 com_data_client.setObjectInputStream(objectInputStream);
 
                 com_data_client.setSocket_created(true);
+                                
+                com_data_client.setBitalino_adress(bitalinoMac);
+                com_data_client.setIp_address(ipAddress);
 
             }
             //Sending order
@@ -244,11 +249,32 @@ public class RegistrationController implements Initializable {
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }*/
+        @FXML
+    public void comDataMenu(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ComDataView.fxml"));
+        Parent comDataViewParent = loader.load();
+
+        Scene ComDataViewScene = new Scene(comDataViewParent);
+
+     //   PatientMenuController controller = loader.getController();
+       // controller.initData(patientMoved,com_data_client);
+        //this line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(ComDataViewScene);
+        window.centerOnScreen();
+
+        window.show();
+    }
     public RegistrationController() {
     }
 
     void initData(Com_data_client com_data) {
         this.com_data_client = com_data;
+    }
+       void initData(String ipaddress, String bitalinoMac) {
+       this.bitalinoMac=bitalinoMac;
+       this.ipAddress=ipaddress;
     }
 
 }

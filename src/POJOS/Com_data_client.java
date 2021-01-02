@@ -18,6 +18,7 @@ import java.net.Socket;
 public class Com_data_client {//If we want to encapsulate all data
     
     private String ip_address;
+    private String bitalino_adress;
     private boolean socket_created;
     private Socket socket;
     
@@ -34,6 +35,7 @@ public class Com_data_client {//If we want to encapsulate all data
         this.objectOutputStream = null;
         this.inputStream = null;
         this.objectInputStream = null;
+        this.bitalino_adress="98:D3:C1:FD:2F:EC";
     }
 
     public String getIp_address() {
@@ -90,6 +92,14 @@ public class Com_data_client {//If we want to encapsulate all data
 
     public void setObjectInputStream(ObjectInputStream objectInputStream) {
         this.objectInputStream = objectInputStream;
+    }
+
+    public String getBitalino_adress() {
+        return bitalino_adress;
+    }
+
+    public void setBitalino_adress(String bitalino_adress) {
+        this.bitalino_adress = bitalino_adress;
     }
     
     
