@@ -12,10 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxWidth="500.0" prefHeight="608.0" style="-fx-background-color: #e3e4e5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.BitalinoMenuController">
+<AnchorPane id="AnchorPane" maxWidth="500.0" prefHeight="175.0" prefWidth="500.0" style="-fx-background-color: #e3e4e5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.BitalinoMenuController">
     
          <children>
-      <Pane fx:id="paneChart" layoutX="3.0" layoutY="307.0" prefHeight="200.0" prefWidth="490.0" />
       <Pane>
          <children>
             <VBox prefHeight="284.0" prefWidth="500.0" spacing="20.0">
@@ -91,7 +90,7 @@
                   </HBox>
                </children>
             </VBox>
-            <Label fx:id="messageLabel" layoutX="28.0" layoutY="284.0" prefHeight="44.0" textAlignment="CENTER">
+            <Label fx:id="messageLabel" layoutX="140.0" layoutY="284.0" prefHeight="44.0" prefWidth="220.0" textAlignment="CENTER">
                <font>
                   <Font size="13.0" />
                </font>

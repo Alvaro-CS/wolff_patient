@@ -12,28 +12,20 @@ createAccountForm--> opens registration view
 package wolff_patient;
 
 import BITalino.BitalinoManager;
-import BITalino.Frame;
 import POJOS.Com_data_client;
 import POJOS.Patient;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.Pane;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -45,8 +37,8 @@ public class ManualECGController implements Initializable {
     private Com_data_client com_data_client;
     private Patient patientMoved;
     private BitalinoManager bitalinoManager;
-    private Integer[] ecg_data=null;
-    boolean start=false;
+    private Integer[] ecg_data = null;
+    boolean start = false;
 
     @FXML
     private Label msgLabel;
@@ -74,7 +66,7 @@ public class ManualECGController implements Initializable {
         Scene ECGMenuViewScene = new Scene(BitalinoMenuParent);
 
         BitalinoMenuController controller = loader.getController();
-        controller.initDataManual(patientMoved, com_data_client,bitalinoManager,ecg_data); //ecg_data can be null if not recorded.
+        controller.initDataManual(patientMoved, com_data_client, bitalinoManager, ecg_data); //ecg_data can be null if not recorded.
 
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -85,7 +77,7 @@ public class ManualECGController implements Initializable {
 
     @FXML
     public void startManualECG(ActionEvent event) throws InterruptedException {
-        start=true;
+        start = true;
         msgLabel.setText("Recording, please don't move...");
         msgLabel.setTextFill(Color.CADETBLUE);
         manualECGThread = new ECGThread(bitalinoManager, "MANUAL");
@@ -95,23 +87,25 @@ public class ManualECGController implements Initializable {
 
     @FXML
     void stopManualECG(ActionEvent event) throws InterruptedException {//GET ECG of manual here
-        if(start){
-        msgLabel.setText("Finishing, please wait...");
-        msgLabel.setTextFill(Color.ORANGE);
-        bitalinoManager.setStop(true);
-       
-        
-        Thread.sleep(2000); //some seconds to make sure it finish properly
-        
-        msgLabel.setText("ECG recorded!");
-        msgLabel.setTextFill(Color.SEAGREEN);
-        ecg_data=manualECGThread.getEcg_data();
-        System.out.println(ecg_data);
-        start=false;
-        }
-        else{
-        msgLabel.setText("Press START first");
-        msgLabel.setTextFill(Color.RED);
+        if (start) {
+            try {
+                msgLabel.setText("Finishing, please wait...");
+                msgLabel.setTextFill(Color.ORANGE);
+                bitalinoManager.setStop(true);
+
+                Thread.sleep(2000); //some seconds to make sure it finish properly
+
+                msgLabel.setText("ECG recorded!");
+                msgLabel.setTextFill(Color.SEAGREEN);
+                ecg_data = manualECGThread.getEcg_data();
+                openECGWindow(event);
+                start = false;
+            } catch (IOException ex) {
+                Logger.getLogger(ManualECGController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            msgLabel.setText("Press START first");
+            msgLabel.setTextFill(Color.RED);
         }
     }
 
@@ -124,4 +118,18 @@ public class ManualECGController implements Initializable {
         return bitalinoManager;
     }
 
+//It opens a window with the ECG that has just been recorded
+    void openECGWindow(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ECGShowView.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Your ECG");
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
+
+        ECGShowController controller = loader.getController();
+        controller.initData(ecg_data);
+
+        stage.show();
+    }
 }

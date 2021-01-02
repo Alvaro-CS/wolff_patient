@@ -17,6 +17,8 @@ import POJOS.Patient;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -71,9 +73,6 @@ public class BitalinoMenuController implements Initializable {
         this.patientMoved = patient;
         this.bitalinoManager = bitalinoManager;
         this.ecg_data = ecg_data;
-        if (ecg_data != null) {
-            showECG();
-        }
     }
 
     /**
@@ -162,17 +161,16 @@ public class BitalinoMenuController implements Initializable {
                     messageLabel.setTextFill(Color.CADETBLUE);
 
                     autoECGThread = new ECGThread(bitalinoManager, "AUTO", seconds);
-                    Thread tAuto=new Thread(autoECGThread);
+                    Thread tAuto = new Thread(autoECGThread);
                     tAuto.start();
                     tAuto.join();
-                   
-                    //Thread.sleep((seconds + 2) * 1000);
 
+                    //Thread.sleep((seconds + 2) * 1000);
                     ecg_data = autoECGThread.getEcg_data();
                     System.out.println("Before show " + ecg_data);
                     messageLabel.setText("ECG recorded!");
                     messageLabel.setTextFill(Color.SEAGREEN);
-                    showECG();
+                    openECGWindow(event);
 
                 } else {
                     messageLabel.setTextFill(Color.RED);
@@ -182,6 +180,8 @@ public class BitalinoMenuController implements Initializable {
             } catch (NumberFormatException e) {
                 messageLabel.setTextFill(Color.RED);
                 messageLabel.setText("You need to enter a NUMBER of seconds");
+            } catch (IOException ex) {
+                Logger.getLogger(BitalinoMenuController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             messageLabel.setTextFill(Color.RED);
@@ -190,83 +190,6 @@ public class BitalinoMenuController implements Initializable {
 
     }
 
-    /**
-     * This method shows a line chart on-screen with the ECG that has been
-     * received. It adjusts max and min values of the chart. Line chart is shown
-     * in a pane.
-     *
-     *
-     */
-    public void showECG() {
-        System.out.println("Dentro show " + ecg_data);
-        XYChart.Series series = new XYChart.Series();
-        //  series.setName("ECG data");
-        //populating the series with data
-        int min = Integer.MAX_VALUE;
-        int max = 0;
-        for (int i = 0; i < ecg_data.length; i++) {
-            System.out.println(i);
-            series.getData().add(new XYChart.Data(i, ecg_data[i]));
-            if (min > ecg_data[i]) {
-                min = ecg_data[i];
-            }
-            if (max < ecg_data[i]) {
-                max = ecg_data[i];
-            }
-        }
-
-        paneChart.getChildren().clear();
-
-        final NumberAxis xAxis = new NumberAxis(0, ecg_data.length, 1);
-        final NumberAxis yAxis = new NumberAxis(min - 5, max + 5, 0.1);//lower, upper, tick
-        LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-
-        lineChart.getXAxis().setLabel("Time");
-        lineChart.getYAxis().setLabel("Amplitude");
-
-        //creating the chart
-        lineChart.setTitle("ECG");
-        //Removing the symbols of the line chart
-        lineChart.setCreateSymbols(false);
-        //defining a series
-        lineChart.getData().add(series);
-        paneChart.getChildren().add(lineChart);
-        System.out.println("Shown");
-    }
-
-    /**
-     * This method creates a socket for sending an ECG to a server. It gets the
-     * ECG data from "bitalinoManager" object, gets the useful information, that
-     * is located in analog[0] and writes the int[] object with all ECG values.
-     */
-    /*  public void sendECG() {
-        OutputStream outputStream = null;
-        ObjectOutputStream objectOutputStream = null;
-        System.out.println("Envia");
-        Socket socket = null;
-        try {
-            socket = new Socket("localhost", 9000);
-            outputStream = socket.getOutputStream();
-        } catch (IOException ex) {
-            System.out.println("It was not possible to connect to the server.");
-            System.exit(-1);
-            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            objectOutputStream = new ObjectOutputStream(outputStream);
-            //We get the data (Frame class) from Bitalino, get the useful info (int) and send it.
-
-            objectOutputStream.writeObject(ecg_data);
-
-        } catch (IOException ex) {
-            System.out.println("Unable to write the object on the server.");
-            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            releaseResources(outputStream, socket);
-
-        }
-    }
-     */
     @FXML
     void backToRecord(ActionEvent event) throws IOException {
         if (bitalinoManager != null && bitalinoManager.isConnected()) {
@@ -318,6 +241,21 @@ public class BitalinoMenuController implements Initializable {
             messageLabel.setTextFill(Color.RED);
             messageLabel.setText("No ECG recorded");
         }
+    }
+
+    //It opens a window with the ECG that has just been recorded
+    void openECGWindow(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ECGShowView.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Your ECG");
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
+
+        ECGShowController controller = loader.getController();
+        controller.initData(ecg_data);
+
+        stage.show();
     }
 
     @Override

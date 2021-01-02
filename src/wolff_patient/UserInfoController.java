@@ -165,13 +165,10 @@ public class UserInfoController implements Initializable {
 
     //For updating patient in server
     public void updatePatient() {
-        OutputStream outputStream = null;
-        ObjectOutputStream objectOutputStream = null;
-        Socket socket = null;
+        ObjectOutputStream objectOutputStream;
         try {
-            socket = new Socket("localhost", 9000);
-            outputStream = socket.getOutputStream();
-            objectOutputStream = new ObjectOutputStream(outputStream);
+
+            objectOutputStream = com_data_client.getObjectOutputStream();
             //Sending order
             String order = "UPDATE";
             objectOutputStream.writeObject(order);
@@ -180,14 +177,10 @@ public class UserInfoController implements Initializable {
             //Sending patient
             objectOutputStream.writeObject(patientMoved);
             System.out.println("Patient data sent to register in server");
-
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
             Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            releaseResources(outputStream, socket);
-
-        }
+        } 
     }
 
     /**
@@ -212,7 +205,7 @@ public class UserInfoController implements Initializable {
 
         window.show();
     }
-
+/*
     private static void releaseResources(OutputStream outputStream, Socket socket) {
         try {
             outputStream.close();
@@ -225,4 +218,5 @@ public class UserInfoController implements Initializable {
             Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+*/
 }
