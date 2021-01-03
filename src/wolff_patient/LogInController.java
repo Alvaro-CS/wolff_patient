@@ -30,6 +30,8 @@ public class LogInController implements Initializable {
     private Com_data_client com_data_client;
     private ClientThreadsServer clientThreadsServer; //we create a reference for accesing different methods
     private Patient patientMoved;
+    private String ipAddress;
+    private String bitalinoMac;
 
     @FXML
     private TextField userNameField;
@@ -39,7 +41,8 @@ public class LogInController implements Initializable {
     private Label loginMessageLabel;
 
     /**
-     *This method logins the patient
+     * This method logins the patient
+     *
      * @param event
      */
     public void loginButtonOnAction(ActionEvent event) throws IOException {
@@ -62,7 +65,7 @@ public class LogInController implements Initializable {
     @FXML
     public void validateLogin(ActionEvent event) throws IOException {
         this.patientMoved = searchPatient();
-        System.out.println("Captured patient:"+patientMoved);
+        System.out.println("Captured patient:" + patientMoved);
         if (this.patientMoved != null) {
             System.out.println("PATIENT EXISTS");
             openMainMenuPatient(event);
@@ -84,12 +87,12 @@ public class LogInController implements Initializable {
 
         loader.setLocation(getClass().getResource("RegistrationView.fxml"));
         Parent registrationViewParent = loader.load();
-        
+
         Scene registrationViewScene = new Scene(registrationViewParent);
-        
+
         RegistrationController controller = loader.getController();
         controller.initData(com_data_client);
-        
+
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(registrationViewScene);
@@ -111,7 +114,7 @@ public class LogInController implements Initializable {
         Scene MainMenuViewScene = new Scene(mainMenuViewParent);
 
         PatientMenuController controller = loader.getController();
-        controller.initData(patientMoved,com_data_client);
+        controller.initData(patientMoved, com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MainMenuViewScene);
@@ -140,24 +143,27 @@ public class LogInController implements Initializable {
 
         try {
             if (!com_data_client.isSocket_created()) {
-                Socket socket=new Socket(com_data_client.getIp_address(), 9000);
+                Socket socket = new Socket(com_data_client.getIp_address(), 9000);
                 com_data_client.setSocket(socket);
                 OutputStream outputStream = socket.getOutputStream();
                 com_data_client.setOutputStream(outputStream);
-                ObjectOutputStream objectOutputStream= new ObjectOutputStream(outputStream);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
                 com_data_client.setObjectOutputStream(objectOutputStream);
                 InputStream inputStream = socket.getInputStream();
                 com_data_client.setInputStream(inputStream);
-                ObjectInputStream objectInputStream= new ObjectInputStream(inputStream);
+                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
                 com_data_client.setObjectInputStream(objectInputStream);
-                
+
                 com_data_client.setSocket_created(true);
-       
+
+                com_data_client.setBitalino_adress(bitalinoMac);
+                com_data_client.setIp_address(ipAddress);
+
             }
 
             //We send the order to server that we want to search for patients
             String order = "SEARCH_PATIENT";
-            ObjectOutputStream objectOutputStream= com_data_client.getObjectOutputStream();
+            ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
             objectOutputStream.writeObject(order);
             System.out.println("Order " + order + " sent to server");
 
@@ -170,9 +176,9 @@ public class LogInController implements Initializable {
             clientThreadsServer = new ClientThreadsServer();
             clientThreadsServer.setCom_data_client(com_data_client);
             new Thread(clientThreadsServer).start();
-            
-            synchronized(clientThreadsServer){
-            clientThreadsServer.wait(); //wait until patient logs in (if not, it returns null because not enough time to get it).
+
+            synchronized (clientThreadsServer) {
+                clientThreadsServer.wait(); //wait until patient logs in (if not, it returns null because not enough time to get it).
             }
             return clientThreadsServer.getPatient();
 
@@ -185,7 +191,7 @@ public class LogInController implements Initializable {
         } catch (InterruptedException ex) {
             Logger.getLogger(LogInController.class
                     .getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
         System.out.println("Final");
         return null;
 
@@ -219,8 +225,7 @@ public class LogInController implements Initializable {
         }
         return null;
     }*/
-    
-/*
+ /*
     private static void releaseResources(OutputStream outputStream, Socket socket) {
         try {
             outputStream.close();
@@ -237,14 +242,36 @@ public class LogInController implements Initializable {
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }*/
+    @FXML
+    public void comDataMenu(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ComDataView.fxml"));
+        Parent comDataViewParent = loader.load();
+
+        Scene ComDataViewScene = new Scene(comDataViewParent);
+
+        //   PatientMenuController controller = loader.getController();
+        // controller.initData(patientMoved,com_data_client);
+        //this line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(ComDataViewScene);
+        window.centerOnScreen();
+
+        window.show();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        com_data_client=new Com_data_client();
+        com_data_client = new Com_data_client();
     }
 
     void initData(Com_data_client com_data) {
-        this.com_data_client=com_data;
+        this.com_data_client = com_data;
+    }
+
+    void initData(String ipaddress, String bitalinoMac) {
+        this.bitalinoMac = bitalinoMac;
+        this.ipAddress = ipaddress;
     }
 
 }

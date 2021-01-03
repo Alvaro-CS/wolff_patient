@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -36,6 +39,31 @@
                         <Insets left="50.0" top="50.0" />
                      </HBox.margin>
                   </Label>
+                  <Group>
+                     <children>
+                        <Button fx:id="comDataButton" cancelButton="true" defaultButton="true" layoutX="1.0" layoutY="1.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" onAction="#comDataMenu" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #A9A9A9;">
+                           <effect>
+                              <Blend />
+                           </effect>
+                           <graphic>
+                              <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/settings.png" />
+                                 </image>
+                                 <rotationAxis>
+                                    <Point3D />
+                                 </rotationAxis>
+                              </ImageView>
+                           </graphic>
+                           <rotationAxis>
+                              <Point3D />
+                           </rotationAxis>
+                        </Button>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="40.0" top="30.0" />
+                     </HBox.margin>
+                  </Group>
                </children>
             </HBox>
             <HBox prefHeight="513.0" prefWidth="480.0">
@@ -147,23 +175,19 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Button fx:id="createAccountButton" onAction="#registerButtonOnAction" prefHeight="60.0" prefWidth="240.0" styleClass="starter_buttom" text="Create account">
-                                 <font>
-                                    <Font name="Ebrima Bold" size="20.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="120.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button fx:id="loginButton" mnemonicParsing="false" onAction="#backtoLogin" prefHeight="45.0" prefWidth="83.0" text="Login">
-                                 <HBox.margin>
-                                    <Insets left="20.0" top="30.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                        </HBox>
+                        <Button fx:id="createAccountButton" onAction="#registerButtonOnAction" prefHeight="60.0" prefWidth="240.0" styleClass="starter_buttom" text="Create account">
+                           <font>
+                              <Font name="Ebrima Bold" size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="120.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#backtoLogin" prefHeight="45.0" prefWidth="83.0" text="Login">
+                           <VBox.margin>
+                              <Insets left="375.0" />
+                           </VBox.margin>
+                        </Button>
                      </children>
                   </VBox>
                </children>
