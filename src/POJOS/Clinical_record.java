@@ -14,6 +14,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 public class Clinical_record implements Serializable {
@@ -29,7 +31,6 @@ public class Clinical_record implements Serializable {
     private transient BooleanProperty difficulty_breathing_prop;
     private transient BooleanProperty fainting_prop;
     private transient StringProperty extra_info_prop;
-    private transient Button ecgShow_button; //transient?
     private transient StringProperty dateString_prop; 
 
     private final SimpleDateFormat formatter;
@@ -78,7 +79,6 @@ public class Clinical_record implements Serializable {
         this.fainting_prop = new SimpleBooleanProperty(fainting);
         this.extra_info_prop = new SimpleStringProperty(extra_info);
         this.dateString_prop = new SimpleStringProperty(dateString);
-        this.ecgShow_button= new Button("VIEW"); //TODO FUNCTIONAL VIEW BUTTON FROM TABLE
     }
 
     public IntegerProperty IdProperty() {
@@ -217,6 +217,9 @@ public class Clinical_record implements Serializable {
         return fainting;
     }
 
+
+
+    
     //Not shown in table
     public Integer[] getECG() {
         return ECG;
@@ -267,9 +270,4 @@ public class Clinical_record implements Serializable {
     public void setExtra_info(String extra_info) {
         this.extra_info = extra_info;
     }
-
-    public Button getEcgShow_button() {
-        return ecgShow_button;
-    }
-
 }

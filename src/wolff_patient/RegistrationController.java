@@ -74,7 +74,6 @@ public class RegistrationController implements Initializable {
     @FXML
     private Label regStatusLabel;
 
-    String filename = "patientFiles";
 
     private String bitalinoMac;
     private String ipAddress;

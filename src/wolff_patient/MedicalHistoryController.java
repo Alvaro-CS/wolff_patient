@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,16 +19,23 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import utilities.ECGplot;
 
 public class MedicalHistoryController implements Initializable {
-    
+
     private Com_data_client com_data_client;
     private Patient patientMoved;
 
+    @FXML
+    private Label ecgLabel;
+    
     @FXML
     private TableView<Clinical_record> table;
 
@@ -58,10 +67,10 @@ public class MedicalHistoryController implements Initializable {
     private TableColumn<Clinical_record, Boolean> faintingColumn;
 
     @FXML
-    private TableColumn ecgColumn;
+    private TableColumn<Clinical_record, String> ecgColumn;
 
     @FXML
-    private TableColumn<Clinical_record, String> extra_infoColumn;
+    private TableColumn<Clinical_record, Button> extra_infoColumn;
 
     private ObservableList<Clinical_record> list;
 
@@ -70,18 +79,8 @@ public class MedicalHistoryController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //Here we connect the columns with the atributes
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateString"));
-        palpitationsColumn.setCellValueFactory(new PropertyValueFactory<>("palpitations"));
-        dizzinessColumn.setCellValueFactory(new PropertyValueFactory<>("dizziness"));
-        fatigueColumn.setCellValueFactory(new PropertyValueFactory<>("fatigue"));
-        anxietyColumn.setCellValueFactory(new PropertyValueFactory<>("anxiety"));
-        chest_painColumn.setCellValueFactory(new PropertyValueFactory<>("chest_pain"));
-        difficulty_breathingColumn.setCellValueFactory(new PropertyValueFactory<>("difficulty_breathing"));
-        faintingColumn.setCellValueFactory(new PropertyValueFactory<>("fainting"));
-        ecgColumn.setCellValueFactory(new PropertyValueFactory<>("ecgShow_button"));
-        extra_infoColumn.setCellValueFactory(new PropertyValueFactory<>("extra_info"));
+        initTable();
+        addViewButton();
     }
 
     public void loadClinical_records() {
@@ -93,14 +92,88 @@ public class MedicalHistoryController implements Initializable {
 
     }
 
+    private void initTable() {
+        //Here we connect the columns with the atributes
+
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateString"));
+        palpitationsColumn.setCellValueFactory(new PropertyValueFactory<>("palpitations"));
+        dizzinessColumn.setCellValueFactory(new PropertyValueFactory<>("dizziness"));
+        fatigueColumn.setCellValueFactory(new PropertyValueFactory<>("fatigue"));
+        anxietyColumn.setCellValueFactory(new PropertyValueFactory<>("anxiety"));
+        chest_painColumn.setCellValueFactory(new PropertyValueFactory<>("chest_pain"));
+        difficulty_breathingColumn.setCellValueFactory(new PropertyValueFactory<>("difficulty_breathing"));
+        faintingColumn.setCellValueFactory(new PropertyValueFactory<>("fainting"));
+        extra_infoColumn.setCellValueFactory(new PropertyValueFactory<>("extra_info"));
+        ecgColumn.setCellValueFactory(new PropertyValueFactory<>("RANDOM"));
+
+    }
+
     /**
-     * Thid method gets the patient got from the login to show the data.
+     * This method adds the View ECG button to a column of the table, with its
+     * behaviour.
      *
      * @param patient
      * @param com_data_client
      */
-    public void initData(Patient patient,Com_data_client com_data_client) {
-        this.com_data_client=com_data_client;
+    private void addViewButton() {
+        Callback<TableColumn<Clinical_record, String>, TableCell<Clinical_record, String>> cellFactory
+                = new Callback<TableColumn<Clinical_record, String>, TableCell<Clinical_record, String>>() {
+            @Override
+            public TableCell call(final TableColumn<Clinical_record, String> param) {
+                final TableCell<Clinical_record, String> cell = new TableCell<Clinical_record, String>() {
+
+                    final Button btn = new Button("VIEW");
+
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                            setText(null);
+                        } else {
+                            btn.setOnAction(event -> {
+                                Clinical_record clinical_record = getTableView().getItems().get(getIndex());
+                                buttonAction(clinical_record);
+                            });
+                            setGraphic(btn);
+                            setText(null);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        ecgColumn.setCellFactory(cellFactory);
+    }
+
+    private void buttonAction(Clinical_record clinical_record) {
+
+        Integer[] ecg_data = clinical_record.getECG();
+        ECGplot e = new ECGplot(ecg_data);
+        if (ecg_data != null) {
+            try {
+                ecgLabel.setText("");//We clean if previously there was no ecg and msg appeared.
+                e.openECGWindow();
+            } catch (IOException ex) {
+                Logger.getLogger(MedicalHistoryController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+         ecgLabel.setText("No ECG found in this record.");
+        }
+
+    }
+
+    /**
+     * This method is used for passing parameters between screens.
+     *
+     * @param patient
+     * @param com_data_client
+     */
+    public void initData(Patient patient, Com_data_client com_data_client) {
+        this.com_data_client = com_data_client;
         this.patientMoved = patient;
         nameLabel.setText("Patient's name:\n " + patientMoved.getName());
         loadClinical_records();
@@ -110,7 +183,7 @@ public class MedicalHistoryController implements Initializable {
     public ObservableList<Clinical_record> getList() {
         return list;
     }
-    
+
     /**
      * This method takes the user back to the main menu
      *
@@ -125,7 +198,7 @@ public class MedicalHistoryController implements Initializable {
         Parent patientMenuViewParent = loader.load();
         Scene MainMenuViewScene = new Scene(patientMenuViewParent);
         PatientMenuController controller = loader.getController();
-        controller.initData(patientMoved,com_data_client);
+        controller.initData(patientMoved, com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MainMenuViewScene);
@@ -151,7 +224,7 @@ public class MedicalHistoryController implements Initializable {
         Scene NewMedicalHistoryViewScene = new Scene(newmedicalHistoryViewParent);
 
         NewMedicalHistoryController controller = loader.getController();
-        controller.initData(patientMoved,com_data_client);
+        controller.initData(patientMoved, com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(NewMedicalHistoryViewScene);
