@@ -54,6 +54,7 @@ public class ComDataController implements Initializable {
         Parent LogInViewParent = loader.load();
         Scene LogInViewScene = new Scene(LogInViewParent);
         LogInController controller = loader.getController();
+            System.out.println(ipAdressField.getText());
         controller.initData(ipAdressField.getText(),bitalinoField.getText());
 
         //this line gets the Stage information
