@@ -44,6 +44,7 @@ public class ECGThread implements Runnable{
         }
        // saveECG();
     }
+    /*
     public void saveECG() {
         //We get the data (Frame class) from Bitalino, get the useful info (int) and send it.
         Frame[] frame = bitalinoManager.getFrame();
@@ -51,7 +52,7 @@ public class ECGThread implements Runnable{
         for (int i = 0; i < frame.length; i++) {
             ecg_data[i] = frame[i].analog[0];
         }
-    }
+    }*/
 
     public Integer[] getEcg_data() {
         return ecg_data;

@@ -30,9 +30,14 @@
                   <TableColumn id="diff_breathing" fx:id="difficulty_breathingColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Difficulty Breathing" />
                   <TableColumn id="fainting" fx:id="faintingColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Fainting" />
                   <TableColumn id="extra_info" fx:id="extra_infoColumn" prefWidth="123.199951171875" style="-fx-alignment: CENTER;" text="Extra Info" />
-                  <TableColumn id="ecg" fx:id="ecgColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="ECG" />
+                  <TableColumn id="ecgShow_button" fx:id="ecgColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="ECG" />
               </columns>
             </TableView>
+            <Label fx:id="ecgLabel" alignment="CENTER" layoutX="619.0" layoutY="173.0" prefHeight="21.0" prefWidth="208.0" textAlignment="CENTER" textFill="#da0e0e">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane prefHeight="115.0" prefWidth="600.0" style="-fx-background-color: e3e4e5;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

@@ -29,6 +29,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import utilities.ECGplot;
 
 public class ManualECGController implements Initializable {
 
@@ -98,7 +99,8 @@ public class ManualECGController implements Initializable {
                 msgLabel.setText("ECG recorded!");
                 msgLabel.setTextFill(Color.SEAGREEN);
                 ecg_data = manualECGThread.getEcg_data();
-                openECGWindow(event);
+                ECGplot e= new ECGplot(ecg_data);
+                e.openECGWindow();
                 start = false;
             } catch (IOException ex) {
                 Logger.getLogger(ManualECGController.class.getName()).log(Level.SEVERE, null, ex);
@@ -119,6 +121,7 @@ public class ManualECGController implements Initializable {
     }
 
 //It opens a window with the ECG that has just been recorded
+    /*
     void openECGWindow(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ECGShowView.fxml"));
 
@@ -131,5 +134,5 @@ public class ManualECGController implements Initializable {
         controller.initData(ecg_data);
 
         stage.show();
-    }
+    }*/
 }

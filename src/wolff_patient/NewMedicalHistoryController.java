@@ -24,9 +24,10 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 public class NewMedicalHistoryController implements Initializable {
+
     private Com_data_client com_data_client;
     private Patient patientMoved;
-    private Integer[] ecg_data=null;
+    private Integer[] ecg_data = null;
     @FXML
     RadioButton palpitations_no;
     @FXML
@@ -81,13 +82,8 @@ public class NewMedicalHistoryController implements Initializable {
     }
 
     public void updatePatient() {
-        OutputStream outputStream = null;
-        ObjectOutputStream objectOutputStream = null;
-        Socket socket = null;
         try {
-            socket = new Socket("localhost", 9000);
-            outputStream = socket.getOutputStream();
-            objectOutputStream = new ObjectOutputStream(outputStream);
+            ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
             //Sending order
             String order = "UPDATE";
             objectOutputStream.writeObject(order);
@@ -99,22 +95,6 @@ public class NewMedicalHistoryController implements Initializable {
 
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
-            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            releaseResources(outputStream, socket);
-
-        }
-    }
-
-    private static void releaseResources(OutputStream outputStream, Socket socket) {
-        try {
-            outputStream.close();
-        } catch (IOException ex) {
-            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            socket.close();
-        } catch (IOException ex) {
             Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -139,7 +119,7 @@ public class NewMedicalHistoryController implements Initializable {
         Scene MedicalHistoryViewScene = new Scene(medicalHistoryViewParent);
 
         MedicalHistoryController controller = loader.getController();
-        controller.initData(patientMoved,com_data_client);
+        controller.initData(patientMoved, com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MedicalHistoryViewScene);
@@ -148,7 +128,7 @@ public class NewMedicalHistoryController implements Initializable {
         window.show();
 
     }
-    
+
     @FXML
     public void ECGMenu(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
@@ -157,10 +137,10 @@ public class NewMedicalHistoryController implements Initializable {
 
         Parent ECGMenuParent = loader.load();
         Scene ECGMenuViewScene = new Scene(ECGMenuParent);
-        
+
         BitalinoMenuController controller = loader.getController();
-        controller.initData(patientMoved,com_data_client);
-        
+        controller.initData(patientMoved, com_data_client);
+
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(ECGMenuViewScene);
@@ -174,14 +154,15 @@ public class NewMedicalHistoryController implements Initializable {
      * @param patient
      * @param com_data_client
      */
-    public void initData(Patient patient,Com_data_client com_data_client) {
-        this.com_data_client=com_data_client;
+    public void initData(Patient patient, Com_data_client com_data_client) {
+        this.com_data_client = com_data_client;
         this.patientMoved = patient;
 
     }
-    public void initDataECG(Patient patient,Com_data_client com_data_client, Integer[] ecg_data) {
-        this.com_data_client=com_data_client;
+
+    public void initDataECG(Patient patient, Com_data_client com_data_client, Integer[] ecg_data) {
+        this.com_data_client = com_data_client;
         this.patientMoved = patient;
-        this.ecg_data=ecg_data;
+        this.ecg_data = ecg_data;
     }
 }

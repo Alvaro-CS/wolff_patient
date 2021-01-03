@@ -31,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import utilities.ECGplot;
 
 public class BitalinoMenuController implements Initializable {
 
@@ -165,7 +166,8 @@ public class BitalinoMenuController implements Initializable {
                     System.out.println("Before show " + ecg_data);
                     messageLabel.setText("ECG recorded!");
                     messageLabel.setTextFill(Color.SEAGREEN);
-                    openECGWindow(event);
+                    ECGplot e= new ECGplot(ecg_data);
+                    e.openECGWindow();
 
                 } else {
                     messageLabel.setTextFill(Color.RED);
@@ -239,6 +241,7 @@ public class BitalinoMenuController implements Initializable {
     }
 
     //It opens a window with the ECG that has just been recorded
+    /*
     void openECGWindow(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ECGShowView.fxml"));
 
@@ -252,7 +255,7 @@ public class BitalinoMenuController implements Initializable {
 
         stage.show();
     }
-
+*/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
