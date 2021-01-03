@@ -27,9 +27,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -45,8 +42,6 @@ public class BitalinoMenuController implements Initializable {
     private TextField secondsField;
     @FXML
     private Label messageLabel;
-    @FXML
-    private Pane paneChart;
 
     /**
      * This method gets the patient got from the login to show the data and com

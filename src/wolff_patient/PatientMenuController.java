@@ -5,6 +5,8 @@ import POJOS.Patient;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -27,11 +29,12 @@ public class PatientMenuController implements Initializable {
      * Thid method accets a person to initialize the view
      *
      * @param patient
+     * @param com_data_client
      */
-    public void initData(Patient patient,Com_data_client com_data_client) {
+    public void initData(Patient patient, Com_data_client com_data_client) {
 
         this.patientMoved = patient;
-        this.com_data_client=com_data_client;
+        this.com_data_client = com_data_client;
         nameLabel.setText("Patient's name:\n " + patientMoved.getName());
 
     }
@@ -55,7 +58,6 @@ public class PatientMenuController implements Initializable {
      */
     public void openUserInfo(ActionEvent event) throws IOException {
 
-        
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("UserInfoView.fxml"));
         Parent userInfoViewParent = loader.load();
@@ -63,7 +65,7 @@ public class PatientMenuController implements Initializable {
         Scene MainMenuViewScene = new Scene(userInfoViewParent);
 
         UserInfoController controller = loader.getController();
-        controller.initData(patientMoved,com_data_client);
+        controller.initData(patientMoved, com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MainMenuViewScene);
@@ -83,12 +85,11 @@ public class PatientMenuController implements Initializable {
 
         loader.setLocation(getClass().getResource("MedicalHistoryView.fxml"));
 
-
         Parent medicalHistoryViewParent = loader.load();
         Scene MedicalHistoryViewScene = new Scene(medicalHistoryViewParent);
-        
-                MedicalHistoryController controller = loader.getController();
-        controller.initData(patientMoved,com_data_client);
+
+        MedicalHistoryController controller = loader.getController();
+        controller.initData(patientMoved, com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MedicalHistoryViewScene);
@@ -97,7 +98,7 @@ public class PatientMenuController implements Initializable {
         window.show();
 
     }
-    
+
     /**
      * This method logs out and returns to log In screen.
      *
@@ -105,10 +106,10 @@ public class PatientMenuController implements Initializable {
      * @throws IOException
      */
     public void logOut(ActionEvent event) throws IOException {
+        releaseResources(com_data_client);
         FXMLLoader loader = new FXMLLoader();
 
         loader.setLocation(getClass().getResource("LogInView.fxml"));
-
 
         Parent LogInViewParent = loader.load();
         Scene LogInViewScene = new Scene(LogInViewParent);
@@ -122,5 +123,32 @@ public class PatientMenuController implements Initializable {
 
     }
 
-    
+    private static void releaseResources(Com_data_client c) {
+        try {
+            c.getInputStream().close();
+        } catch (IOException ex) {
+            Logger.getLogger(PatientMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            c.getObjectInputStream().close();
+        } catch (IOException ex) {
+            Logger.getLogger(PatientMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            c.getOutputStream().close();
+        } catch (IOException ex) {
+            Logger.getLogger(PatientMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            c.getObjectOutputStream().close();
+        } catch (IOException ex) {
+            Logger.getLogger(PatientMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            c.getSocket().close();
+        } catch (IOException ex) {
+            Logger.getLogger(PatientMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }
