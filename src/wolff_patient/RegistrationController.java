@@ -148,12 +148,10 @@ public class RegistrationController implements Initializable {
             System.out.println("Order" + order + "sent");
 
             //Sending patient
-            //Patient p = new Patient(ID, password, name, surname);
             Patient p1 = new Patient(ID, password, name, surname, gender, dob, adress, ssnumber, phone);
 
             objectOutputStream.writeObject(p1);
-            System.out.println("Patient data sent to register in server");
-            p1.toString();
+            System.out.println("Patient data ("+p1.getDNI()+ ") sent to register in server");
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
             Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
@@ -168,7 +166,7 @@ public class RegistrationController implements Initializable {
      * @return boolean
      */
     public boolean usernameIsFree(String id) {//TODO
-        Patient p = null;
+        Patient p;
         try {
             if (!com_data_client.isSocket_created()) {
                 Socket socket = new Socket(com_data_client.getIp_address(), 9000);
