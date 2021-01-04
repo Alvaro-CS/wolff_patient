@@ -135,9 +135,9 @@
                      <children>
                         <HBox prefHeight="60.0" prefWidth="480.0">
                            <children>
-                              <Label fx:id="regMessageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="240.0" textAlignment="CENTER">
+                              <Label fx:id="regMessageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" prefWidth="240.0" textAlignment="CENTER">
                                  <HBox.margin>
-                                    <Insets left="30.0" right="15.0" top="10.0" />
+                                    <Insets left="30.0" right="5.0" />
                                  </HBox.margin>
                               </Label>
                               <Label fx:id="regStatusLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="240.0" textAlignment="CENTER">

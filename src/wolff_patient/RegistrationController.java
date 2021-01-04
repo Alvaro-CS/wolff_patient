@@ -88,10 +88,11 @@ public class RegistrationController implements Initializable {
      */
     public void registerButtonOnAction(ActionEvent event) throws IOException {
 
-        if (usernameIsFree(userNameField.getText())) {
+        if (usernameIsFree(userNameField.getText())&& userNameField.getText()!=null && userNameField.getText().toString().length()==9) {
             regMessageLabel.setText("Username available");
 
-            if (passwordField.getText().equals(repeatPasswordField.getText())) {
+            if (passwordField.getText().equals(repeatPasswordField.getText())&& passwordField.getText().isEmpty()!=true) {
+                System.out.println(passwordField.getText());
                 confirmPasswordLabel.setText("Passwords match");
                 if (nameField.getText() == null || nameField.getText().isEmpty()) {
                     regMessageLabel.setText("Name parameter is missing");
@@ -111,7 +112,7 @@ public class RegistrationController implements Initializable {
                 } else if (adressField.getText() == null || adressField.getText().isEmpty()) {
                     regMessageLabel.setText("Address parameter is missing");
                     System.out.println("Address parameter is missing");
-                } else if (phoneField.getText() == null || isNumeric(phoneField.getText()) == false) {
+                } else if (phoneField.getText() == null || isNumeric(phoneField.getText()) == false ||phoneField.getText().toString().length()!=9) {
                     regMessageLabel.setText("Phone number is missing or is incorrect");
                     System.out.println("Phone number is missing or is incorrect");
                 } else {
@@ -121,10 +122,10 @@ public class RegistrationController implements Initializable {
                     backtoLogin(event);
                 }
             } else {
-                confirmPasswordLabel.setText("Passwords don't match");
+                confirmPasswordLabel.setText("Passwords don't match or are not valid");
             }
         } else {
-            regMessageLabel.setText("That username already exists.\nChoose another one.");
+            regMessageLabel.setText("That username already exists \nor is not valid.\nIntroduce a valid one one.");
         }
 
     }
