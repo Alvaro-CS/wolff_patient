@@ -39,7 +39,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-      <Label fx:id="loginMessageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="303.0" prefHeight="61.0" prefWidth="387.0">
+      <Label fx:id="loginMessageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="318.0" prefHeight="45.0" prefWidth="387.0" textAlignment="CENTER" textFill="#904242">
          <font>
             <Font size="11.0" />
          </font>

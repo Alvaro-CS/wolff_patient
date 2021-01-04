@@ -81,7 +81,7 @@ public class LogInController implements Initializable {
 
         } else {
             System.out.println("CONTROL VALIDATE NULL");
-            loginMessageLabel.setText("User no found.\nPlease try again");
+            loginMessageLabel.setText("User-password combination not found.\nPlease try again");
         }
     }
 

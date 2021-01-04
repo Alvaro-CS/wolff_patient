@@ -45,7 +45,11 @@ public class ClientThreadsServer implements Runnable {
 
                     tmp = objectInputStream.readObject();//we receive the patient
                     patient = (Patient) tmp;
-                    System.out.println("Patient received: " + patient.getDNI());
+                    if (patient != null) {
+                        System.out.println("Patient received: " + patient.getDNI());
+                    } else {
+                        System.out.println("Null patient: " + patient);
+                    }
                     notify(); //we awake thread to get data
                     break;
                 }
@@ -60,7 +64,7 @@ public class ClientThreadsServer implements Runnable {
         }
     }
 
-/*
+    /*
     private static void releaseResourcesClient(ObjectInputStream objectInputStream, Socket socket) {
         try {
             objectInputStream.close();
@@ -74,17 +78,15 @@ public class ClientThreadsServer implements Runnable {
             Logger.getLogger(ClientThreadsServer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }*/
-
-public Patient getPatient() {
+    public Patient getPatient() {
         return patient;
     }
 
-   /*public boolean isPatient_logged() {
+    /*public boolean isPatient_logged() {
         return patient_logged;
     }*/
-
     public void setCom_data_client(Com_data_client com_data_client) {
         this.com_data_client = com_data_client;
     }
-    
+
 }
