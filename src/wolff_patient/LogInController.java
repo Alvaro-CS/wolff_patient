@@ -46,13 +46,22 @@ public class LogInController implements Initializable {
      * @param event
      */
     public void loginButtonOnAction(ActionEvent event) throws IOException {
-
-        if (userNameField.getText().isEmpty() == false && passwordField.getText().isEmpty() == false) {
-            validateLogin(event);
-
+        if (com_data_client.getIp_address() == null) {
+            loginMessageLabel.setText("Please click on the settings button and introduce "
+                    + "\n your ipaddress and bitalino mac address");
         } else {
-            //if Fields are empty
-            loginMessageLabel.setText("Please enter ID and password");
+
+            if (userNameField.getText().isEmpty() == false && passwordField.getText().isEmpty() == false) {
+                if (com_data_client.getIp_address().isEmpty() == true) {
+                    loginMessageLabel.setText("Please click on the settings button and introduce your ipaddress and bitalino mac address");
+                } else {
+                    validateLogin(event);
+                }
+
+            } else {
+                //if Fields are empty
+                loginMessageLabel.setText("Please enter ID and password");
+            }
         }
     }
 
@@ -83,21 +92,27 @@ public class LogInController implements Initializable {
      * @throws IOException
      */
     public void createAccountForm(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
+        if (com_data_client.getIp_address() == null) {
+            loginMessageLabel.setText("Please click on the settings button and introduce "
+                    + "\n your ipaddress and bitalino mac address");
+        } else {
+            FXMLLoader loader = new FXMLLoader();
 
-        loader.setLocation(getClass().getResource("RegistrationView.fxml"));
-        Parent registrationViewParent = loader.load();
+            loader.setLocation(getClass().getResource("RegistrationView.fxml"));
+            Parent registrationViewParent = loader.load();
 
-        Scene registrationViewScene = new Scene(registrationViewParent);
+            Scene registrationViewScene = new Scene(registrationViewParent);
 
-        RegistrationController controller = loader.getController();
-        controller.initData(com_data_client);
+            RegistrationController controller = loader.getController();
+            controller.initData(com_data_client);
 
-        //this line gets the Stage information
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(registrationViewScene);
-        window.centerOnScreen();
-        window.show();
+            //this line gets the Stage information
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(registrationViewScene);
+            window.centerOnScreen();
+            window.show();
+        }
+
     }
 
     /**
@@ -155,9 +170,7 @@ public class LogInController implements Initializable {
                 com_data_client.setObjectInputStream(objectInputStream);
 
                 com_data_client.setSocket_created(true);
-
-                com_data_client.setBitalino_adress(bitalinoMac);
-                com_data_client.setIp_address(ipAddress);
+                
 
             }
 
@@ -249,6 +262,7 @@ public class LogInController implements Initializable {
         Parent comDataViewParent = loader.load();
 
         Scene ComDataViewScene = new Scene(comDataViewParent);
+        
 
         //   PatientMenuController controller = loader.getController();
         // controller.initData(patientMoved,com_data_client);
@@ -270,8 +284,10 @@ public class LogInController implements Initializable {
     }
 
     void initData(String ipaddress, String bitalinoMac) {
-        this.bitalinoMac = bitalinoMac;
-        this.ipAddress = ipaddress;
+        com_data_client.setIp_address(ipaddress);
+        com_data_client.setBitalino_mac(bitalinoMac);
+        System.out.println("en initdata");
+        System.out.println(ipaddress);
     }
 
 }

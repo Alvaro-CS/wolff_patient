@@ -77,6 +77,7 @@ public class RegistrationController implements Initializable {
 
     private String bitalinoMac;
     private String ipAddress;
+
     /**
      * This method takes place when the createAccountButton is clicked. After
      * checking that the username is free and the passwords match, it calls the
@@ -92,10 +93,33 @@ public class RegistrationController implements Initializable {
 
             if (passwordField.getText().equals(repeatPasswordField.getText())) {
                 confirmPasswordLabel.setText("Passwords match");
+                if (nameField.getText() == null || nameField.getText().isEmpty()) {
+                    regMessageLabel.setText("Name parameter is missing");
+                    System.out.println("Name parameter is missing");
+                } else if (surnameField.getText() == null || surnameField.getText().isEmpty()) {
+                    regMessageLabel.setText("Surname parameter is missing");
+                    System.out.println("Surname parameter is missing");
+                } else if (genderComboBox.getValue() == null) {
+                    regMessageLabel.setText("The gender is missing");
+                    System.out.println("The gender is missing");
+                } else if (dobDatePicker.getValue() == null) {
+                    regMessageLabel.setText("The date of birth is missing or is incorrect");
+                    System.out.println("The date of birth is missing or is incorrect");
+                } else if (ssNumberField.getText() == null || isNumeric(ssNumberField.getText()) == false) {
+                    regMessageLabel.setText("Social security number is missing or is incorrect");
+                    System.out.println("Social security number is missing or is incorrect");
+                } else if (adressField.getText() == null || adressField.getText().isEmpty()) {
+                    regMessageLabel.setText("Address parameter is missing");
+                    System.out.println("Address parameter is missing");
+                } else if (phoneField.getText() == null || isNumeric(phoneField.getText()) == false) {
+                    regMessageLabel.setText("Phone number is missing or is incorrect");
+                    System.out.println("Phone number is missing or is incorrect");
+                } else {
 
-                registerUser();
-                regStatusLabel.setText("Registration completed");
-                backtoLogin(event);
+                    registerUser();
+                    regStatusLabel.setText("Registration completed");
+                    backtoLogin(event);
+                }
             } else {
                 confirmPasswordLabel.setText("Passwords don't match");
             }
@@ -105,6 +129,15 @@ public class RegistrationController implements Initializable {
 
     }
 
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     public void backtoLogin(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("LogInView.fxml"));
@@ -112,6 +145,7 @@ public class RegistrationController implements Initializable {
         Scene LogInViewScene = new Scene(LogInViewParent);
 
         LogInController controller = loader.getController();
+        System.out.println("Registration:"+com_data_client.getIp_address());
         controller.initData(com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -152,7 +186,7 @@ public class RegistrationController implements Initializable {
             Patient p1 = new Patient(ID, password, name, surname, gender, dob, adress, ssnumber, phone);
 
             objectOutputStream.writeObject(p1);
-            System.out.println("Patient data ("+p1.getDNI()+ ") sent to register in server");
+            System.out.println("Patient data (" + p1.getDNI() + ") sent to register in server");
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
             Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
@@ -182,9 +216,8 @@ public class RegistrationController implements Initializable {
                 com_data_client.setObjectInputStream(objectInputStream);
 
                 com_data_client.setSocket_created(true);
-                                
-                com_data_client.setBitalino_adress(bitalinoMac);
-                com_data_client.setIp_address(ipAddress);
+
+
 
             }
             //Sending order
@@ -246,32 +279,36 @@ public class RegistrationController implements Initializable {
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }*/
-        @FXML
-    public void comDataMenu(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ComDataView.fxml"));
-        Parent comDataViewParent = loader.load();
+//    @FXML
+//    public void comDataMenu(ActionEvent event) throws IOException {
+//        FXMLLoader loader = new FXMLLoader();
+//        loader.setLocation(getClass().getResource("ComDataView.fxml"));
+//        Parent comDataViewParent = loader.load();
+//
+//        Scene ComDataViewScene = new Scene(comDataViewParent);
+//
+//        //   PatientMenuController controller = loader.getController();
+//        // controller.initData(patientMoved,com_data_client);
+//        //this line gets the Stage information
+//        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        window.setScene(ComDataViewScene);
+//        window.centerOnScreen();
+//
+//        window.show();
+//    }
 
-        Scene ComDataViewScene = new Scene(comDataViewParent);
-
-     //   PatientMenuController controller = loader.getController();
-       // controller.initData(patientMoved,com_data_client);
-        //this line gets the Stage information
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(ComDataViewScene);
-        window.centerOnScreen();
-
-        window.show();
-    }
     public RegistrationController() {
     }
 
     void initData(Com_data_client com_data) {
         this.com_data_client = com_data;
     }
-       void initData(String ipaddress, String bitalinoMac) {
-       this.bitalinoMac=bitalinoMac;
-       this.ipAddress=ipaddress;
-    }
+
+//    void initData(String ipaddress, String bitalinoMac) {
+//        com_data_client.setIp_address(ipaddress);
+//        com_data_client.setBitalino_mac(bitalinoMac);
+//        System.out.println("en initdata register");
+//        System.out.println(ipaddress);
+//    }
 
 }
