@@ -30,9 +30,6 @@ public class LogInController implements Initializable {
     private Com_data_client com_data_client;
     private ClientThreadsServer clientThreadsServer; //we create a reference for accesing different methods
     private Patient patientMoved;
-    private String ipAddress;
-    private String bitalinoMac;
-
     @FXML
     private TextField userNameField;
     @FXML
@@ -44,20 +41,16 @@ public class LogInController implements Initializable {
      * This method logins the patient
      *
      * @param event
+     * @throws java.io.IOException
      */
     public void loginButtonOnAction(ActionEvent event) throws IOException {
         if (com_data_client.getIp_address() == null) {
             loginMessageLabel.setText("Please click on the settings button and introduce "
-                    + "\n your ipaddress and bitalino mac address");
+                    + "\n the server's IP address and Bitalino MAC address");
         } else {
 
-            if (userNameField.getText().isEmpty() == false && passwordField.getText().isEmpty() == false) {
-                if (com_data_client.getIp_address().isEmpty() == true) {
-                    loginMessageLabel.setText("Please click on the settings button and introduce your ipaddress and bitalino mac address");
-                } else {
-                    validateLogin(event);
-                }
-
+            if (!userNameField.getText().isEmpty() && !passwordField.getText().isEmpty()) {
+                validateLogin(event);
             } else {
                 //if Fields are empty
                 loginMessageLabel.setText("Please enter ID and password");
@@ -94,7 +87,7 @@ public class LogInController implements Initializable {
     public void createAccountForm(ActionEvent event) throws IOException {
         if (com_data_client.getIp_address() == null) {
             loginMessageLabel.setText("Please click on the settings button and introduce "
-                    + "\n your ipaddress and bitalino mac address");
+                    + "\n the server's IP address and Bitalino MAC address");
         } else {
             FXMLLoader loader = new FXMLLoader();
 
@@ -170,7 +163,6 @@ public class LogInController implements Initializable {
                 com_data_client.setObjectInputStream(objectInputStream);
 
                 com_data_client.setSocket_created(true);
-                
 
             }
 
@@ -262,7 +254,6 @@ public class LogInController implements Initializable {
         Parent comDataViewParent = loader.load();
 
         Scene ComDataViewScene = new Scene(comDataViewParent);
-        
 
         //   PatientMenuController controller = loader.getController();
         // controller.initData(patientMoved,com_data_client);
@@ -286,8 +277,7 @@ public class LogInController implements Initializable {
     void initData(String ipaddress, String bitalinoMac) {
         com_data_client.setIp_address(ipaddress);
         com_data_client.setBitalino_mac(bitalinoMac);
-        System.out.println("en initdata");
-        System.out.println(ipaddress);
+        System.out.println(ipaddress+"|"+bitalinoMac);
     }
 
 }

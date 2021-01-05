@@ -91,12 +91,12 @@
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="240.0">
                      <children>
-                        <ComboBox fx:id="genderComboBox" prefHeight="45.0" prefWidth="240.0">
+                        <ComboBox fx:id="genderComboBox" prefHeight="45.0" prefWidth="240.0" promptText="Gender">
                            <VBox.margin>
                               <Insets left="10.0" right="30.0" top="10.0" />
                            </VBox.margin>
                         </ComboBox>
-                        <DatePicker fx:id="dobDatePicker" prefHeight="45.0" prefWidth="240.0">
+                        <DatePicker fx:id="dobDatePicker" prefHeight="45.0" prefWidth="240.0" promptText="Date of Birth">
                            <VBox.margin>
                               <Insets left="10.0" right="30.0" top="10.0" />
                            </VBox.margin>
@@ -109,7 +109,7 @@
                               <Insets left="10.0" right="30.0" top="10.0" />
                            </VBox.margin>
                         </TextField>
-                        <TextField fx:id="adressField" prefHeight="45.0" prefWidth="240.0" promptText="Adress">
+                        <TextField fx:id="addressField" prefHeight="45.0" prefWidth="240.0" promptText="Address">
                            <font>
                               <Font name="Ebrima Bold" size="14.0" />
                            </font>
@@ -131,22 +131,9 @@
             </HBox>
             <HBox prefHeight="408.0" prefWidth="480.0">
                <children>
-                  <VBox prefHeight="79.0" prefWidth="492.0">
+                  <VBox prefHeight="150.0" prefWidth="480.0">
                      <children>
-                        <HBox prefHeight="60.0" prefWidth="480.0">
-                           <children>
-                              <Label fx:id="regMessageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" prefWidth="240.0" textAlignment="CENTER">
-                                 <HBox.margin>
-                                    <Insets left="30.0" right="5.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="regStatusLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="240.0" textAlignment="CENTER">
-                                 <HBox.margin>
-                                    <Insets left="15.0" right="30.0" top="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                        </HBox>
+                        <Label fx:id="regMessageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" prefWidth="482.0" textAlignment="CENTER" />
                         <Button fx:id="createAccountButton" onAction="#registerButtonOnAction" prefHeight="60.0" prefWidth="240.0" styleClass="starter_buttom" text="Create account">
                            <font>
                               <Font name="Ebrima Bold" size="20.0" />

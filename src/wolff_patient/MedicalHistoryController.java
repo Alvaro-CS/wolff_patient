@@ -70,7 +70,7 @@ public class MedicalHistoryController implements Initializable {
     private TableColumn<Clinical_record, String> ecgColumn;
 
     @FXML
-    private TableColumn<Clinical_record, Button> extra_infoColumn;
+    private TableColumn<Clinical_record, String> extra_infoColumn;
 
     private ObservableList<Clinical_record> list;
 

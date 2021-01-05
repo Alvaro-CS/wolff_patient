@@ -64,27 +64,10 @@ public class ClientThreadsServer implements Runnable {
         }
     }
 
-    /*
-    private static void releaseResourcesClient(ObjectInputStream objectInputStream, Socket socket) {
-        try {
-            objectInputStream.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ClientThreadsServer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        try {
-            socket.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ClientThreadsServer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }*/
     public Patient getPatient() {
         return patient;
     }
 
-    /*public boolean isPatient_logged() {
-        return patient_logged;
-    }*/
     public void setCom_data_client(Com_data_client com_data_client) {
         this.com_data_client = com_data_client;
     }

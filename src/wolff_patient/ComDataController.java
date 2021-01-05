@@ -26,24 +26,11 @@ import javafx.stage.Stage;
 
 public class ComDataController implements Initializable {
 
-    private Com_data_client com_data_client;
-    private ClientThreadsServer clientThreadsServer; //we create a reference for accesing different methods
-    private Patient patientMoved;
-    
     @FXML
     private TextField ipAdressField;
     @FXML
     private TextField bitalinoField;
-    @FXML
-    private Label messageLabel;
 
-//    @FXML
-//    public void SaveComData(ActionEvent event) throws IOException {
-//        com_data_client.setIp_address(ipAdressField.getText());
-//        com_data_client.setBitalino_adress(bitalinoField.getText());
-//        goBackLogin(event);
-//
-//    }
     
         public void goBackLogin(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();

@@ -62,7 +62,7 @@ public class RegistrationController implements Initializable {
     @FXML
     private DatePicker dobDatePicker;
     @FXML
-    private TextField adressField;
+    private TextField addressField;
     @FXML
     private TextField ssNumberField;
     @FXML
@@ -71,12 +71,6 @@ public class RegistrationController implements Initializable {
     private Label regMessageLabel;
     @FXML
     private Label confirmPasswordLabel;
-    @FXML
-    private Label regStatusLabel;
-
-
-    private String bitalinoMac;
-    private String ipAddress;
 
     /**
      * This method takes place when the createAccountButton is clicked. After
@@ -88,10 +82,10 @@ public class RegistrationController implements Initializable {
      */
     public void registerButtonOnAction(ActionEvent event) throws IOException {
 
-        if (usernameIsFree(userNameField.getText())&& userNameField.getText()!=null && userNameField.getText().toString().length()==9) {
+        if (usernameIsFree(userNameField.getText()) && userNameField.getText() != null && userNameField.getText().length() == 9) {
             regMessageLabel.setText("Username available");
 
-            if (passwordField.getText().equals(repeatPasswordField.getText())&& passwordField.getText().isEmpty()!=true) {
+            if (passwordField.getText().equals(repeatPasswordField.getText()) && passwordField.getText().isEmpty() != true) {
                 System.out.println(passwordField.getText());
                 confirmPasswordLabel.setText("Passwords match");
                 if (nameField.getText() == null || nameField.getText().isEmpty()) {
@@ -109,16 +103,16 @@ public class RegistrationController implements Initializable {
                 } else if (ssNumberField.getText() == null || isNumeric(ssNumberField.getText()) == false) {
                     regMessageLabel.setText("Social security number is missing or is incorrect");
                     System.out.println("Social security number is missing or is incorrect");
-                } else if (adressField.getText() == null || adressField.getText().isEmpty()) {
+                } else if (addressField.getText() == null || addressField.getText().isEmpty()) {
                     regMessageLabel.setText("Address parameter is missing");
                     System.out.println("Address parameter is missing");
-                } else if (phoneField.getText() == null || isNumeric(phoneField.getText()) == false ||phoneField.getText().toString().length()!=9) {
+                } else if (phoneField.getText() == null || isNumeric(phoneField.getText()) == false || phoneField.getText().length() != 9) {
                     regMessageLabel.setText("Phone number is missing or is incorrect");
                     System.out.println("Phone number is missing or is incorrect");
                 } else {
 
                     registerUser();
-                    regStatusLabel.setText("Registration completed");
+                    regMessageLabel.setText("Registration completed");
                     backtoLogin(event);
                 }
             } else {
@@ -146,7 +140,7 @@ public class RegistrationController implements Initializable {
         Scene LogInViewScene = new Scene(LogInViewParent);
 
         LogInController controller = loader.getController();
-        System.out.println("Registration:"+com_data_client.getIp_address());
+        System.out.println("Registration:" + com_data_client.getIp_address());
         controller.initData(com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -173,7 +167,7 @@ public class RegistrationController implements Initializable {
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
         Date dob = Date.from(instant);
         int ssnumber = Integer.parseInt(ssNumberField.getText());
-        String adress = adressField.getText();
+        String address = addressField.getText();
         int phone = Integer.parseInt(phoneField.getText());
 
         try {
@@ -184,7 +178,7 @@ public class RegistrationController implements Initializable {
             System.out.println("Order" + order + "sent");
 
             //Sending patient
-            Patient p1 = new Patient(ID, password, name, surname, gender, dob, adress, ssnumber, phone);
+            Patient p1 = new Patient(ID, password, name, surname, gender, dob, address, ssnumber, phone);
 
             objectOutputStream.writeObject(p1);
             System.out.println("Patient data (" + p1.getDNI() + ") sent to register in server");
@@ -217,8 +211,6 @@ public class RegistrationController implements Initializable {
                 com_data_client.setObjectInputStream(objectInputStream);
 
                 com_data_client.setSocket_created(true);
-
-
 
             }
             //Sending order
@@ -297,7 +289,6 @@ public class RegistrationController implements Initializable {
 //
 //        window.show();
 //    }
-
     public RegistrationController() {
     }
 
@@ -311,5 +302,4 @@ public class RegistrationController implements Initializable {
 //        System.out.println("en initdata register");
 //        System.out.println(ipaddress);
 //    }
-
 }
