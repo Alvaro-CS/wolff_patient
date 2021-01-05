@@ -232,5 +232,23 @@ public class MedicalHistoryController implements Initializable {
 
         window.show();
     }
+        @FXML
+    public void chooseTypeRecord(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(getClass().getResource("OptionECGView.fxml"));
+
+        Parent optionECGViewParent = loader.load();
+        Scene OptionECGViewScene = new Scene(optionECGViewParent);
+
+        OptionECGController controller = loader.getController();
+        controller.initData(patientMoved, com_data_client);
+        //this line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(OptionECGViewScene);
+        window.centerOnScreen();
+
+        window.show();
+    }
 
 }

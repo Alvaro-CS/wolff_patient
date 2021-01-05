@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -7,6 +8,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
@@ -27,110 +29,79 @@
             </Button>
          </children>
       </Pane>
-      <Group layoutX="67.0" layoutY="129.0">
+      <HBox layoutX="-2.0" layoutY="204.0" prefHeight="106.0" prefWidth="619.0" spacing="80.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0">
          <children>
-            <Button fx:id="Button1" cancelButton="true" defaultButton="true" layoutX="14.0" layoutY="1.0" mnemonicParsing="false" onAction="#openUserInfo" prefHeight="97.0" prefWidth="97.0" style="-fx-background-color: e3e4e5;">
-               <effect>
-                  <Blend />
-               </effect>
-               <graphic>
-                  <ImageView fitHeight="97.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/user.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+            <Group>
+               <children>
+                  <Button fx:id="Button1" cancelButton="true" defaultButton="true" layoutX="14.0" layoutY="1.0" mnemonicParsing="false" onAction="#openUserInfo" prefHeight="97.0" prefWidth="97.0" style="-fx-background-color: e3e4e5;">
+                     <effect>
+                        <Blend />
+                     </effect>
+                     <graphic>
+                        <ImageView fitHeight="97.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/user.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </Group>
+            <Group>
+               <children>
+                  <Button fx:id="Button4" cancelButton="true" defaultButton="true" mnemonicParsing="false" onAction="#openMedicalHistory" prefHeight="97.0" prefWidth="97.0" style="-fx-background-color: e3e4e5;">
+                     <effect>
+                        <Blend />
+                     </effect>
+                     <graphic>
+                        <ImageView fitHeight="97.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/medical-history.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </Group>
+            <Group>
+               <children>
+                  <Button fx:id="Button5" alignment="CENTER" cancelButton="true" defaultButton="true" mnemonicParsing="false" prefHeight="97.0" prefWidth="97.0" style="-fx-background-color: e3e4e5;">
+                     <effect>
+                        <Blend />
+                     </effect>
+                     <graphic>
+                        <ImageView fitHeight="97.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/user-manual.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </Group>
          </children>
-      </Group>
-      <Group layoutX="254.0" layoutY="130.0">
+      </HBox>
+      <HBox layoutX="61.0" layoutY="309.0" prefHeight="143.0" prefWidth="499.0" spacing="80.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0">
          <children>
-            <Button fx:id="Button2" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" defaultButton="true" mnemonicParsing="false" prefHeight="97.0" prefWidth="97.0" style="-fx-background-color: e3e4e5;">
-               <effect>
-                  <Blend />
-               </effect>
-               <graphic>
-                  <ImageView fitHeight="97.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/chat.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+            <Label prefWidth="130.0" text="My profile">
+               <font>
+                  <Font name="Berlin Sans FB" size="19.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <Label prefHeight="21.0" prefWidth="150.0" text="Medical records">
+               <font>
+                  <Font name="Berlin Sans FB" size="19.0" />
+               </font>
+            </Label>
+            <Label prefHeight="21.0" prefWidth="124.0" text="Information">
+               <font>
+                  <Font name="Berlin Sans FB" size="19.0" />
+               </font>
+            </Label>
          </children>
-      </Group>
-      <Group layoutX="423.0" layoutY="130.0">
-         <children>
-            <Button fx:id="button3" cancelButton="true" defaultButton="true" mnemonicParsing="false" prefHeight="97.0" prefWidth="97.0" style="-fx-background-color: e3e4e5;">
-               <effect>
-                  <Blend />
-               </effect>
-               <graphic>
-                  <ImageView fitHeight="97.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/businessman.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children>
-      </Group>
-      <Group layoutX="81.0" layoutY="342.0">
-         <children>
-            <Button fx:id="Button4" cancelButton="true" defaultButton="true" mnemonicParsing="false" onAction="#openMedicalHistory" prefHeight="97.0" prefWidth="97.0" style="-fx-background-color: e3e4e5;">
-               <effect>
-                  <Blend />
-               </effect>
-               <graphic>
-                  <ImageView fitHeight="97.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/medical-history.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children>
-      </Group>
-      <Group layoutX="254.0" layoutY="342.0">
-         <children>
-            <Button fx:id="Button5" alignment="CENTER" cancelButton="true" defaultButton="true" mnemonicParsing="false" prefHeight="97.0" prefWidth="97.0" style="-fx-background-color: e3e4e5;">
-               <effect>
-                  <Blend />
-               </effect>
-               <graphic>
-                  <ImageView fitHeight="97.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/user-manual.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children>
-      </Group>
-      <Group layoutX="423.0" layoutY="342.0">
-         <children>
-            <Button fx:id="Button6" cancelButton="true" defaultButton="true" mnemonicParsing="false" prefHeight="97.0" prefWidth="97.0" style="-fx-background-color: e3e4e5;">
-               <effect>
-                  <Blend />
-               </effect>
-               <graphic>
-                  <ImageView fitHeight="97.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/settings.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children></Group>
-      <Label layoutX="77.0" layoutY="464.0" text="Medical records">
-         <font>
-            <Font name="Berlin Sans FB" size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="98.0" layoutY="254.0" text="My profile">
-         <font>
-            <Font name="Berlin Sans FB" size="19.0" />
-         </font>
-      </Label>
+      </HBox>
    </children>
 </AnchorPane>
