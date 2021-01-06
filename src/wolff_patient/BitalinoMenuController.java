@@ -166,7 +166,7 @@ public class BitalinoMenuController implements Initializable {
                     System.out.println("Before show " + ecg_data);
                     messageLabel.setText("ECG recorded!");
                     messageLabel.setTextFill(Color.SEAGREEN);
-                    ECGplot e= new ECGplot(ecg_data);
+                    ECGplot e = new ECGplot(ecg_data);
                     e.openECGWindow();
 
                 } else {
@@ -194,17 +194,16 @@ public class BitalinoMenuController implements Initializable {
         }
         FXMLLoader loader = new FXMLLoader();
 
-        loader.setLocation(getClass().getResource("NewMedicalHistoryView.fxml"));
+        loader.setLocation(getClass().getResource("MedicalHistoryView.fxml"));
 
-        Parent newmedicalHistoryViewParent = loader.load();
-        Scene NewMedicalHistoryViewScene = new Scene(newmedicalHistoryViewParent);
+        Parent medicalHistoryViewParent = loader.load();
+        Scene MedicalHistoryViewScene = new Scene(medicalHistoryViewParent);
 
-        NewMedicalHistoryController controller = loader.getController();
+        MedicalHistoryController controller = loader.getController();
         controller.initData(patientMoved, com_data_client);
-
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(NewMedicalHistoryViewScene);
+        window.setScene(MedicalHistoryViewScene);
         window.centerOnScreen();
 
         window.show();
@@ -218,19 +217,19 @@ public class BitalinoMenuController implements Initializable {
             if (bitalinoManager != null && bitalinoManager.isConnected()) {
                 disconnectBitalino(event); //We disconnect bitalino if we go back
             }
+
             FXMLLoader loader = new FXMLLoader();
 
-            loader.setLocation(getClass().getResource("NewMedicalHistoryView.fxml"));
+            loader.setLocation(getClass().getResource("MedicalFormView.fxml"));
 
-            Parent newmedicalHistoryViewParent = loader.load();
-            Scene NewMedicalHistoryViewScene = new Scene(newmedicalHistoryViewParent);
+            Parent medicalFormViewParent = loader.load();
+            Scene MedicalFormViewScene = new Scene(medicalFormViewParent);
 
-            NewMedicalHistoryController controller = loader.getController();
+            MedicalFormController controller = loader.getController();
             controller.initDataECG(patientMoved, com_data_client, ecg_data);
-
             //this line gets the Stage information
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(NewMedicalHistoryViewScene);
+            window.setScene(MedicalFormViewScene);
             window.centerOnScreen();
 
             window.show();
@@ -255,7 +254,7 @@ public class BitalinoMenuController implements Initializable {
 
         stage.show();
     }
-*/
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }

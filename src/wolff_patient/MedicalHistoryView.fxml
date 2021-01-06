@@ -14,7 +14,7 @@
    <children>
       <Pane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="313.0" layoutY="158.0" mnemonicParsing="false" onAction="#addRecord" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #8FBC8F; -fx-border-color: #000000;" text="Add Clinical Record">
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="313.0" layoutY="158.0" mnemonicParsing="false" onAction="#chooseTypeRecord" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #8FBC8F; -fx-border-color: #000000;" text="Add Clinical Record">
                <font>
                   <Font name="Book Antiqua Bold" size="17.0" />
                </font></Button>
