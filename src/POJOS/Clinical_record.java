@@ -41,6 +41,7 @@ public class Clinical_record implements Serializable {
     private Boolean difficulty_breathing;
     private Boolean fainting;
     private String extra_info;
+    private String comments;
 
     private Integer[] ECG;
     private static final long serialVersionUID = 2L;
@@ -61,6 +62,7 @@ public class Clinical_record implements Serializable {
         this.fainting = fainting;
         this.ECG = ECG;
         this.extra_info = extra_info;
+        comments="";//Comments for the doctor
         setProperties();
     }
 
@@ -266,4 +268,22 @@ public class Clinical_record implements Serializable {
     public void setExtra_info(String extra_info) {
         this.extra_info = extra_info;
     }
+
+    public StringProperty getDateString_prop() {
+        return dateString_prop;
+    }
+
+    public void setDateString_prop(StringProperty dateString_prop) {
+        this.dateString_prop = dateString_prop;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+    
+    
 }

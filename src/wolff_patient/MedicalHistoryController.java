@@ -34,8 +34,8 @@ public class MedicalHistoryController implements Initializable {
     private Patient patientMoved;
 
     @FXML
-    private Label ecgLabel;
-    
+    private Label buttonsLabel;
+
     @FXML
     private TableView<Clinical_record> table;
 
@@ -70,6 +70,9 @@ public class MedicalHistoryController implements Initializable {
     private TableColumn<Clinical_record, String> ecgColumn;
 
     @FXML
+    private TableColumn<Clinical_record, String> commentsColumn;
+
+    @FXML
     private TableColumn<Clinical_record, String> extra_infoColumn;
 
     private ObservableList<Clinical_record> list;
@@ -81,6 +84,7 @@ public class MedicalHistoryController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initTable();
         addViewButton();
+        addCommentsButton();
     }
 
     public void loadClinical_records() {
@@ -106,6 +110,7 @@ public class MedicalHistoryController implements Initializable {
         faintingColumn.setCellValueFactory(new PropertyValueFactory<>("fainting"));
         extra_infoColumn.setCellValueFactory(new PropertyValueFactory<>("extra_info"));
         ecgColumn.setCellValueFactory(new PropertyValueFactory<>("RANDOM"));
+        commentsColumn.setCellValueFactory(new PropertyValueFactory<>("RANDOM"));
 
     }
 
@@ -134,7 +139,7 @@ public class MedicalHistoryController implements Initializable {
                         } else {
                             btn.setOnAction(event -> {
                                 Clinical_record clinical_record = getTableView().getItems().get(getIndex());
-                                buttonAction(clinical_record);
+                                buttonECGAction(clinical_record);
                             });
                             setGraphic(btn);
                             setText(null);
@@ -148,20 +153,75 @@ public class MedicalHistoryController implements Initializable {
         ecgColumn.setCellFactory(cellFactory);
     }
 
-    private void buttonAction(Clinical_record clinical_record) {
+    private void buttonECGAction(Clinical_record clinical_record) {
 
         Integer[] ecg_data = clinical_record.getECG();
         ECGplot e = new ECGplot(ecg_data);
         if (ecg_data != null) {
             try {
-                ecgLabel.setText("");//We clean if previously there was no ecg and msg appeared.
+                buttonsLabel.setText("");//We clean if previously there was no ecg and msg appeared.
                 e.openECGWindow();
             } catch (IOException ex) {
                 Logger.getLogger(MedicalHistoryController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            buttonsLabel.setText("No ECG found in this record.");
         }
-        else{
-         ecgLabel.setText("No ECG found in this record.");
+
+    }
+
+    /**
+     * This method adds the View comments button to a column of the table, with its
+     * behaviour.
+     *
+     * @param patient
+     * @param com_data_client
+     */
+    private void addCommentsButton() {
+        Callback<TableColumn<Clinical_record, String>, TableCell<Clinical_record, String>> cellFactory
+                = new Callback<TableColumn<Clinical_record, String>, TableCell<Clinical_record, String>>() {
+            @Override
+            public TableCell call(final TableColumn<Clinical_record, String> param) {
+                final TableCell<Clinical_record, String> cell = new TableCell<Clinical_record, String>() {
+
+                    final Button btn = new Button("VIEW");
+
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                            setText(null);
+                        } else {
+                            btn.setOnAction(event -> {
+                                Clinical_record clinical_record = getTableView().getItems().get(getIndex());
+                                buttonCommentsAction(clinical_record);
+                            });
+                            setGraphic(btn);
+                            setText(null);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        commentsColumn.setCellFactory(cellFactory);
+    }
+
+    private void buttonCommentsAction(Clinical_record clinical_record) {
+
+        String comments = clinical_record.getComments();
+        if (!comments.equals("")) {
+
+            try {
+                buttonsLabel.setText("");//We clean if previously there was no ecg and msg appeared.
+                openCommentsWindow(comments);
+            } catch (IOException ex) {
+                Logger.getLogger(MedicalHistoryController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            buttonsLabel.setText("No comments found in this record.");
         }
 
     }
@@ -232,7 +292,8 @@ public class MedicalHistoryController implements Initializable {
 
         window.show();
     }
-        @FXML
+
+    @FXML
     public void chooseTypeRecord(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
 
@@ -251,4 +312,17 @@ public class MedicalHistoryController implements Initializable {
         window.show();
     }
 
+    public void openCommentsWindow(String comments) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("RecordCommentsView.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Comments from your doctor");
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
+
+        RecordCommentsController controller = loader.getController();
+        controller.initData(comments);
+
+        stage.show();
+    }
 }

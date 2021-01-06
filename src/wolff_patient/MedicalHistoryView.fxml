@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.MedicalHistoryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="647.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.MedicalHistoryController">
    <children>
       <Pane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -18,7 +18,7 @@
                <font>
                   <Font name="Book Antiqua Bold" size="17.0" />
                </font></Button>
-            <TableView fx:id="table" layoutY="247.0">
+            <TableView fx:id="table" layoutY="247.0" prefHeight="400.0">
               <columns>
                 <TableColumn id="id" fx:id="idColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="ID" />
                   <TableColumn id="date" fx:id="dateColumn" prefWidth="76.0" style="-fx-alignment: CENTER;" text="Date" />
@@ -27,13 +27,14 @@
                   <TableColumn id="fatique" fx:id="fatigueColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Fatigue" />
                   <TableColumn id="anxiety" fx:id="anxietyColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Anxiety" />
                   <TableColumn id="chest_pain" fx:id="chest_painColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Chest Pain" />
-                  <TableColumn id="diff_breathing" fx:id="difficulty_breathingColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Difficulty Breathing" />
-                  <TableColumn id="fainting" fx:id="faintingColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Fainting" />
+                  <TableColumn id="diff_breathing" fx:id="difficulty_breathingColumn" prefWidth="83.20001220703125" style="-fx-alignment: CENTER;" text="Difficulty Breathing" />
+                  <TableColumn id="fainting" fx:id="faintingColumn" prefWidth="67.20001220703125" style="-fx-alignment: CENTER;" text="Fainting" />
                   <TableColumn id="extra_info" fx:id="extra_infoColumn" prefWidth="123.199951171875" style="-fx-alignment: CENTER;" text="Extra Info" />
                   <TableColumn id="ecgShow_button" fx:id="ecgColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="ECG" />
+                  <TableColumn id="ecgShow_button" fx:id="commentsColumn" prefWidth="120.800048828125" style="-fx-alignment: CENTER;" text="Doctor comments" />
               </columns>
             </TableView>
-            <Label fx:id="ecgLabel" alignment="CENTER" layoutX="619.0" layoutY="173.0" prefHeight="21.0" prefWidth="208.0" textAlignment="CENTER" textFill="#da0e0e">
+            <Label fx:id="buttonsLabel" alignment="CENTER" layoutX="619.0" layoutY="173.0" prefHeight="21.0" prefWidth="314.0" textAlignment="CENTER" textFill="#da0e0e">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -57,7 +58,7 @@
                   <Font name="Footlight MT Light" size="20.0" />
                </font>
             </Label>
-            <Button alignment="CENTER" layoutX="733.0" layoutY="44.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="45.0" text="Back to menu" />
+            <Button alignment="CENTER" layoutX="866.0" layoutY="38.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="45.0" text="Back to menu" />
          </children>
       </Pane>
    </children>
