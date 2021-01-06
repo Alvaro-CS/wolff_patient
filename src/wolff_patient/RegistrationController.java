@@ -119,7 +119,7 @@ public class RegistrationController implements Initializable {
                 confirmPasswordLabel.setText("Passwords don't match or are not valid");
             }
         } else {
-            regMessageLabel.setText("That username already exists \nor is not valid.\nIntroduce a valid one one.");
+            regMessageLabel.setText("That username already exists or it is not valid.\nIntroduce a valid one.");
         }
 
     }
