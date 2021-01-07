@@ -15,7 +15,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Patient implements Runnable, Serializable {
-
+    
     private static final long serialVersionUID = 1L;
 
     private String DNI;
@@ -45,7 +45,8 @@ public class Patient implements Runnable, Serializable {
     private ArrayList<Clinical_record> clinical_record_list;
 
     private final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-
+    
+    
     public Patient(String DNI, String password, String name, String lastName) {
         this.DNI = DNI;
         this.password = password;
@@ -69,6 +70,19 @@ public class Patient implements Runnable, Serializable {
         setProperties();
     }
     
+    public Patient(Patient p){//Copy constructor
+        this.DNI = p.getDNI();
+        this.password = p.getPassword();
+        this.name = p.getName();
+        this.lastName = p.getLastName();
+        this.gender = p.getGender();
+        this.birthdate = p.getBirthdate();
+        this.address = p.getAddress();
+        this.SSNumber = p.getSSNumber();
+        this.telf = p.getTelf();
+        clinical_record_list = p.getClinical_record_list();
+        setProperties();
+    }
     //For TableView showing purposes
     private void setProperties() {
         this.DNI_prop = new SimpleStringProperty(DNI);

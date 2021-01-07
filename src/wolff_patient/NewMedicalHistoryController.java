@@ -87,10 +87,12 @@ public class NewMedicalHistoryController implements Initializable {
             //Sending order
             String order = "UPDATE";
             objectOutputStream.writeObject(order);
-            System.out.println("Order" + order + "sent");
 
+            System.out.println("Order" + order + "sent");
+            Patient p= new Patient(patientMoved); //for not getting troubles with streams
             //Sending patient
-            objectOutputStream.writeObject(patientMoved);
+            objectOutputStream.writeObject(p);
+            objectOutputStream.reset();
             System.out.println("Patient data sent to register in server");
 
         } catch (IOException ex) {

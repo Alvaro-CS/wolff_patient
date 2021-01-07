@@ -137,7 +137,7 @@ public class UserInfoController implements Initializable {
             System.out.println("Name updated");
         }
         if (!surnameField.getText().isEmpty() && !surnameField.getText().equals(patientMoved.getLastName())) {
-            patientMoved.setName(nameField.getText());
+            patientMoved.setLastName(surnameField.getText());
             System.out.println("Last Name updated");
         }
         if (!telephoneField.getText().isEmpty()
@@ -176,6 +176,7 @@ public class UserInfoController implements Initializable {
 
             //Sending patient
             objectOutputStream.writeObject(patientMoved);
+            objectOutputStream.reset();
             System.out.println("Patient data sent to register in server");
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
