@@ -1,3 +1,4 @@
+// OLD CLASS, NOT USED, SAVED FOR SECURITY. HOWEVER, IT CAN BE REMOVED WHEN SURE
 package wolff_patient;
 
 import POJOS.Clinical_record;
@@ -88,8 +89,9 @@ public class NewMedicalHistoryController implements Initializable {
             String order = "UPDATE";
             objectOutputStream.writeObject(order);
 
-            System.out.println("Order" + order + "sent");
+            System.out.println("Order " + order + "sent");
             Patient p= new Patient(patientMoved); //for not getting troubles with streams
+            System.out.println("Antes de mandar al server"+p.getClinical_record_list().size());
             //Sending patient
             objectOutputStream.writeObject(p);
             objectOutputStream.reset();
