@@ -95,10 +95,11 @@ public class MedicalFormController implements Initializable {
             //Sending order
             String order = "UPDATE";
             objectOutputStream.writeObject(order);
-            System.out.println("Order" + order + "sent");
+            System.out.println("Order ORDER" + order + "sent");
 
             //Sending patient
             objectOutputStream.writeObject(patientMoved);
+            objectOutputStream.reset();
             System.out.println("Patient data sent to register in server");
 
         } catch (IOException ex) {
