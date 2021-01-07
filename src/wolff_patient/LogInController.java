@@ -50,7 +50,9 @@ public class LogInController implements Initializable {
         } else {
 
             if (!userNameField.getText().isEmpty() && !passwordField.getText().isEmpty()) {
+
                 validateLogin(event);
+
             } else {
                 //if Fields are empty
                 loginMessageLabel.setText("Please enter ID and password");
@@ -72,7 +74,10 @@ public class LogInController implements Initializable {
             System.out.println("PATIENT EXISTS");
             openMainMenuPatient(event);
 
-        } else {
+        } else if(com_data_client.getSocket()==null) {
+            loginMessageLabel.setText("Connection could not be established");
+            
+        } else{
             System.out.println("CONTROL VALIDATE NULL");
             loginMessageLabel.setText("User-password combination not found.\nPlease try again");
         }
@@ -151,21 +156,30 @@ public class LogInController implements Initializable {
 
         try {
             if (!com_data_client.isSocket_created()) {
-                Socket socket = new Socket(com_data_client.getIp_address(), 9000);
-                com_data_client.setSocket(socket);
-                OutputStream outputStream = socket.getOutputStream();
-                com_data_client.setOutputStream(outputStream);
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-                com_data_client.setObjectOutputStream(objectOutputStream);
-                InputStream inputStream = socket.getInputStream();
-                com_data_client.setInputStream(inputStream);
-                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-                com_data_client.setObjectInputStream(objectInputStream);
+                try {
+                    Socket socket = new Socket(com_data_client.getIp_address(), 9000);
+                    if (socket.isConnected()) {
+                        System.out.println("Conexión establecida con la dirección: " + com_data_client.getIp_address() + " a través del puerto: " + 9000);
+                   
+                    com_data_client.setSocket(socket);
+                    OutputStream outputStream = socket.getOutputStream();
+                    com_data_client.setOutputStream(outputStream);
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+                    com_data_client.setObjectOutputStream(objectOutputStream);
+                    InputStream inputStream = socket.getInputStream();
+                    com_data_client.setInputStream(inputStream);
+                    ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+                    com_data_client.setObjectInputStream(objectInputStream);
 
-                com_data_client.setSocket_created(true);
+                    com_data_client.setSocket_created(true);
+                    }
+                    
+                } catch (Exception e) {                            
+                    System.err.println("No se pudo establecer conexión con: " + com_data_client.getIp_address() + " a travez del puerto: " + 9000);
+                }
 
             }
-
+            if(com_data_client.getSocket()!=null){
             //We send the order to server that we want to search for patients
             String order = "SEARCH_PATIENT";
             ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
@@ -186,6 +200,7 @@ public class LogInController implements Initializable {
                 clientThreadsServer.wait(); //wait until patient logs in (if not, it returns null because not enough time to get it).
             }
             return clientThreadsServer.getPatient();
+            }
 
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
@@ -277,7 +292,7 @@ public class LogInController implements Initializable {
     void initData(String ipaddress, String bitalinoMac) {
         com_data_client.setIp_address(ipaddress);
         com_data_client.setBitalino_mac(bitalinoMac);
-        System.out.println(ipaddress+"|"+bitalinoMac);
+        System.out.println(ipaddress + "|" + bitalinoMac);
     }
 
 }
