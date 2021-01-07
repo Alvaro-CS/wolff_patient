@@ -27,35 +27,37 @@ import javafx.stage.Stage;
 public class ComDataController implements Initializable {
 
     @FXML
-    private TextField ipAdressField;
+    private TextField ipAddressField;
     @FXML
     private TextField bitalinoField;
+    @FXML
+    private Label messageLabel;
 
-    
-        public void goBackLogin(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
+    public void goBackLogin(ActionEvent event) throws IOException {
+        if (ipAddressField.getText().isEmpty()|| bitalinoField.getText().isEmpty()) {
+            messageLabel.setText("Please, introduce both parameters");
+        } else {
 
-        loader.setLocation(getClass().getResource("LogInView.fxml"));
+            FXMLLoader loader = new FXMLLoader();
 
+            loader.setLocation(getClass().getResource("LogInView.fxml"));
 
-        Parent LogInViewParent = loader.load();
-        Scene LogInViewScene = new Scene(LogInViewParent);
-        LogInController controller = loader.getController();
-            System.out.println(ipAdressField.getText());
-        controller.initData(ipAdressField.getText(),bitalinoField.getText());
+            Parent LogInViewParent = loader.load();
+            Scene LogInViewScene = new Scene(LogInViewParent);
+            LogInController controller = loader.getController();
+            controller.initData(ipAddressField.getText(), bitalinoField.getText());
 
-        //this line gets the Stage information
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(LogInViewScene);
-        window.centerOnScreen();
+            //this line gets the Stage information
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(LogInViewScene);
+            window.centerOnScreen();
 
-        window.show();
-
+            window.show();
+        }
     }
-  
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
-
 
 }

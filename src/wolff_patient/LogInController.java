@@ -44,7 +44,7 @@ public class LogInController implements Initializable {
      * @throws java.io.IOException
      */
     public void loginButtonOnAction(ActionEvent event) throws IOException {
-        if (com_data_client.getIp_address() == null) {
+        if (com_data_client.getIp_address() == null || com_data_client.getBitalino_mac()==null) {
             loginMessageLabel.setText("Please click on the settings button and introduce "
                     + "\n the server's IP address and Bitalino MAC address");
         } else {
@@ -90,7 +90,7 @@ public class LogInController implements Initializable {
      * @throws IOException
      */
     public void createAccountForm(ActionEvent event) throws IOException {
-        if (com_data_client.getIp_address() == null) {
+        if (com_data_client.getIp_address() == null || com_data_client.getBitalino_mac()==null) {
             loginMessageLabel.setText("Please click on the settings button and introduce "
                     + "\n the server's IP address and Bitalino MAC address");
         } else {
