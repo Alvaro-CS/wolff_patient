@@ -37,7 +37,7 @@ public class OptionECGController implements Initializable {
 
     private Com_data_client com_data_client;
     private Patient patientMoved;
-   
+
     public void initData(Patient patient, Com_data_client com_data_client) {
         this.com_data_client = com_data_client;
         this.patientMoved = patient;
@@ -49,7 +49,7 @@ public class OptionECGController implements Initializable {
 
     @FXML
     public void withECG(ActionEvent event) throws IOException {
-                FXMLLoader loader = new FXMLLoader();
+        FXMLLoader loader = new FXMLLoader();
 
         loader.setLocation(getClass().getResource("BitalinoMenuView.fxml"));
 
@@ -85,9 +85,8 @@ public class OptionECGController implements Initializable {
 
         window.show();
     }
-    
-    
- public void goBackMedicalHistory(ActionEvent event) throws IOException {
+
+    public void goBackMedicalHistory(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
 
         loader.setLocation(getClass().getResource("MedicalHistoryView.fxml"));

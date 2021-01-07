@@ -34,8 +34,8 @@ public class ComDataController implements Initializable {
     private Label messageLabel;
 
     public void goBackLogin(ActionEvent event) throws IOException {
-        if (ipAddressField.getText().isEmpty()|| bitalinoField.getText().isEmpty()) {
-            messageLabel.setText("Please, introduce both parameters");
+        if (ipAddressField.getText().isEmpty()) {
+            messageLabel.setText("The IP address is required");
         } else {
 
             FXMLLoader loader = new FXMLLoader();

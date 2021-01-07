@@ -75,9 +75,13 @@ public class BitalinoMenuController implements Initializable {
      *
      * @param event
      */
-    public void connectBitalino(ActionEvent event) {
-        if (bitalinoManager == null) {
-            bitalinoManager = new BitalinoManager("98:D3:C1:FD:2F:EC"); //El user tiene que meterlo
+    public void connectBitalino(ActionEvent event) throws IOException {
+        if(com_data_client.getBitalino_mac().isEmpty()){
+            bitalinoMacNeeded(event);
+        }else{
+            System.out.println("mac:"+com_data_client.getBitalino_mac());
+         if (bitalinoManager == null) {
+             bitalinoManager = new BitalinoManager(com_data_client.getBitalino_mac());
             if (bitalinoManager != null) {
                 messageLabel.setTextFill(Color.GREEN);
                 messageLabel.setText("Bitalino connected.");
@@ -91,11 +95,28 @@ public class BitalinoMenuController implements Initializable {
             messageLabel.setTextFill(Color.RED);
             messageLabel.setText("Bitalino already connected. Disconnect it to connect a different device.");
         } else { //pURPOSE OF THIS?
-            bitalinoManager = new BitalinoManager("98:D3:C1:FD:2F:EC"); //El user tiene que meterlo
+             bitalinoManager = new BitalinoManager(com_data_client.getBitalino_mac());
             messageLabel.setTextFill(Color.GREEN);
 
             messageLabel.setText("Bitalino connected.");
         }
+        }
+    }
+        public void bitalinoMacNeeded(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("BitalinoMacView.fxml"));
+        Parent bitalinoMacViewParent = loader.load();
+
+        Scene BitalinoMacViewScene = new Scene(bitalinoMacViewParent);
+
+        BitalinoMacController controller = loader.getController();
+        controller.initData(patientMoved,com_data_client);
+        //this line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(BitalinoMacViewScene);
+        window.centerOnScreen();
+
+        window.show();
     }
 
     /**
