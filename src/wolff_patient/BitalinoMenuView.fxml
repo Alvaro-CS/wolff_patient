@@ -29,9 +29,9 @@
                               <Insets left="40.0" top="10.0" />
                            </HBox.margin>
                               </ImageView>
-                              <Label text="Bitalino ECG ">
+                              <Label prefHeight="34.0" prefWidth="173.0" text="Bitalino ECG ">
                                  <font>
-                                    <Font name="Impact" size="26.0" />
+                                    <Font name="Ebrima Bold" size="26.0" />
                                  </font>
                            <HBox.margin>
                               <Insets left="60.0" top="40.0" />
@@ -95,7 +95,7 @@
                   <Font size="13.0" />
                </font>
             </Label>
-            <Button layoutX="329.0" layoutY="226.0" mnemonicParsing="false" onAction="#saveECG" prefHeight="46.0" prefWidth="92.0" style="-fx-background-color: #90EE90; -fx-border-color: gray;" text="SAVE ECG">
+            <Button layoutX="329.0" layoutY="226.0" mnemonicParsing="false" onAction="#saveECG" prefHeight="46.0" prefWidth="92.0" text="SAVE ECG">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

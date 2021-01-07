@@ -20,7 +20,7 @@
          <children>
             <ScrollPane layoutX="41.0" layoutY="165.0" prefHeight="296.0" prefWidth="705.0">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="541.0" prefWidth="702.0" style="-fx-background-color: #bdecb6">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="541.0" prefWidth="702.0">
                      <children>
                         <VBox prefHeight="1215.0" prefWidth="775.0" spacing="30.0">
                            <children>
@@ -200,7 +200,7 @@
                   </AnchorPane>
               </content>
             </ScrollPane>
-            <HBox layoutX="41.0" layoutY="123.0" prefHeight="42.0" prefWidth="325.0" spacing="30.0" style="-fx-background-color: #bdecb6">
+            <HBox layoutX="41.0" layoutY="123.0" prefHeight="42.0" prefWidth="325.0" spacing="30.0">
                <children>
                   <Label prefHeight="80.0" prefWidth="417.0" text="Please, answer the questions.">
                      <font>
@@ -211,7 +211,7 @@
             </HBox>
             <Button layoutX="563.0" layoutY="646.0" mnemonicParsing="false" onAction="#saveRecord" text="Save record">
                <font>
-                  <Font name="Goudy Old Style Bold" size="28.0" />
+                  <Font name="Ebrima Bold" size="28.0" />
                </font>
             </Button>
             <HBox layoutX="41.0" layoutY="466.0" prefHeight="182.0" prefWidth="705.0" spacing="50.0">
@@ -223,7 +223,7 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="infoArea" prefHeight="102.0" prefWidth="706.0" promptText="Write here any observation about any sympton that you experience that is not shown above or any observation you want to transmit to your doctor.">
+                        <TextArea fx:id="infoArea" prefHeight="102.0" prefWidth="706.0" promptText="Write here any observation about any symptom that you experience that is not shown above or any observation you want to transmit to your doctor.">
                            <font>
                               <Font size="14.0" />
                            </font>

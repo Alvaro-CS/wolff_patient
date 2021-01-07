@@ -11,12 +11,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxWidth="500.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #e3e4e5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.ManualECGController">
+<AnchorPane id="AnchorPane" maxWidth="500.0" prefHeight="267.0" prefWidth="400.0" style="-fx-background-color: #e3e4e5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.ManualECGController">
     
          <children>
-      <Pane prefHeight="250.0" prefWidth="400.0">
+      <Pane prefHeight="219.0" prefWidth="400.0">
          <children>
-            <VBox prefHeight="250.0" prefWidth="400.0" spacing="20.0">
+            <VBox prefHeight="213.0" prefWidth="400.0" spacing="20.0">
                <children>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
@@ -28,17 +28,17 @@
                               <Insets left="40.0" top="30.0" />
                            </HBox.margin>
                               </ImageView>
-                              <Label text="Bitalino ECG ">
+                              <Label prefHeight="34.0" prefWidth="172.0" text="Bitalino ECG ">
                                  <font>
-                                    <Font name="Impact" size="26.0" />
+                                    <Font name="Ebrima Bold" size="26.0" />
                                  </font>
                            <HBox.margin>
-                              <Insets left="40.0" top="50.0" />
+                              <Insets left="20.0" top="50.0" />
                            </HBox.margin>
                               </Label>
                         <Button mnemonicParsing="false" onAction="#backToECGMenu" prefHeight="35.0" prefWidth="91.0" text="Back to menu">
                            <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
+                              <Insets top="10.0" />
                            </HBox.margin>
                         </Button>
                      </children>
@@ -69,6 +69,6 @@
             </VBox>
          </children>
       </Pane>
-      <Label fx:id="msgLabel" layoutX="108.0" layoutY="258.0" prefHeight="18.0" prefWidth="200.0" textAlignment="CENTER" />
+      <Label fx:id="msgLabel" layoutX="100.0" layoutY="219.0" prefHeight="34.0" prefWidth="200.0" textAlignment="CENTER" />
     </children>
 </AnchorPane>
