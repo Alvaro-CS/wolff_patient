@@ -14,9 +14,9 @@
 <AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="387.0" style="-fx-background-color: #e3e4e5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.LogInController">
     
          <children>
-            <Label layoutX="139.0" layoutY="63.0" text="Welcome ">
+            <Label layoutX="119.0" layoutY="57.0" text="Welcome ">
                <font>
-                  <Font name="Impact" size="26.0" />
+                  <Font name="Ebrima Bold" size="35.0" />
                </font>
             </Label>
             <ImageView fitHeight="81.0" fitWidth="89.0" layoutX="22.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
@@ -49,7 +49,7 @@
                   <Font name="Ebrima Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="signUpButton" layoutX="227.0" layoutY="478.0" onAction="#createAccountForm" styleClass="starter_small_buttom" text="Signup" textFill="#4f90a5">
+            <Button fx:id="signUpButton" layoutX="227.0" layoutY="478.0" onAction="#createAccountForm" styleClass="starter_small_buttom" text="Signup">
                <font>
                   <Font name="Ebrima Bold" size="14.0" />
                </font>

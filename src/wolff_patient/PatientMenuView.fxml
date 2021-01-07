@@ -16,9 +16,9 @@
    <children>
       <Pane layoutY="-5.0" prefHeight="97.0" prefWidth="600.0" style="-fx-background-color: e3e4e5;" AnchorPane.bottomAnchor="434.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="199.0" layoutY="20.0" text="Main Menu">
+            <Label layoutX="215.0" layoutY="19.0" text="Main Menu">
                <font>
-                  <Font size="40.0" />
+                  <Font name="System Bold" size="36.0" />
                </font>
             </Label>
             <Label fx:id="nameLabel" layoutX="14.0" layoutY="20.0" prefHeight="58.0" prefWidth="141.0" />
@@ -81,27 +81,23 @@
             </Group>
          </children>
       </HBox>
-      <HBox layoutX="61.0" layoutY="309.0" prefHeight="143.0" prefWidth="499.0" spacing="80.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0">
-         <children>
-            <Label prefWidth="130.0" text="My profile">
-               <font>
-                  <Font name="Berlin Sans FB" size="19.0" />
-               </font>
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
-            </Label>
-            <Label prefHeight="21.0" prefWidth="150.0" text="Medical records">
-               <font>
-                  <Font name="Berlin Sans FB" size="19.0" />
-               </font>
-            </Label>
-            <Label prefHeight="21.0" prefWidth="124.0" text="Information">
-               <font>
-                  <Font name="Berlin Sans FB" size="19.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
+      <Label layoutX="60.0" layoutY="310.0" prefWidth="130.0" text="My profile">
+         <font>
+            <Font name="Ebrima Bold" size="19.0" />
+         </font>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </Label>
+      <Label layoutX="452.0" layoutY="310.0" prefHeight="21.0" prefWidth="124.0" text="Information">
+         <font>
+            <Font name="Ebrima Bold" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="233.0" layoutY="310.0" prefHeight="24.0" prefWidth="153.0" text="Medical records">
+         <font>
+            <Font name="Ebrima Bold" size="19.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
