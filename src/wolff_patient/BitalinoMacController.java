@@ -33,7 +33,11 @@ public class BitalinoMacController implements Initializable {
     private Label messageLabel;
     private Com_data_client com_data_client;
     private Patient patientMoved;
-
+/**
+ * Goes back to bitalino menu after introducing the bitalino mac address
+ * @param event
+ * @throws IOException 
+ */
     public void goBackBitalinoMenu(ActionEvent event) throws IOException {
         if (bitalinoField.getText().isEmpty()) {
             messageLabel.setText("The bitalino mac address is required");
