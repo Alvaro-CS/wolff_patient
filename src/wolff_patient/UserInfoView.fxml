@@ -90,7 +90,7 @@
                                  </font>
                               </TextField>
                               <Label fx:id="adressLabel" prefHeight="45.0" prefWidth="288.0" />
-                              <TextField fx:id="adressField" prefHeight="45.0" prefWidth="240.0" promptText="Change Adress">
+                              <TextField fx:id="adressField" prefHeight="45.0" prefWidth="240.0" promptText="Change Address">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -140,7 +140,7 @@
                   </HBox>
                </children>
             </VBox>
-            <Button fx:id="done_button" layoutX="394.0" layoutY="421.0" onAction="#updateInformation" prefHeight="60.0" prefWidth="122.0" styleClass="starter_small_buttom" text="Done" textFill="#000000b5">
+            <Button fx:id="done_button" layoutX="394.0" layoutY="421.0" onAction="#updateInformation" prefHeight="60.0" prefWidth="122.0" styleClass="starter_small_buttom" text="Update" textFill="#000000b5">
                <font>
                   <Font name="Ebrima Bold" size="14.0" />
                </font>

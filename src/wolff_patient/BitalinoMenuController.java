@@ -11,6 +11,7 @@ createAccountForm--> opens registration view
  */
 package wolff_patient;
 
+import BITalino.BITalinoException;
 import BITalino.BitalinoManager;
 import POJOS.Com_data_client;
 import POJOS.Patient;
@@ -74,35 +75,38 @@ public class BitalinoMenuController implements Initializable {
     /**
      *
      * @param event
+     * @throws java.io.IOException
      */
     public void connectBitalino(ActionEvent event) throws IOException {
-        if(com_data_client.getBitalino_mac().isEmpty()){
+        if (com_data_client.getBitalino_mac().isEmpty()) {
             bitalinoMacNeeded(event);
-        }else{
-            System.out.println("mac:"+com_data_client.getBitalino_mac());
-         if (bitalinoManager == null) {
-             bitalinoManager = new BitalinoManager(com_data_client.getBitalino_mac());
-            if (bitalinoManager != null) {
-                messageLabel.setTextFill(Color.GREEN);
-                messageLabel.setText("Bitalino connected.");
-            } else {
+        } else {
+            System.out.println("mac:" + com_data_client.getBitalino_mac());
+            if (bitalinoManager == null) {
+                bitalinoManager = new BitalinoManager(com_data_client.getBitalino_mac());
+                if (bitalinoManager.isMac_correct()) {
+                    if (bitalinoManager != null && bitalinoManager.isConnected()) { //It has been connected succesfully
+                        messageLabel.setTextFill(Color.GREEN);
+                        messageLabel.setText("Bitalino connected.");
+                    } else { //Error connecting
+                        messageLabel.setTextFill(Color.RED);
+                        bitalinoManager = null;
+                        messageLabel.setText("Bitalino connection failed.");
+                    }
+                } else {
+                    messageLabel.setTextFill(Color.RED);
+                    messageLabel.setText("The introduced MAC address does not exist.");
+                    com_data_client.setBitalino_mac("");
+                    bitalinoManager = null;
+                }
+            } else if (bitalinoManager != null && bitalinoManager.isConnected()) { //It was connected in a beginning.
                 messageLabel.setTextFill(Color.RED);
-                messageLabel.setText("Bitalino connection failed.");
-
+                messageLabel.setText("Bitalino already connected. Disconnect it to connect a different device.");
             }
-
-        } else if (bitalinoManager.isConnected()) {
-            messageLabel.setTextFill(Color.RED);
-            messageLabel.setText("Bitalino already connected. Disconnect it to connect a different device.");
-        } else { //pURPOSE OF THIS?
-             bitalinoManager = new BitalinoManager(com_data_client.getBitalino_mac());
-            messageLabel.setTextFill(Color.GREEN);
-
-            messageLabel.setText("Bitalino connected.");
-        }
         }
     }
-        public void bitalinoMacNeeded(ActionEvent event) throws IOException {
+
+    public void bitalinoMacNeeded(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("BitalinoMacView.fxml"));
         Parent bitalinoMacViewParent = loader.load();
@@ -110,7 +114,7 @@ public class BitalinoMenuController implements Initializable {
         Scene BitalinoMacViewScene = new Scene(bitalinoMacViewParent);
 
         BitalinoMacController controller = loader.getController();
-        controller.initData(patientMoved,com_data_client);
+        controller.initData(patientMoved, com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(BitalinoMacViewScene);
@@ -184,9 +188,14 @@ public class BitalinoMenuController implements Initializable {
 
                     //Thread.sleep((seconds + 2) * 1000);
                     ecg_data = autoECGThread.getEcg_data();
-                    System.out.println("Before show " + ecg_data);
+                    if(bitalinoManager.isLost_com()){
+                    messageLabel.setText("Communications interrupted.\nYou can save the resulting ECG or connect again to the Bitalino.");
+                    messageLabel.setTextFill(Color.RED);
+                    bitalinoManager=null;
+                    }
+                    else {
                     messageLabel.setText("ECG recorded!");
-                    messageLabel.setTextFill(Color.SEAGREEN);
+                    messageLabel.setTextFill(Color.SEAGREEN);}
                     ECGplot e = new ECGplot(ecg_data);
                     e.openECGWindow();
 

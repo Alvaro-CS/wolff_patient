@@ -1,7 +1,6 @@
 package BITalino;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,14 +11,15 @@ public class BitalinoManager {
     private boolean connected;
     private BITalino bitalino = null;
     private boolean stop;
-    private static final int max_ecg_time = 86400; //24 h.
+    private static final int MAX_ECG_TIME = 86400; //24 h.
+    private boolean mac_correct = true;
+    private boolean lost_com = false;
 
     //Create an object BitalinoManager, with the MAC Addres specified.
     public BitalinoManager(String macAddress) {
         connected = false;
         try {
             bitalino = new BITalino();
-
             //Sampling rate, should be 10, 100 or 1000
             int SamplingRate = 100;
             System.out.println("Connecting with " + macAddress);
@@ -29,8 +29,11 @@ public class BitalinoManager {
 
         } catch (BITalinoException e) {
             Logger.getLogger(BitalinoManager.class.getName()).log(Level.SEVERE, null, e);
+            mac_correct = !e.getMessage().contains("MAC"); //If exception contains MAC, there is a problem with that.
             System.out.println("Could not connect to the bitalino, please try again");
-        } 
+            connected = false;
+        }
+
     }
 
     public void startManualECG() { //TODO not overwrite
@@ -40,8 +43,8 @@ public class BitalinoManager {
             bitalino.start(channelsToAcquire);
             int block_size = 100;
             ArrayList<Integer> ecg_data_list = new ArrayList<>();
-            //ecg_data=new Integer[max_ecg_time*block_size];
-            for (int j = 0; j < max_ecg_time; j++) { //infinite?
+            //ecg_data=new Integer[MAX_ECG_TIME*block_size];
+            for (int j = 0; j < MAX_ECG_TIME; j++) { //infinite?
                 try {
 
                     frame = bitalino.read(block_size);
@@ -57,6 +60,11 @@ public class BitalinoManager {
                     }
                 } catch (BITalinoException ex) {
                     Logger.getLogger(BitalinoManager.class.getName()).log(Level.SEVERE, null, ex);
+                    if (!lost_com) { //In this way, just with 1 time getting the error, the variable will remain tru.
+                        if (ex.getMessage().contains("lost communication")) {
+                            lost_com = true;
+                        }
+                    }
                 }
                 if (stop) { //exit from loop
                     ecg_data = ecg_data_list.toArray(new Integer[0]); //we transform the list to the array that will have the data
@@ -87,7 +95,7 @@ public class BitalinoManager {
                     //frame = bitalino.read(block_size*seconds);
                     ecg_data = new Integer[frame.length];
 
-                    System.out.println(j+" seconds, size block: " + frame.length);
+                    System.out.println(j + " seconds, size block: " + frame.length);
 
                     //Print the samples
                     for (int i = 0; i < frame.length; i++) {
@@ -102,13 +110,19 @@ public class BitalinoManager {
                 } //stop acquisition
                 catch (BITalinoException ex) {
                     Logger.getLogger(BitalinoManager.class.getName()).log(Level.SEVERE, null, ex);
+                    if (!lost_com) { //In this way, just with 1 time getting the error, the variable will remain tru.
+                        if (ex.getMessage().contains("lost communication")) {
+                            lost_com = true;
+                        }
+                    }
                 }
             }
             ecg_data = ecg_data_list.toArray(new Integer[0]);
-            System.out.println("Finished: "+ecg_data);
+            System.out.println("Finished: " + ecg_data);
             bitalino.stop();
         } catch (BITalinoException ex) {
             Logger.getLogger(BitalinoManager.class.getName()).log(Level.SEVERE, null, ex);
+
         } catch (Throwable ex) {
             Logger.getLogger(BitalinoManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -146,6 +160,18 @@ public class BitalinoManager {
 
     public Integer[] getEcg_data() {
         return ecg_data;
+    }
+
+    public boolean isMac_correct() {
+        return mac_correct;
+    }
+
+    public void setMac_correct(boolean mac_correct) {
+        this.mac_correct = mac_correct;
+    }
+
+    public boolean isLost_com() {
+        return lost_com;
     }
 
 }

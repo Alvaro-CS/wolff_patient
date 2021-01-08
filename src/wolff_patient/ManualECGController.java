@@ -94,14 +94,19 @@ public class ManualECGController implements Initializable {
                 msgLabel.setTextFill(Color.ORANGE);
                 bitalinoManager.setStop(true);
 
-                Thread.sleep(2000); //some seconds to make sure it finish properly
-
-                msgLabel.setText("ECG recorded!");
-                msgLabel.setTextFill(Color.SEAGREEN);
-                ecg_data = manualECGThread.getEcg_data();
-                ECGplot e= new ECGplot(ecg_data);
-                e.openECGWindow();
-                start = false;
+                Thread.sleep(2000); //TODO some seconds to make sure it finish properly. Check if can be done with join
+                if (bitalinoManager.isLost_com()) {
+                    msgLabel.setText("Communications interrupted.\nYou can save the resulting ECG or connect again to the Bitalino.");
+                    msgLabel.setTextFill(Color.RED);
+                    bitalinoManager = null;
+                } else {
+                    msgLabel.setText("ECG recorded!");
+                    msgLabel.setTextFill(Color.SEAGREEN);
+                    ecg_data = manualECGThread.getEcg_data();
+                    ECGplot e = new ECGplot(ecg_data);
+                    e.openECGWindow();
+                    start = false;
+                }
             } catch (IOException ex) {
                 Logger.getLogger(ManualECGController.class.getName()).log(Level.SEVERE, null, ex);
             }
