@@ -63,6 +63,7 @@ public class BitalinoManager {
                     if (!lost_com) { //In this way, just with 1 time getting the error, the variable will remain tru.
                         if (ex.getMessage().contains("lost communication")) {
                             lost_com = true;
+                            System.out.println("COMMUNICATIONS LOST1.");
                         }
                     }
                 }
@@ -75,6 +76,7 @@ public class BitalinoManager {
             bitalino.stop();
         } catch (BITalinoException ex) {
             Logger.getLogger(BitalinoManager.class.getName()).log(Level.SEVERE, null, ex);
+
         } catch (Throwable ex) {
             Logger.getLogger(BitalinoManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -113,6 +115,7 @@ public class BitalinoManager {
                     if (!lost_com) { //In this way, just with 1 time getting the error, the variable will remain tru.
                         if (ex.getMessage().contains("lost communication")) {
                             lost_com = true;
+                            System.out.println("COMMUNICATIONS LOST.");
                         }
                     }
                 }
