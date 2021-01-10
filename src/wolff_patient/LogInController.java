@@ -105,10 +105,18 @@ public class LogInController implements Initializable {
             controller.initData(com_data_client);
 
             //this line gets the Stage information
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            //Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Stage window = new Stage();
             window.setScene(registrationViewScene);
             window.centerOnScreen();
             window.show();
+            
+            //press the X to close 
+            window.setOnCloseRequest(e->controller.closeWindows(com_data_client));
+            
+            // Close the current window
+            Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            myStage.close();
         }
 
     }
@@ -134,6 +142,9 @@ public class LogInController implements Initializable {
         window.centerOnScreen();
 
         window.show();
+        
+         //press the X to close the main menu and release resources
+        window.setOnCloseRequest(e->controller.releaseResources(com_data_client));
     }
 
 //    generic open menu        
@@ -267,17 +278,34 @@ public class LogInController implements Initializable {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("ComDataView.fxml"));
         Parent comDataViewParent = loader.load();
+        
+        //Call the controller
+        ComDataController controller = loader.getController();
 
         Scene ComDataViewScene = new Scene(comDataViewParent);
+        Stage window = new Stage();
 
         //   PatientMenuController controller = loader.getController();
         // controller.initData(patientMoved,com_data_client);
         //this line gets the Stage information
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(ComDataViewScene);
         window.centerOnScreen();
 
         window.show();
+        
+        // When the X is press to closs
+        window.setOnCloseRequest(e -> {
+            try {
+                controller.closeWindows();
+            } catch (IOException ex) {
+                Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+
+        // Close the current window
+        Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        myStage.close();
     }
 
     @Override

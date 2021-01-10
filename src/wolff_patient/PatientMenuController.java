@@ -61,17 +61,26 @@ public class PatientMenuController implements Initializable {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("UserInfoView.fxml"));
         Parent userInfoViewParent = loader.load();
-
-        Scene MainMenuViewScene = new Scene(userInfoViewParent);
+        
 
         UserInfoController controller = loader.getController();
         controller.initData(patientMoved, com_data_client);
+        
+        Scene MainMenuViewScene = new Scene(userInfoViewParent);
         //this line gets the Stage information
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage window = new Stage();
         window.setScene(MainMenuViewScene);
         window.centerOnScreen();
 
         window.show();
+        
+        // When the X is press to close
+        window.setOnCloseRequest(e -> controller.closeWindows());
+
+        // Close the current window
+        Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        myStage.close();
     }
 
     /**
@@ -91,11 +100,19 @@ public class PatientMenuController implements Initializable {
         MedicalHistoryController controller = loader.getController();
         controller.initData(patientMoved, com_data_client);
         //this line gets the Stage information
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage window = new Stage();
         window.setScene(MedicalHistoryViewScene);
         window.centerOnScreen();
 
         window.show();
+        
+        // Indico que debe hacer al cerrar
+        window.setOnCloseRequest(e -> controller.closeWindows());
+
+        // Ciero la ventana donde estoy
+        Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        myStage.close();
 
     }
 
@@ -120,10 +137,11 @@ public class PatientMenuController implements Initializable {
         window.centerOnScreen();
 
         window.show();
+        window.close();
 
     }
 
-    private static void releaseResources(Com_data_client c) {
+    public static void releaseResources(Com_data_client c) {
         try {
             c.getInputStream().close();
         } catch (IOException ex) {

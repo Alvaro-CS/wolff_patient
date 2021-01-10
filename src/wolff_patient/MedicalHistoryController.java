@@ -325,4 +325,39 @@ public class MedicalHistoryController implements Initializable {
 
         stage.show();
     }
+    
+    public void closeWindows() {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PatientMenuView.fxml"));
+
+            Parent root = loader.load();
+            
+            // CARGAMOS EL CONTROLADOR DEL MAIN MENU
+            PatientMenuController controller = loader.getController();
+            controller.initData(patientMoved, com_data_client);
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.show();
+            
+            try{
+
+            Stage myStage = (Stage) this.buttonsLabel.getScene().getWindow();
+            myStage.close();
+            
+            }catch(NullPointerException e){
+                System.out.println("Exception caught");
+            }
+
+            
+           
+
+        } catch (IOException ex) {
+            Logger.getLogger(PatientMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }
