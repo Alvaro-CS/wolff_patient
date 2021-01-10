@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="527.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.InfoController">
+   <children>
+      <Pane prefHeight="97.0" prefWidth="524.0" style="-fx-background-color: e3e4e5;">
+         <children>
+            <Label layoutX="198.0" layoutY="22.0" prefHeight="53.0" prefWidth="124.0" text="About us" textAlignment="CENTER">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Label fx:id="label" layoutX="-4.0" layoutY="-44.0" prefHeight="465.0" prefWidth="540.0" text="ABOUT US&#10;&#10;We are a group of students who decided to create a project in order to help a part of the population.&#10;Our aim in to provide healthcare to people who suffer from Wolff Parkinson disease and make their lives better, saving them visits to the medical center. &#10;With this platform the user is able to connect himself the electrodes and record ECGs and symptoms from the confort of his home. The doctor will be able to see this information and provide feedback.&#10;&#10;What do we achieve with this?&#10;The patient is able to be controlled constantly and anytime; which is a better way to treat the disease and control it in a non-invasive way and from home." textAlignment="JUSTIFY" wrapText="true">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <padding>
+            <Insets left="30.0" right="30.0" top="130.0" />
+         </padding>
+      </Label>
+   </children>
+</AnchorPane>

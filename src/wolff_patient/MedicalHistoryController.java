@@ -24,6 +24,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import utilities.ECGplot;
@@ -35,48 +36,33 @@ public class MedicalHistoryController implements Initializable {
 
     @FXML
     private Label buttonsLabel;
-
     @FXML
     private TableView<Clinical_record> table;
-
     @FXML
     private TableColumn<Clinical_record, Integer> idColumn;
-
     @FXML
     private TableColumn<Clinical_record, String> dateColumn;
-
     @FXML
     private TableColumn<Clinical_record, Boolean> palpitationsColumn;
-
     @FXML
     private TableColumn<Clinical_record, Boolean> dizzinessColumn;
-
     @FXML
     private TableColumn<Clinical_record, Boolean> fatigueColumn;
-
     @FXML
     private TableColumn<Clinical_record, Boolean> anxietyColumn;
-
     @FXML
     private TableColumn<Clinical_record, Boolean> chest_painColumn;
-
     @FXML
     private TableColumn<Clinical_record, Boolean> difficulty_breathingColumn;
-
     @FXML
     private TableColumn<Clinical_record, Boolean> faintingColumn;
-
     @FXML
     private TableColumn<Clinical_record, String> ecgColumn;
-
     @FXML
     private TableColumn<Clinical_record, String> commentsColumn;
-
     @FXML
     private TableColumn<Clinical_record, String> extra_infoColumn;
-
     private ObservableList<Clinical_record> list;
-
     @FXML
     private Label nameLabel;
 
@@ -121,6 +107,7 @@ public class MedicalHistoryController implements Initializable {
      * @param patient
      * @param com_data_client
      */
+    @FXML
     private void addViewButton() {
         Callback<TableColumn<Clinical_record, String>, TableCell<Clinical_record, String>> cellFactory
                 = new Callback<TableColumn<Clinical_record, String>, TableCell<Clinical_record, String>>() {
@@ -153,6 +140,7 @@ public class MedicalHistoryController implements Initializable {
         ecgColumn.setCellFactory(cellFactory);
     }
 
+    @FXML
     private void buttonECGAction(Clinical_record clinical_record) {
 
         Integer[] ecg_data = clinical_record.getECG();
@@ -171,12 +159,13 @@ public class MedicalHistoryController implements Initializable {
     }
 
     /**
-     * This method adds the View comments button to a column of the table, with its
-     * behaviour.
+     * This method adds the View comments button to a column of the table, with
+     * its behaviour.
      *
      * @param patient
      * @param com_data_client
      */
+    @FXML
     private void addCommentsButton() {
         Callback<TableColumn<Clinical_record, String>, TableCell<Clinical_record, String>> cellFactory
                 = new Callback<TableColumn<Clinical_record, String>, TableCell<Clinical_record, String>>() {
@@ -209,6 +198,7 @@ public class MedicalHistoryController implements Initializable {
         commentsColumn.setCellFactory(cellFactory);
     }
 
+    @FXML
     private void buttonCommentsAction(Clinical_record clinical_record) {
 
         String comments = clinical_record.getComments();
@@ -251,7 +241,7 @@ public class MedicalHistoryController implements Initializable {
      * @throws IOException
      */
     @FXML
-    public void backToMenu(ActionEvent event) throws IOException {
+    private void backToMenu(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("PatientMenuView.fxml"));
@@ -263,6 +253,8 @@ public class MedicalHistoryController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MainMenuViewScene);
         window.centerOnScreen();
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
 
         window.show();
     }
@@ -275,7 +267,7 @@ public class MedicalHistoryController implements Initializable {
      * @throws IOException
      */
     @FXML
-    public void addRecord(ActionEvent event) throws IOException {
+    private void addRecord(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
 
         loader.setLocation(getClass().getResource("NewMedicalHistoryView.fxml"));
@@ -289,12 +281,14 @@ public class MedicalHistoryController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(NewMedicalHistoryViewScene);
         window.centerOnScreen();
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
 
         window.show();
     }
 
     @FXML
-    public void chooseTypeRecord(ActionEvent event) throws IOException {
+    private void chooseTypeRecord(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
 
         loader.setLocation(getClass().getResource("OptionECGView.fxml"));
@@ -307,16 +301,20 @@ public class MedicalHistoryController implements Initializable {
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(OptionECGViewScene);
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
         window.centerOnScreen();
 
         window.show();
     }
 
-    public void openCommentsWindow(String comments) throws IOException {
+    @FXML
+    private void openCommentsWindow(String comments) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("RecordCommentsView.fxml"));
 
         Stage stage = new Stage();
         stage.setTitle("Comments from your doctor");
+        stage.getIcons().add(new Image("/wolff_patient/images/logo.png"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
 

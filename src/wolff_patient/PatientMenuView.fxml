@@ -65,7 +65,7 @@
             </Group>
             <Group>
                <children>
-                  <Button fx:id="Button5" alignment="CENTER" cancelButton="true" defaultButton="true" mnemonicParsing="false" prefHeight="97.0" prefWidth="97.0" style="-fx-background-color: e3e4e5;">
+                  <Button fx:id="Button5" alignment="CENTER" cancelButton="true" defaultButton="true" mnemonicParsing="false" onAction="#extraInfo" prefHeight="97.0" prefWidth="97.0" style="-fx-background-color: e3e4e5;">
                      <effect>
                         <Blend />
                      </effect>

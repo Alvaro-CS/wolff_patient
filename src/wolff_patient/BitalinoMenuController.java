@@ -11,7 +11,6 @@ createAccountForm--> opens registration view
  */
 package wolff_patient;
 
-import BITalino.BITalinoException;
 import BITalino.BitalinoManager;
 import POJOS.Com_data_client;
 import POJOS.Patient;
@@ -23,13 +22,13 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.Pane;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import utilities.ECGplot;
@@ -77,7 +76,8 @@ public class BitalinoMenuController implements Initializable {
      * @param event
      * @throws java.io.IOException
      */
-    public void connectBitalino(ActionEvent event) throws IOException {
+    @FXML
+    private void connectBitalino(ActionEvent event) throws IOException {
         if (com_data_client.getBitalino_mac().isEmpty()) {
             bitalinoMacNeeded(event);
         } else {
@@ -106,7 +106,8 @@ public class BitalinoMenuController implements Initializable {
         }
     }
 
-    public void bitalinoMacNeeded(ActionEvent event) throws IOException {
+    @FXML
+    private void bitalinoMacNeeded(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("BitalinoMacView.fxml"));
         Parent bitalinoMacViewParent = loader.load();
@@ -118,6 +119,9 @@ public class BitalinoMenuController implements Initializable {
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(BitalinoMacViewScene);
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
+
         window.centerOnScreen();
 
         window.show();
@@ -127,7 +131,8 @@ public class BitalinoMenuController implements Initializable {
      *
      * @param event
      */
-    public void disconnectBitalino(ActionEvent event) {
+    @FXML
+    private void disconnectBitalino(ActionEvent event) {
         if (bitalinoManager == null) {
             messageLabel.setTextFill(Color.RED);
             messageLabel.setText("You need to connect to a Bitalino device first");
@@ -139,7 +144,7 @@ public class BitalinoMenuController implements Initializable {
     }
 
     @FXML
-    void openManualECGoptions(ActionEvent event) throws IOException {
+    private void openManualECGoptions(ActionEvent event) throws IOException {
         if (bitalinoManager != null) {
 
             FXMLLoader loader = new FXMLLoader();
@@ -155,6 +160,8 @@ public class BitalinoMenuController implements Initializable {
             //this line gets the Stage information
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(ManualECGViewScene);
+            window.setTitle("WOLFFGRAM");
+            window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
             window.centerOnScreen();
 
             window.show();
@@ -170,7 +177,8 @@ public class BitalinoMenuController implements Initializable {
      * @param event
      * @throws java.lang.InterruptedException
      */
-    public void readECGAuto(ActionEvent event) throws InterruptedException {
+    @FXML
+    private void readECGAuto(ActionEvent event) throws InterruptedException {
         Integer seconds;
         ECGThread autoECGThread;
         if (bitalinoManager != null) {
@@ -188,14 +196,14 @@ public class BitalinoMenuController implements Initializable {
 
                     //Thread.sleep((seconds + 2) * 1000);
                     ecg_data = autoECGThread.getEcg_data();
-                    if(bitalinoManager.isLost_com()){
-                    messageLabel.setText("Communications interrupted.\nYou can save the resulting ECG or connect again to the Bitalino.");
-                    messageLabel.setTextFill(Color.RED);
-                    bitalinoManager=null;
+                    if (bitalinoManager.isLost_com()) {
+                        messageLabel.setText("Communications interrupted.\nYou can save the resulting ECG or connect again to the Bitalino.");
+                        messageLabel.setTextFill(Color.RED);
+                        bitalinoManager = null;
+                    } else {
+                        messageLabel.setText("ECG recorded!");
+                        messageLabel.setTextFill(Color.SEAGREEN);
                     }
-                    else {
-                    messageLabel.setText("ECG recorded!");
-                    messageLabel.setTextFill(Color.SEAGREEN);}
                     ECGplot e = new ECGplot(ecg_data);
                     e.openECGWindow();
 
@@ -218,7 +226,7 @@ public class BitalinoMenuController implements Initializable {
     }
 
     @FXML
-    void backToRecord(ActionEvent event) throws IOException {
+    private void backToRecord(ActionEvent event) throws IOException {
         if (bitalinoManager != null && bitalinoManager.isConnected()) {
             disconnectBitalino(event); //We disconnect bitalino if we go back
         }
@@ -234,6 +242,8 @@ public class BitalinoMenuController implements Initializable {
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MedicalHistoryViewScene);
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
         window.centerOnScreen();
 
         window.show();
@@ -241,7 +251,7 @@ public class BitalinoMenuController implements Initializable {
 
     //Similar to go back, but here we return the ecg. We could reuse the previous method, but done for clarity for the user
     @FXML
-    void saveECG(ActionEvent event) throws IOException {
+    private void saveECG(ActionEvent event) throws IOException {
 
         if (ecg_data != null) {
             if (bitalinoManager != null && bitalinoManager.isConnected()) {

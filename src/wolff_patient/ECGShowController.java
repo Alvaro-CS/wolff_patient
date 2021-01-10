@@ -5,9 +5,7 @@
  */
 package wolff_patient;
 
-import BITalino.BitalinoManager;
-import POJOS.Com_data_client;
-import POJOS.Patient;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -45,7 +43,8 @@ public class ECGShowController implements Initializable {
      *
      *
      */
-    public void showECG() {
+    @FXML
+    private void showECG() {
         System.out.println("Dentro show " + ecg_data);
         XYChart.Series series = new XYChart.Series();
         //  series.setName("ECG data");

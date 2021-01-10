@@ -33,6 +33,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import utilities.ECGplot;
@@ -63,11 +64,10 @@ public class MedicalFormController implements Initializable {
 
     boolean palpitations, dizziness, fatigue, anxiety, chest_pain, difficulty_breathing,
             fainting;
-        private Clinical_record clinical_record;
+    private Clinical_record clinical_record;
 
-
-        @FXML
-    public void saveRecord(ActionEvent event) throws IOException {
+    @FXML
+    private void saveRecord(ActionEvent event) throws IOException {
         //As default is no, we only need to check if it is selected. If not, "YES"
         //needs to be selected
         palpitations = !palpitations_no.isSelected();
@@ -88,8 +88,9 @@ public class MedicalFormController implements Initializable {
         updatePatient();
         goBackMedicalHistory(event);
     }
-    
-       public void updatePatient() {
+
+    @FXML
+    private void updatePatient() {
         try {
             ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
             //Sending order
@@ -107,7 +108,9 @@ public class MedicalFormController implements Initializable {
             Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-         public void goBackMedicalHistory(ActionEvent event) throws IOException {
+
+    @FXML
+    private void goBackMedicalHistory(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
 
         loader.setLocation(getClass().getResource("MedicalHistoryView.fxml"));
@@ -121,21 +124,25 @@ public class MedicalFormController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MedicalHistoryViewScene);
         window.centerOnScreen();
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
 
         window.show();
 
     }
+
     public void initData(Patient patient, Com_data_client com_data_client) {
         this.com_data_client = com_data_client;
         this.patientMoved = patient;
 
     }
-    
+
     public void initDataECG(Patient patient, Com_data_client com_data_client, Integer[] ecg_data) {
         this.com_data_client = com_data_client;
         this.patientMoved = patient;
         this.ecg_data = ecg_data;
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }

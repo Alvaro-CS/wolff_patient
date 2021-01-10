@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class PatientMenuController implements Initializable {
@@ -56,7 +57,8 @@ public class PatientMenuController implements Initializable {
      * @param event
      * @throws IOException
      */
-    public void openUserInfo(ActionEvent event) throws IOException {
+    @FXML
+    private void openUserInfo(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("UserInfoView.fxml"));
@@ -70,6 +72,8 @@ public class PatientMenuController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MainMenuViewScene);
         window.centerOnScreen();
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
 
         window.show();
     }
@@ -80,7 +84,8 @@ public class PatientMenuController implements Initializable {
      * @param event
      * @throws IOException
      */
-    public void openMedicalHistory(ActionEvent event) throws IOException {
+    @FXML
+    private void openMedicalHistory(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
 
         loader.setLocation(getClass().getResource("MedicalHistoryView.fxml"));
@@ -94,18 +99,48 @@ public class PatientMenuController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MedicalHistoryViewScene);
         window.centerOnScreen();
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
 
         window.show();
 
     }
 
     /**
+     * This method opens the Extra info
+     *
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    private void extraInfo(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(getClass().getResource("InfoView.fxml"));
+
+        Parent infoViewParent = loader.load();
+        Scene InfoViewScene = new Scene(infoViewParent);
+
+        InfoController controller = loader.getController();
+        controller.initData(patientMoved, com_data_client);
+        //this line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(InfoViewScene);
+        window.centerOnScreen();
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
+
+        window.show();
+
+    }
+    /**
      * This method logs out and returns to log In screen.
      *
      * @param event
      * @throws IOException
      */
-    public void logOut(ActionEvent event) throws IOException {
+    @FXML
+    private void logOut(ActionEvent event) throws IOException {
         releaseResources(com_data_client);
         FXMLLoader loader = new FXMLLoader();
 
@@ -118,10 +153,13 @@ public class PatientMenuController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(LogInViewScene);
         window.centerOnScreen();
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
 
         window.show();
 
     }
+    
 
     private static void releaseResources(Com_data_client c) {
         try {

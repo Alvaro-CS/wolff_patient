@@ -4,22 +4,13 @@ package wolff_patient;
 import POJOS.Com_data_client;
 import POJOS.Patient;
 import POJOS.Patient.Gender;
-import java.io.EOFException;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.net.Socket;
-
 import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -32,7 +23,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import java.util.ArrayList;
 import java.util.Date;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -40,6 +30,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import utilities.Hashmaker;
 
@@ -80,9 +71,9 @@ public class RegistrationController implements Initializable {
      * @param event
      * @throws java.io.IOException
      */
-    public void registerButtonOnAction(ActionEvent event) throws IOException {
-
-        if (usernameIsFree(userNameField.getText()) && userNameField.getText() != null && userNameField.getText().length() == 9) {
+    @FXML
+    private void registerButtonOnAction(ActionEvent event) throws IOException {
+        if (usernameIsFree(userNameField.getText())&& userNameField.getText()!=null &&userNameField.getText().length()==9) {
             regMessageLabel.setText("Username available");
 
             if (passwordField.getText().equals(repeatPasswordField.getText()) && passwordField.getText().isEmpty() != true) {
@@ -110,7 +101,7 @@ public class RegistrationController implements Initializable {
                     regMessageLabel.setText("Phone number is missing or is incorrect");
                     System.out.println("Phone number is missing or is incorrect");
                 } else {
-
+                    System.out.println("noooo");
                     registerUser();
                     regMessageLabel.setText("Registration completed");
                     backtoLogin(event);
@@ -132,8 +123,8 @@ public class RegistrationController implements Initializable {
             return false;
         }
     }
-
-    public void backtoLogin(ActionEvent event) throws IOException {
+    @FXML
+    private void backtoLogin(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("LogInView.fxml"));
         Parent LogInViewParent = loader.load();
@@ -146,10 +137,13 @@ public class RegistrationController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(LogInViewScene);
         window.centerOnScreen();
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
         window.show();
     }
 
-    public void registerUser() {
+    @FXML
+    private void registerUser() {
         String ID = userNameField.getText();
         String password = Hashmaker.getSHA256(passwordField.getText());
         String name = nameField.getText();
@@ -195,7 +189,8 @@ public class RegistrationController implements Initializable {
      * @param id
      * @return boolean
      */
-    public boolean usernameIsFree(String id) {//TODO
+    @FXML
+    private boolean usernameIsFree(String id) {//TODO
         Patient p;
         try {
             if (!com_data_client.isSocket_created()) {
@@ -209,7 +204,6 @@ public class RegistrationController implements Initializable {
                 com_data_client.setInputStream(inputStream);
                 ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
                 com_data_client.setObjectInputStream(objectInputStream);
-
                 com_data_client.setSocket_created(true);
 
             }
@@ -218,7 +212,6 @@ public class RegistrationController implements Initializable {
             ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
             objectOutputStream.writeObject(order);
             System.out.println("Order" + order + "sent");
-
             //Sending patient
             objectOutputStream.writeObject(id);
             System.out.println("Patient name sent to server, will check if it exists.");
@@ -227,7 +220,6 @@ public class RegistrationController implements Initializable {
             objectInputStream.readObject();//We read the ORDER. We don't need it for nothing, so we don't save it to a variable.
             Object tmp = objectInputStream.readObject();//we receive the new patient from client
             p = (Patient) tmp;
-
             if (p != null) {//If received, it will not be null. Username is NOT free.
                 return false;
             }

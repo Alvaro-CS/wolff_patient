@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.InfoController">
+   <children>
+      <Pane prefHeight="97.0" prefWidth="620.0" style="-fx-background-color: e3e4e5;">
+         <children>
+            <ImageView fitHeight="28.0" fitWidth="272.0" layoutX="263.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/name.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="22.0" prefHeight="53.0" prefWidth="560.0" text="How do I use                          ?">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <ScrollPane layoutX="39.0" layoutY="141.0" prefHeight="479.0" prefWidth="560.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="130.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1119.0" prefWidth="535.0">
+               <children>
+                  <Label fx:id="label" layoutX="60.0" prefHeight="1097.0" prefWidth="466.0" text="Welcome to WOLFFGRAM!&#10;&#10;In order to use the platform correctly please read the following information.&#10;&#10;In the main menu you will see three different icons:&#10;-My profile&#10;-Medical records&#10;-Information&#10;&#10;The first one, “My profile” is where you can access to see or update any of your personal information of your account. It is important your information is always updated just in case there is an emergency. You can write the new information and click update button to make the changes. Also, you can see on top of each field your actual information&#10;&#10;Pressing the button of back to menu, you will be in the main menu again.&#10;&#10;The second one is Medical records. The first thing you can see when you click on it are all the different records you have saved. Each row on the table is a different one. You can see the date the record was saved, the symptoms and two buttons. The first one will let you see the graph of the ECG if it was recorded, and the other will let you see the doctor's comment on the record if he has added one.&#10;Above this table, there is a button you can click when you want to record a new one. Once you click it a new window will appear. You will be offer two options. Record with ECG or without ECG. Although it is not mandatory, we strongly recommend the option with ECG.&#10;&#10;If you choose to record an ECG, a new window will appear. The first thing you need to do is connect the Bitalino. Connect it to your computer and click on connect Bitalino. You will need to introduce the MAC address of the device that you will find in the back of it; it is a long number with letters; write it and press Save. &#10;Once you have written the MAC address you are able to record the ECG. You have two different options:&#10;-&#9;Record automatic ECG button: you have to introduce the number of seconds that you want to record, and then click Record.&#10;-&#9;Record manual ECG button: here you need to press when to start and when to stop recording. &#10;After recording the ECG click Save.&#10;A new window will appear where you can record all your symptoms. If you choose not no record an ECG, this window will open directly. &#10;In this step you can register your symptoms. If you are experiencing a symptom you don’t see on the list or want to leave a comment for the doctor, you can leave it in the Extra Information box.&#10;Once you press save record, you are directed back to the table, where you will be able to see the information you just recorded.&#10;Now you can click Close Bitalino button to disconnect the device&#10;Pressing the button of back to menu, you will be in the main menu again.&#10;&#10;And the third option of the main menu is where you are right now. You can also see here how to position your electrodes for the ECG and information about us.&#10; The Log Out button of the main menu will close the program.&#10;&#10;We hope this information has been useful. Thank you for trusting WOLFFGRAM.&#10;" textAlignment="JUSTIFY" wrapText="true" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

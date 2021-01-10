@@ -23,7 +23,7 @@
                      <children>
                               <ImageView fitHeight="81.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@images/heart.png" />
+                                    <Image url="@images/logo.png" />
                                  </image>
                            <HBox.margin>
                               <Insets left="40.0" top="10.0" />
@@ -34,12 +34,12 @@
                                     <Font name="Ebrima Bold" size="26.0" />
                                  </font>
                            <HBox.margin>
-                              <Insets left="60.0" top="40.0" />
+                              <Insets left="40.0" top="40.0" />
                            </HBox.margin>
                               </Label>
                         <Button mnemonicParsing="false" onAction="#backToRecord" prefHeight="46.0" prefWidth="92.0" text="Go back">
                            <HBox.margin>
-                              <Insets left="80.0" top="20.0" />
+                              <Insets left="30.0" top="20.0" />
                            </HBox.margin>
                            <font>
                               <Font name="System Bold" size="12.0" />

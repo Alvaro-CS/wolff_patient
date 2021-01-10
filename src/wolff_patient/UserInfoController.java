@@ -27,6 +27,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import utilities.Hashmaker;
 
@@ -42,42 +43,30 @@ public class UserInfoController implements Initializable {
 
     @FXML
     private Label nameLabel;
-
     @FXML
     private TextField nameField;
-
     @FXML
     private Label surnameLabel;
-
     @FXML
     private TextField surnameField;
-
     @FXML
     private Label genderLabel;
-
     @FXML
     private ComboBox genderComboBox;
-
     @FXML
     private Label telephoneLabel;
-
     @FXML
     TextField telephoneField;
-
     @FXML
     private Label adressLabel;
-
     @FXML
     private TextField adressField;
     @FXML
     private PasswordField new_password_field;
-
     @FXML
     private PasswordField repeat_password_field;
-
     @FXML
     private PasswordField password_field;
-
     @FXML
     private Label passwordLabel;
 
@@ -164,7 +153,8 @@ public class UserInfoController implements Initializable {
     }
 
     //For updating patient in server
-    public void updatePatient() {
+    @FXML
+    private void updatePatient() {
         ObjectOutputStream objectOutputStream;
         try {
 
@@ -191,7 +181,7 @@ public class UserInfoController implements Initializable {
      * @throws IOException
      */
     @FXML
-    public void backToMenu(ActionEvent event) throws IOException {
+    private void backToMenu(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("PatientMenuView.fxml"));
@@ -203,6 +193,8 @@ public class UserInfoController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MainMenuViewScene);
         window.centerOnScreen();
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
 
         window.show();
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
@@ -14,19 +15,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="714.0" prefWidth="763.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.MedicalFormController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="685.0" prefWidth="665.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wolff_patient.MedicalFormController">
    <children>
-      <Pane prefHeight="797.0" prefWidth="763.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane prefHeight="671.0" prefWidth="666.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ScrollPane layoutX="41.0" layoutY="165.0" prefHeight="296.0" prefWidth="705.0">
+            <ScrollPane layoutX="41.0" layoutY="165.0" prefHeight="252.0" prefWidth="585.0">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="541.0" prefWidth="702.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="541.0" prefWidth="622.0">
                      <children>
-                        <VBox prefHeight="1215.0" prefWidth="775.0" spacing="30.0">
+                        <VBox prefHeight="1215.0" prefWidth="521.0" spacing="10.0" AnchorPane.bottomAnchor="-694.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="161.0" AnchorPane.topAnchor="20.0">
                            <children>
                               <HBox prefHeight="110.0" prefWidth="688.0" spacing="30.0">
                                  <children>
-                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="15.0">
                                        <children>
                                           <Label text="Do you have palpitations?*">
                                              <font>
@@ -48,7 +49,7 @@
                                           </RadioButton>
                                        </children>
                                     </VBox>
-                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="15.0">
                                        <children>
                                           <Label text="Do you have dizziness?*">
                                              <font>
@@ -74,7 +75,7 @@
                               </HBox>
                               <HBox prefHeight="110.0" prefWidth="800.0" spacing="30.0">
                                  <children>
-                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="15.0">
                                        <children>
                                           <Label text="Do you have fatigue?*">
                                              <font>
@@ -96,7 +97,7 @@
                                           </RadioButton>
                                        </children>
                                     </VBox>
-                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                                    <VBox prefHeight="110.0" prefWidth="292.0" spacing="15.0">
                                        <children>
                                           <Label text="Do you have anxiety?*">
                                              <font>
@@ -122,7 +123,7 @@
                               </HBox>
                               <HBox prefHeight="110.0" prefWidth="800.0" spacing="30.0">
                                  <children>
-                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="15.0">
                                        <children>
                                           <Label text="Do you have chest pain?*">
                                              <font>
@@ -144,7 +145,7 @@
                                           </RadioButton>
                                        </children>
                                     </VBox>
-                                    <VBox prefHeight="130.0" prefWidth="384.0" spacing="20.0">
+                                    <VBox prefHeight="110.0" prefWidth="294.0" spacing="15.0">
                                        <children>
                                           <Label text="Do you have difficulty breathing?*">
                                              <font>
@@ -170,7 +171,7 @@
                               </HBox>
                               <HBox prefHeight="110.0" prefWidth="710.0" spacing="30.0">
                                  <children>
-                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="20.0">
+                                    <VBox prefHeight="130.0" prefWidth="308.0" spacing="15.0">
                                        <children>
                                           <Label text="Do you have fainting?*">
                                              <font>
@@ -202,28 +203,31 @@
             </ScrollPane>
             <HBox layoutX="41.0" layoutY="123.0" prefHeight="42.0" prefWidth="325.0" spacing="30.0">
                <children>
-                  <Label prefHeight="80.0" prefWidth="417.0" text="Please, answer the questions.">
+                  <Label prefHeight="80.0" prefWidth="417.0" text="Please, answer the following questions:">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <Button layoutX="563.0" layoutY="646.0" mnemonicParsing="false" onAction="#saveRecord" text="Save record">
+            <Button layoutX="441.0" layoutY="592.0" mnemonicParsing="false" onAction="#saveRecord" text="Save record">
                <font>
                   <Font name="Ebrima Bold" size="28.0" />
                </font>
             </Button>
-            <HBox layoutX="41.0" layoutY="466.0" prefHeight="182.0" prefWidth="705.0" spacing="50.0">
+            <HBox layoutX="41.0" layoutY="419.0" prefHeight="182.0" prefWidth="593.0" spacing="50.0">
                <children>
-                  <VBox prefHeight="186.0" prefWidth="706.0" spacing="30.0">
+                  <VBox prefHeight="182.0" prefWidth="605.0" spacing="15.0">
                      <children>
                         <Label prefHeight="0.0" prefWidth="1441.0" text="Extra information (optional)">
                            <font>
-                              <Font size="24.0" />
+                              <Font name="System Bold" size="17.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
                         </Label>
-                        <TextArea fx:id="infoArea" prefHeight="102.0" prefWidth="706.0" promptText="Write here any observation about any symptom that you experience that is not shown above or any observation you want to transmit to your doctor.">
+                        <TextArea fx:id="infoArea" prefHeight="102.0" prefWidth="571.0" promptText="Write here any observation about any symptom that you experience that is not shown above or any observation you want to transmit to your doctor.">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -236,7 +240,7 @@
       </Pane>
       <Pane prefHeight="115.0" prefWidth="600.0" style="-fx-background-color: e3e4e5;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="137.0" layoutY="32.0" text="Medical History">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="185.0" layoutY="31.0" text="Medical History">
                <font>
                   <Font name="Ebrima Bold" size="40.0" />
                </font>
@@ -246,7 +250,7 @@
                   <Image url="@images/medical-history.png" />
                </image>
             </ImageView>
-            <Button layoutX="645.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBackMedicalHistory" prefHeight="35.0" prefWidth="104.0" text="Go back" />
+            <Button layoutX="521.0" layoutY="15.0" mnemonicParsing="false" onAction="#goBackMedicalHistory" prefHeight="50.0" prefWidth="127.0" text="Go back" />
          </children>
       </Pane>
    </children>

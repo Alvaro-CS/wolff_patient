@@ -27,6 +27,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import utilities.ECGplot;
@@ -58,7 +59,7 @@ public class ManualECGController implements Initializable {
     }
 
     @FXML
-    void backToECGMenu(ActionEvent event) throws IOException {
+    private void backToECGMenu(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
 
         loader.setLocation(getClass().getResource("BitalinoMenuView.fxml"));
@@ -72,12 +73,15 @@ public class ManualECGController implements Initializable {
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(ECGMenuViewScene);
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
+
         window.centerOnScreen();
         window.show();
     }
 
     @FXML
-    public void startManualECG(ActionEvent event) throws InterruptedException {
+    private void startManualECG(ActionEvent event) throws InterruptedException {
         start = true;
         msgLabel.setText("Recording, please don't move...");
         msgLabel.setTextFill(Color.CADETBLUE);
@@ -87,7 +91,7 @@ public class ManualECGController implements Initializable {
     }
 
     @FXML
-    void stopManualECG(ActionEvent event) throws InterruptedException {//GET ECG of manual here
+    private void stopManualECG(ActionEvent event) throws InterruptedException {//GET ECG of manual here
         if (start) {
             try {
                 msgLabel.setText("Finishing, please wait...");

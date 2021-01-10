@@ -22,6 +22,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import utilities.Hashmaker;
 
@@ -43,7 +44,8 @@ public class LogInController implements Initializable {
      * @param event
      * @throws java.io.IOException
      */
-    public void loginButtonOnAction(ActionEvent event) throws IOException {
+    @FXML
+    private void loginButtonOnAction(ActionEvent event) throws IOException {
         if (com_data_client.getIp_address() == null) {
             loginMessageLabel.setText("Please click on the settings button and introduce "
                     + "\n the server's IP address and Bitalino MAC address");
@@ -67,17 +69,17 @@ public class LogInController implements Initializable {
      * @throws IOException
      */
     @FXML
-    public void validateLogin(ActionEvent event) throws IOException {
+    private void validateLogin(ActionEvent event) throws IOException {
         this.patientMoved = searchPatient();
         System.out.println("Captured patient:" + patientMoved);
         if (this.patientMoved != null) {
             System.out.println("PATIENT EXISTS");
             openMainMenuPatient(event);
 
-        } else if(com_data_client.getSocket()==null) {
+        } else if (com_data_client.getSocket() == null) {
             loginMessageLabel.setText("Connection could not be established");
-            
-        } else{
+
+        } else {
             System.out.println("CONTROL VALIDATE NULL");
             loginMessageLabel.setText("User-password combination not found.\nPlease try again");
         }
@@ -89,8 +91,9 @@ public class LogInController implements Initializable {
      * @param event
      * @throws IOException
      */
-    public void createAccountForm(ActionEvent event) throws IOException {
-        if (com_data_client.getIp_address() == null ) {
+    @FXML
+    private void createAccountForm(ActionEvent event) throws IOException {
+        if (com_data_client.getIp_address() == null) {
             loginMessageLabel.setText("Please click on the settings button and introduce "
                     + "\n the server's IP address and Bitalino MAC address");
         } else {
@@ -108,6 +111,10 @@ public class LogInController implements Initializable {
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(registrationViewScene);
             window.centerOnScreen();
+
+            window.setTitle("WOLFFGRAM");
+            window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
+
             window.show();
         }
 
@@ -119,7 +126,8 @@ public class LogInController implements Initializable {
      * @param event
      * @throws IOException
      */
-    public void openMainMenuPatient(ActionEvent event) throws IOException {
+    @FXML
+    private void openMainMenuPatient(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("PatientMenuView.fxml"));
         Parent mainMenuViewParent = loader.load();
@@ -132,6 +140,8 @@ public class LogInController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MainMenuViewScene);
         window.centerOnScreen();
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
 
         window.show();
     }
@@ -152,7 +162,8 @@ public class LogInController implements Initializable {
      *
      * @return
      */
-    public Patient searchPatient() {
+    @FXML
+    private Patient searchPatient() {
 
         try {
             if (!com_data_client.isSocket_created()) {
@@ -160,46 +171,46 @@ public class LogInController implements Initializable {
                     Socket socket = new Socket(com_data_client.getIp_address(), 9000);
                     if (socket.isConnected()) {
                         System.out.println("Conexión establecida con la dirección: " + com_data_client.getIp_address() + " a través del puerto: " + 9000);
-                   
-                    com_data_client.setSocket(socket);
-                    OutputStream outputStream = socket.getOutputStream();
-                    com_data_client.setOutputStream(outputStream);
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-                    com_data_client.setObjectOutputStream(objectOutputStream);
-                    InputStream inputStream = socket.getInputStream();
-                    com_data_client.setInputStream(inputStream);
-                    ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-                    com_data_client.setObjectInputStream(objectInputStream);
 
-                    com_data_client.setSocket_created(true);
+                        com_data_client.setSocket(socket);
+                        OutputStream outputStream = socket.getOutputStream();
+                        com_data_client.setOutputStream(outputStream);
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+                        com_data_client.setObjectOutputStream(objectOutputStream);
+                        InputStream inputStream = socket.getInputStream();
+                        com_data_client.setInputStream(inputStream);
+                        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+                        com_data_client.setObjectInputStream(objectInputStream);
+
+                        com_data_client.setSocket_created(true);
                     }
-                    
-                } catch (Exception e) {                            
+
+                } catch (Exception e) {
                     System.err.println("No se pudo establecer conexión con: " + com_data_client.getIp_address() + " a travez del puerto: " + 9000);
                 }
 
             }
-            if(com_data_client.getSocket()!=null){
-            //We send the order to server that we want to search for patients
-            String order = "SEARCH_PATIENT";
-            ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
-            objectOutputStream.writeObject(order);
-            System.out.println("Order " + order + " sent to server");
+            if (com_data_client.getSocket() != null) {
+                //We send the order to server that we want to search for patients
+                String order = "SEARCH_PATIENT";
+                ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
+                objectOutputStream.writeObject(order);
+                System.out.println("Order " + order + " sent to server");
 
-            //We send the query with ID + password combination to the server
-            objectOutputStream.writeObject((Object) userNameField.getText());
-            objectOutputStream.writeObject((Object) Hashmaker.getSHA256(passwordField.getText()));
-            System.out.println("Query sent");
+                //We send the query with ID + password combination to the server
+                objectOutputStream.writeObject((Object) userNameField.getText());
+                objectOutputStream.writeObject((Object) Hashmaker.getSHA256(passwordField.getText()));
+                System.out.println("Query sent");
 
-            //We here need to receive from the server the patient found.
-            clientThreadsServer = new ClientThreadsServer();
-            clientThreadsServer.setCom_data_client(com_data_client);
-            new Thread(clientThreadsServer).start();
+                //We here need to receive from the server the patient found.
+                clientThreadsServer = new ClientThreadsServer();
+                clientThreadsServer.setCom_data_client(com_data_client);
+                new Thread(clientThreadsServer).start();
 
-            synchronized (clientThreadsServer) {
-                clientThreadsServer.wait(); //wait until patient logs in (if not, it returns null because not enough time to get it).
-            }
-            return clientThreadsServer.getPatient();
+                synchronized (clientThreadsServer) {
+                    clientThreadsServer.wait(); //wait until patient logs in (if not, it returns null because not enough time to get it).
+                }
+                return clientThreadsServer.getPatient();
             }
 
         } catch (IOException ex) {
@@ -263,7 +274,7 @@ public class LogInController implements Initializable {
         }
     }*/
     @FXML
-    public void comDataMenu(ActionEvent event) throws IOException {
+    private void comDataMenu(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("ComDataView.fxml"));
         Parent comDataViewParent = loader.load();
@@ -274,6 +285,9 @@ public class LogInController implements Initializable {
         // controller.initData(patientMoved,com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
+
         window.setScene(ComDataViewScene);
         window.centerOnScreen();
 

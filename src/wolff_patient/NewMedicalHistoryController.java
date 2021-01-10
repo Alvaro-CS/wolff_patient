@@ -6,8 +6,6 @@ import POJOS.Com_data_client;
 import POJOS.Patient;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -22,6 +20,7 @@ import javafx.scene.Scene;
 
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class NewMedicalHistoryController implements Initializable {
@@ -43,7 +42,6 @@ public class NewMedicalHistoryController implements Initializable {
     RadioButton difficulty_breathing_no;
     @FXML
     RadioButton fainting_no;
-
     @FXML
     TextArea infoArea;
 
@@ -127,6 +125,8 @@ public class NewMedicalHistoryController implements Initializable {
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MedicalHistoryViewScene);
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
         window.centerOnScreen();
 
         window.show();
@@ -149,6 +149,8 @@ public class NewMedicalHistoryController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(ECGMenuViewScene);
         window.centerOnScreen();
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
         window.show();
     }
 
