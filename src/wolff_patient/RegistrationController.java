@@ -73,7 +73,7 @@ public class RegistrationController implements Initializable {
      */
     @FXML
     private void registerButtonOnAction(ActionEvent event) throws IOException {
-        if (usernameIsFree(userNameField.getText())&& userNameField.getText()!=null &&userNameField.getText().length()==9) {
+        if (usernameIsFree(userNameField.getText()) && userNameField.getText() != null && userNameField.getText().length() == 9) {
             regMessageLabel.setText("Username available");
 
             if (passwordField.getText().equals(repeatPasswordField.getText()) && passwordField.getText().isEmpty() != true) {
@@ -123,6 +123,13 @@ public class RegistrationController implements Initializable {
             return false;
         }
     }
+
+    /**
+     * This method takes back to Login menu
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     private void backtoLogin(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
@@ -142,6 +149,11 @@ public class RegistrationController implements Initializable {
         window.show();
     }
 
+    /**
+     * This method gets the info from the fields to build a patient object and
+     * send it to the server.
+     *
+     */
     @FXML
     private void registerUser() {
         String ID = userNameField.getText();
@@ -183,7 +195,7 @@ public class RegistrationController implements Initializable {
     }
 
     /**
-     * this method checks each patient stored in the file to see if the username
+     * This method checks each patient stored in the file to see if the username
      * is already registered
      *
      * @param id
@@ -232,14 +244,14 @@ public class RegistrationController implements Initializable {
         return true; //If patient is null, username IS free.
 
     }
-    
+
     public void closeWindows(Com_data_client com_data_client) {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInView.fxml"));
 
             Parent root = loader.load();
-            
+
             //Cargamos el controlador del LogInView para que recuerde la IP
             LogInController controller = loader.getController();
             controller.initData(com_data_client);
@@ -272,41 +284,6 @@ public class RegistrationController implements Initializable {
         genderComboBox.getItems().add("Female");
         genderComboBox.getItems().add("Other");
     }
-
-    /*
-    private static void releaseResources(OutputStream outputStream, Socket socket) {
-        try {
-            outputStream.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(LogInController.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            socket.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(LogInController.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-    }*/
-//    @FXML
-//    public void comDataMenu(ActionEvent event) throws IOException {
-//        FXMLLoader loader = new FXMLLoader();
-//        loader.setLocation(getClass().getResource("ComDataView.fxml"));
-//        Parent comDataViewParent = loader.load();
-//
-//        Scene ComDataViewScene = new Scene(comDataViewParent);
-//
-//        //   PatientMenuController controller = loader.getController();
-//        // controller.initData(patientMoved,com_data_client);
-//        //this line gets the Stage information
-//        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        window.setScene(ComDataViewScene);
-//        window.centerOnScreen();
-//
-//        window.show();
-//    }
     public RegistrationController() {
     }
 
@@ -314,10 +291,4 @@ public class RegistrationController implements Initializable {
         this.com_data_client = com_data;
     }
 
-//    void initData(String ipaddress, String bitalinoMac) {
-//        com_data_client.setIp_address(ipaddress);
-//        com_data_client.setBitalino_mac(bitalinoMac);
-//        System.out.println("en initdata register");
-//        System.out.println(ipaddress);
-//    }
 }

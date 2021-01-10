@@ -111,16 +111,15 @@ public class LogInController implements Initializable {
             //Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Stage window = new Stage();
             window.setScene(registrationViewScene);
-            window.centerOnScreen();
-
             window.setTitle("WOLFFGRAM");
             window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
+            window.centerOnScreen();
 
             window.show();
-            
+
             //press the X to close 
-            window.setOnCloseRequest(e->controller.closeWindows(com_data_client));
-            
+            window.setOnCloseRequest(e -> controller.closeWindows(com_data_client));
+
             // Close the current window
             Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             myStage.close();
@@ -147,29 +146,18 @@ public class LogInController implements Initializable {
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MainMenuViewScene);
-        window.centerOnScreen();
         window.setTitle("WOLFFGRAM");
         window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
+        window.centerOnScreen();
 
         window.show();
-        
-         //press the X to close the main menu and release resources
-        window.setOnCloseRequest(e->controller.releaseResources(com_data_client));
+
+        //press the X to close the main menu and release resources
+        window.setOnCloseRequest(e -> PatientMenuController.releaseResources(com_data_client));
     }
 
-//    generic open menu        
-//    public void openMainMenu(ActionEvent event)throws IOException{
-//        Parent mainMenuViewParent = FXMLLoader.load(getClass().getResource("PatientMenuView.fxml"));
-//        Scene MainMenuViewScene = new Scene(mainMenuViewParent);
-//        //this line gets the Stage information
-//        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        window.setScene(MainMenuViewScene);
-//        window.centerOnScreen();
-//
-//        window.show();
-//    }
     /**
-     * This method searches for a patient
+     * This method searches for a patient in the server
      *
      * @return
      */
@@ -181,7 +169,7 @@ public class LogInController implements Initializable {
                 try {
                     Socket socket = new Socket(com_data_client.getIp_address(), 9000);
                     if (socket.isConnected()) {
-                        System.out.println("Conexión establecida con la dirección: " + com_data_client.getIp_address() + " a través del puerto: " + 9000);
+                        System.out.println("Connection established with: " + com_data_client.getIp_address() + " by port: " + 9000);
 
                         com_data_client.setSocket(socket);
                         OutputStream outputStream = socket.getOutputStream();
@@ -196,8 +184,8 @@ public class LogInController implements Initializable {
                         com_data_client.setSocket_created(true);
                     }
 
-                } catch (Exception e) {
-                    System.err.println("No se pudo establecer conexión con: " + com_data_client.getIp_address() + " a travez del puerto: " + 9000);
+                } catch (IOException e) {
+                    System.err.println("No connection established with: " + com_data_client.getIp_address() + " by port: " + 9000);
                 }
 
             }
@@ -239,71 +227,25 @@ public class LogInController implements Initializable {
 
     }
 
-    /*
-    public Patient searchPatientOld() {
-        Patient patient;
-        ArrayList<Patient> patients2 = new ArrayList<>();
-        String filename = "patientFiles";
-
-        try {
-            ObjectInputStream is = new ObjectInputStream(new FileInputStream(filename));
-            patients2 = (ArrayList<Patient>) is.readObject();
-            for (int i = 0; i < patients2.size(); i++) {
-                if (patients2.get(i).getDNI().equalsIgnoreCase(username)
-                        && patients2.get(i).getPassword().equals(password)) {
-                    patient = patients2.get(i);
-                    return patient;
-                }
-            }
-            is.close();
-        } catch (EOFException ex) {
-            System.out.println("All data have been correctly read.");
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }*/
- /*
-    private static void releaseResources(OutputStream outputStream, Socket socket) {
-        try {
-            outputStream.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(LogInController.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            socket.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(LogInController.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-    }*/
     @FXML
     private void comDataMenu(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("ComDataView.fxml"));
         Parent comDataViewParent = loader.load();
-        
+
         //Call the controller
         ComDataController controller = loader.getController();
 
         Scene ComDataViewScene = new Scene(comDataViewParent);
         Stage window = new Stage();
 
+        window.setScene(ComDataViewScene);
         window.setTitle("WOLFFGRAM");
         window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
-
-        window.setScene(ComDataViewScene);
         window.centerOnScreen();
 
         window.show();
-        
+
         // When the X is press to closs
         window.setOnCloseRequest(e -> {
             try {

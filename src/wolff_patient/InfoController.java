@@ -63,11 +63,10 @@ public class InfoController implements Initializable {
     private void button1(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/wolff_patient/InfoView1.fxml"));
         Stage stage = new Stage();
-
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
         stage.setTitle("WOLFFGRAM");
         stage.getIcons().add(new Image("/wolff_patient/images/logo.png"));
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
 
         stage.show();
 
@@ -77,10 +76,10 @@ public class InfoController implements Initializable {
     private void button2(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/wolff_patient/InfoView2.fxml"));
         Stage stage = new Stage();
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
         stage.setTitle("WOLFFGRAM");
         stage.getIcons().add(new Image("/wolff_patient/images/logo.png"));
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
 
         stage.show();
     }
@@ -89,10 +88,10 @@ public class InfoController implements Initializable {
     private void button3(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/wolff_patient/InfoView3.fxml"));
         Stage stage = new Stage();
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
         stage.setTitle("WOLFFGRAM");
         stage.getIcons().add(new Image("/wolff_patient/images/logo.png"));
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
         stage.show();
     }
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package wolff_patient;
 
 
@@ -15,11 +10,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.Pane;
 
-/**
- * FXML Controller class
- *
- * @author susan
- */
+
 public class ECGShowController implements Initializable {
 
     @FXML
@@ -45,7 +36,6 @@ public class ECGShowController implements Initializable {
      */
     @FXML
     private void showECG() {
-        System.out.println("Dentro show " + ecg_data);
         XYChart.Series series = new XYChart.Series();
         //  series.setName("ECG data");
         //populating the series with data

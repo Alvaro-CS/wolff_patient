@@ -18,7 +18,7 @@ public class ClientThreadsServer implements Runnable {
 
     private Com_data_client com_data_client;
     private Patient patient; //Patient that is going to be got from the server when login
-    //private boolean patient_logged;
+    
 
     /**
      * Empty (default) constructor.
@@ -39,7 +39,7 @@ public class ClientThreadsServer implements Runnable {
             instruction = (String) tmp;
 
             System.out.println("Order received");
-            switch (instruction) {
+            switch (instruction) {//Although we have only 1 option, designed for programming more options if needed.
                 case "RECEIVE_PATIENT": { //For login
                     System.out.println(instruction + " option running");
 

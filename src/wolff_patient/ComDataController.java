@@ -1,6 +1,5 @@
 package wolff_patient;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -48,7 +47,6 @@ public class ComDataController implements Initializable {
             window.centerOnScreen();
             window.setTitle("WOLFFGRAM");
             window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
-
             window.show();
         }
     }
@@ -56,7 +54,7 @@ public class ComDataController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
-    
+
     public void closeWindows() throws IOException {
 
         try {
@@ -69,13 +67,13 @@ public class ComDataController implements Initializable {
 
             stage.setScene(scene);
             stage.show();
-            
-            try{
 
-            Stage myStage = (Stage) (this.messageLabel.getScene().getWindow());
-            myStage.close();
-            
-            }catch(NullPointerException e){
+            try {
+
+                Stage myStage = (Stage) (this.messageLabel.getScene().getWindow());
+                myStage.close();
+
+            } catch (NullPointerException e) {
                 System.out.println("Exception caught");
             }
 

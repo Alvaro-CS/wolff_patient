@@ -9,8 +9,6 @@ import POJOS.Com_data_client;
 import POJOS.Patient;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -22,7 +20,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -37,7 +34,7 @@ import utilities.Hashmaker;
  * @author susan
  */
 public class UserInfoController implements Initializable {
-    
+
     private Com_data_client com_data_client;
     private static Patient patientMoved;
 
@@ -77,7 +74,7 @@ public class UserInfoController implements Initializable {
      * @param com_data_client
      */
     public void initData(Patient patient, Com_data_client com_data_client) {
-        this.com_data_client=com_data_client;
+        this.com_data_client = com_data_client;
         patientMoved = patient;
         nameLabel.setText("Patient's name: " + patientMoved.getName());
         surnameLabel.setText("Patient's surname: " + patientMoved.getLastName());
@@ -87,7 +84,7 @@ public class UserInfoController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {        
+    public void initialize(URL url, ResourceBundle rb) {
         genderComboBox.getItems().add("Male");
         genderComboBox.getItems().add("Female");
         genderComboBox.getItems().add("Other");
@@ -138,21 +135,24 @@ public class UserInfoController implements Initializable {
             patientMoved.setAddress(adressField.getText());
             System.out.println("Adress updated");
         }
-        if(genderComboBox.getValue()!=null){
-        if (!genderComboBox.getValue().equals(patientMoved.getGender())  && genderComboBox.getValue().equals("Female")) {
-            patientMoved.setGender(Patient.Gender.FEMALE);
-        }
-        if (!genderComboBox.getValue().equals(patientMoved.getGender())  && genderComboBox.getValue().equals("Male")) {
-            patientMoved.setGender(Patient.Gender.MALE);
-        }
-        if (!genderComboBox.getValue().equals(patientMoved.getGender())  && genderComboBox.getValue().equals("Other")) {
-            patientMoved.setGender(Patient.Gender.OTHER);
-        }
+        if (genderComboBox.getValue() != null) {
+            if (!genderComboBox.getValue().equals(patientMoved.getGender()) && genderComboBox.getValue().equals("Female")) {
+                patientMoved.setGender(Patient.Gender.FEMALE);
+            }
+            if (!genderComboBox.getValue().equals(patientMoved.getGender()) && genderComboBox.getValue().equals("Male")) {
+                patientMoved.setGender(Patient.Gender.MALE);
+            }
+            if (!genderComboBox.getValue().equals(patientMoved.getGender()) && genderComboBox.getValue().equals("Other")) {
+                patientMoved.setGender(Patient.Gender.OTHER);
+            }
         }
         updatePatient();
     }
 
-    //For updating patient in server
+    /**
+     * This method updates patient's data in the server
+     *
+     */
     @FXML
     private void updatePatient() {
         ObjectOutputStream objectOutputStream;
@@ -171,7 +171,7 @@ public class UserInfoController implements Initializable {
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
             Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }
 
     /**
@@ -188,7 +188,7 @@ public class UserInfoController implements Initializable {
         Parent patientMenuViewParent = loader.load();
         Scene MainMenuViewScene = new Scene(patientMenuViewParent);
         PatientMenuController controller = loader.getController();
-        controller.initData(patientMoved,com_data_client);
+        controller.initData(patientMoved, com_data_client);
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MainMenuViewScene);
@@ -199,13 +199,17 @@ public class UserInfoController implements Initializable {
         window.show();
     }
     
+    /**
+     * This method handles closing the app by X button
+     *
+     */
     public void closeWindows() {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("PatientMenuView.fxml"));
 
             Parent root = loader.load();
-            
+
             //CARGAMOS EL CONTROLADOR DE LA VISTA DEL MAIN MENU
             PatientMenuController controller = loader.getController();
             controller.initData(patientMoved, com_data_client);
@@ -224,18 +228,4 @@ public class UserInfoController implements Initializable {
         }
 
     }
-/*
-    private static void releaseResources(OutputStream outputStream, Socket socket) {
-        try {
-            outputStream.close();
-        } catch (IOException ex) {
-            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            socket.close();
-        } catch (IOException ex) {
-            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-*/
 }

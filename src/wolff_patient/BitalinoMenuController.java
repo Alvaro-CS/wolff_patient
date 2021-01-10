@@ -121,7 +121,6 @@ public class BitalinoMenuController implements Initializable {
         window.setScene(BitalinoMacViewScene);
         window.setTitle("WOLFFGRAM");
         window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
-
         window.centerOnScreen();
 
         window.show();
@@ -269,6 +268,8 @@ public class BitalinoMenuController implements Initializable {
             //this line gets the Stage information
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(MedicalFormViewScene);
+            window.setTitle("WOLFFGRAM");
+            window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
             window.centerOnScreen();
 
             window.show();
@@ -278,22 +279,6 @@ public class BitalinoMenuController implements Initializable {
         }
     }
 
-    //It opens a window with the ECG that has just been recorded
-    /*
-    void openECGWindow(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ECGShowView.fxml"));
-
-        Stage stage = new Stage();
-        stage.setTitle("Your ECG");
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
-
-        ECGShowController controller = loader.getController();
-        controller.initData(ecg_data);
-
-        stage.show();
-    }
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }

@@ -11,11 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
-/**
- * FXML Controller class
- *
- * @author susan
- */
+
 public class RecordCommentsController implements Initializable {
 
     @FXML

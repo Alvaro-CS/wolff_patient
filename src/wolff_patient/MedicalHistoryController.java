@@ -82,9 +82,13 @@ public class MedicalHistoryController implements Initializable {
 
     }
 
+    /**
+     * This method connects the columns with the atributes.
+     *
+     * @param event
+     * @throws IOException
+     */
     private void initTable() {
-        //Here we connect the columns with the atributes
-
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateString"));
         palpitationsColumn.setCellValueFactory(new PropertyValueFactory<>("palpitations"));
@@ -252,34 +256,8 @@ public class MedicalHistoryController implements Initializable {
         //this line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(MainMenuViewScene);
-        window.centerOnScreen();
         window.setTitle("WOLFFGRAM");
         window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
-
-        window.show();
-    }
-
-    /**
-     * This method loads the scene which lets the user add a new clinical record
-     * to its profile.
-     *
-     * @param event
-     * @throws IOException
-     */
-    @FXML
-    private void addRecord(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-
-        loader.setLocation(getClass().getResource("NewMedicalHistoryView.fxml"));
-
-        Parent newmedicalHistoryViewParent = loader.load();
-        Scene NewMedicalHistoryViewScene = new Scene(newmedicalHistoryViewParent);
-
-        NewMedicalHistoryController controller = loader.getController();
-        controller.initData(patientMoved, com_data_client);
-        //this line gets the Stage information
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(NewMedicalHistoryViewScene);
         window.centerOnScreen();
         window.setTitle("WOLFFGRAM");
         window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
@@ -323,14 +301,14 @@ public class MedicalHistoryController implements Initializable {
 
         stage.show();
     }
-    
+
     public void closeWindows() {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("PatientMenuView.fxml"));
 
             Parent root = loader.load();
-            
+
             // CARGAMOS EL CONTROLADOR DEL MAIN MENU
             PatientMenuController controller = loader.getController();
             controller.initData(patientMoved, com_data_client);
@@ -340,18 +318,15 @@ public class MedicalHistoryController implements Initializable {
 
             stage.setScene(scene);
             stage.show();
-            
-            try{
 
-            Stage myStage = (Stage) this.buttonsLabel.getScene().getWindow();
-            myStage.close();
-            
-            }catch(NullPointerException e){
+            try {
+
+                Stage myStage = (Stage) this.buttonsLabel.getScene().getWindow();
+                myStage.close();
+
+            } catch (NullPointerException e) {
                 System.out.println("Exception caught");
             }
-
-            
-           
 
         } catch (IOException ex) {
             Logger.getLogger(PatientMenuController.class.getName()).log(Level.SEVERE, null, ex);

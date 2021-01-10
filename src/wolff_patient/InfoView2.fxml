@@ -52,7 +52,10 @@
             </Pane>
          </children>
       </HBox>
-      <Label layoutX="270.0" layoutY="115.0" prefHeight="45.0" prefWidth="80.0" text="Three options:" />
+      <Label alignment="CENTER" layoutX="226.0" layoutY="115.0" prefHeight="46.0" prefWidth="161.0" text="Three options" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font></Label>
       <Pane layoutX="30.0" layoutY="500.0" prefHeight="115.0" prefWidth="160.0">
          <children>
             <VBox prefHeight="115.0" prefWidth="30.0" spacing="15.0">
@@ -91,7 +94,7 @@
                </children>
             </VBox>
             <Label layoutX="30.0" layoutY="93.0" text=" Left wrist" />
-            <Label layoutX="30.0" layoutY="6.0" text=" Rigth ankle" />
+            <Label layoutX="30.0" layoutY="6.0" text=" Right ankle" />
             <Label layoutX="30.0" layoutY="49.0" text=" Right wrist" />
          </children>
       </Pane>

@@ -8,6 +8,7 @@ package utilities;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import wolff_patient.ECGShowController;
 
@@ -27,6 +28,8 @@ public class ECGplot {
 
         Stage stage = new Stage();
         stage.setTitle("Your ECG");
+        stage.getIcons().add(new Image("/wolff_patient/images/ecg.png"));
+
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
 
