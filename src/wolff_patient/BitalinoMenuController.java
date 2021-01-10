@@ -194,7 +194,6 @@ public class BitalinoMenuController implements Initializable {
                     tAuto.start();
                     tAuto.join();
 
-                    //Thread.sleep((seconds + 2) * 1000);
                     ecg_data = autoECGThread.getEcg_data();
                     if (bitalinoManager.isLost_com()) {
                         messageLabel.setText("Communications interrupted.\nYou can save the resulting ECG or connect again to the Bitalino.");

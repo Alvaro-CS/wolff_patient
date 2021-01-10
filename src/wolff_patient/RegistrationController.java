@@ -232,6 +232,32 @@ public class RegistrationController implements Initializable {
         return true; //If patient is null, username IS free.
 
     }
+    
+    public void closeWindows(Com_data_client com_data_client) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInView.fxml"));
+
+            Parent root = loader.load();
+            
+            //Cargamos el controlador del LogInView para que recuerde la IP
+            LogInController controller = loader.getController();
+            controller.initData(com_data_client);
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.show();
+
+            Stage myStage = (Stage) this.confirmPasswordLabel.getScene().getWindow();
+            myStage.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(PatientMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
     /**
      * this method needs the @override

@@ -4,6 +4,8 @@ package wolff_patient;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -53,6 +55,34 @@ public class ComDataController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+    }
+    
+    public void closeWindows() throws IOException {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInView.fxml"));
+
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.show();
+            
+            try{
+
+            Stage myStage = (Stage) (this.messageLabel.getScene().getWindow());
+            myStage.close();
+            
+            }catch(NullPointerException e){
+                System.out.println("Exception caught");
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

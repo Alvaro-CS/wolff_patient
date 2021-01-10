@@ -198,6 +198,32 @@ public class UserInfoController implements Initializable {
 
         window.show();
     }
+    
+    public void closeWindows() {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PatientMenuView.fxml"));
+
+            Parent root = loader.load();
+            
+            //CARGAMOS EL CONTROLADOR DE LA VISTA DEL MAIN MENU
+            PatientMenuController controller = loader.getController();
+            controller.initData(patientMoved, com_data_client);
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.show();
+
+            Stage myStage = (Stage) this.telephoneField.getScene().getWindow();
+            myStage.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(PatientMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 /*
     private static void releaseResources(OutputStream outputStream, Socket socket) {
         try {

@@ -35,6 +35,7 @@ import utilities.ECGplot;
 public class ManualECGController implements Initializable {
 
     private ECGThread manualECGThread; //we create a reference for accesing different methods
+    private Thread t;
 
     private Com_data_client com_data_client;
     private Patient patientMoved;
@@ -82,12 +83,17 @@ public class ManualECGController implements Initializable {
 
     @FXML
     private void startManualECG(ActionEvent event) throws InterruptedException {
-        start = true;
-        msgLabel.setText("Recording, please don't move...");
-        msgLabel.setTextFill(Color.CADETBLUE);
-        manualECGThread = new ECGThread(bitalinoManager, "MANUAL");
-        new Thread(manualECGThread).start();
-
+        if (bitalinoManager == null) {
+            msgLabel.setText("Please, go back and connect to the Bitalino again.");
+            msgLabel.setTextFill(Color.RED);
+        } else {
+            start = true;
+            msgLabel.setText("Recording, please don't move...");
+            msgLabel.setTextFill(Color.CADETBLUE);
+            manualECGThread = new ECGThread(bitalinoManager, "MANUAL");
+            t = new Thread(manualECGThread);
+            t.start();
+        }
     }
 
     @FXML
@@ -97,10 +103,9 @@ public class ManualECGController implements Initializable {
                 msgLabel.setText("Finishing, please wait...");
                 msgLabel.setTextFill(Color.ORANGE);
                 bitalinoManager.setStop(true);
-
-                Thread.sleep(2000); //TODO some seconds to make sure it finish properly. Check if can be done with join
+                t.join();
                 if (bitalinoManager.isLost_com()) {
-                    msgLabel.setText("Communications interrupted.\nYou can save the resulting ECG or connect again to the Bitalino.");
+                    msgLabel.setText("Communications interrupted.\nPlease, go back and connect again to the Bitalino.");
                     msgLabel.setTextFill(Color.RED);
                     bitalinoManager = null;
                 } else {
@@ -109,8 +114,10 @@ public class ManualECGController implements Initializable {
                     ecg_data = manualECGThread.getEcg_data();
                     ECGplot e = new ECGplot(ecg_data);
                     e.openECGWindow();
-                    start = false;
+                    System.out.println(bitalinoManager.isLost_com());
                 }
+                start = false;
+
             } catch (IOException ex) {
                 Logger.getLogger(ManualECGController.class.getName()).log(Level.SEVERE, null, ex);
             }
