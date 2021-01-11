@@ -18,14 +18,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import utilities.Hashmaker;
 
 public class LogInController implements Initializable {

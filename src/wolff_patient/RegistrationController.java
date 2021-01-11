@@ -101,7 +101,6 @@ public class RegistrationController implements Initializable {
                     regMessageLabel.setText("Phone number is missing or is incorrect");
                     System.out.println("Phone number is missing or is incorrect");
                 } else {
-                    System.out.println("noooo");
                     registerUser();
                     regMessageLabel.setText("Registration completed");
                     backtoLogin(event);
@@ -109,9 +108,9 @@ public class RegistrationController implements Initializable {
             } else {
                 confirmPasswordLabel.setText("Passwords don't match or are not valid");
             }
-        } else if(com_data_client.getSocket() == null) {
+        } else if (com_data_client.getSocket() == null) {
             regMessageLabel.setText("Connection could not be established");
-        }else{
+        } else {
             regMessageLabel.setText("That username already exists or it is not valid.\nIntroduce a valid one.");
         }
 
@@ -204,7 +203,7 @@ public class RegistrationController implements Initializable {
      * @return boolean
      */
     @FXML
-    private boolean usernameIsFree(String id) {//TODO
+    private boolean usernameIsFree(String id) {//TODO fix connection check
         Patient p;
         try {
             if (!com_data_client.isSocket_created()) {
@@ -224,10 +223,8 @@ public class RegistrationController implements Initializable {
                         com_data_client.setObjectInputStream(objectInputStream);
                         com_data_client.setSocket_created(true);
 
-                    } else if (socket == null) {
-                        regMessageLabel.setText("Connection could not be established");
                     } else {
-                        regMessageLabel.setText("Connection could not be established 1");
+                        regMessageLabel.setText("Connection could not be established.");
                     }
                 } catch (IOException e) {
                     System.err.println("No connection established with: " + com_data_client.getIp_address() + " by port: " + 9000);
@@ -237,19 +234,27 @@ public class RegistrationController implements Initializable {
             }
             if (com_data_client.getSocket() != null) {
                 //Sending order
-                String order = "EXISTS";
-                ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
-                objectOutputStream.writeObject(order);
-                System.out.println("Order" + order + "sent");
-                //Sending patient
-                objectOutputStream.writeObject(id);
-                System.out.println("Patient name sent to server, will check if it exists.");
-
                 ObjectInputStream objectInputStream = com_data_client.getObjectInputStream();
-                objectInputStream.readObject();//We read the ORDER. We don't need it for nothing, so we don't save it to a variable.
-                Object tmp = objectInputStream.readObject();//we receive the new patient from client
-                p = (Patient) tmp;
-                if (p != null) {//If received, it will not be null. Username is NOT free.no 
+                int signal = objectInputStream.readByte();
+                if (signal == 1) {//Connection with the server 
+                    System.out.println("Connection established");
+                    String order = "EXISTS";
+                    ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
+                    objectOutputStream.writeObject(order);
+                    System.out.println("Order" + order + "sent");
+                    //Sending patient
+                    objectOutputStream.writeObject(id);
+                    System.out.println("Patient name sent to server, will check if it exists.");
+
+                    //ObjectInputStream objectInputStream = com_data_client.getObjectInputStream();
+                    objectInputStream.readObject();//We read the ORDER. We don't need it for nothing, so we don't save it to a variable.
+                    Object tmp = objectInputStream.readObject();//we receive the new patient from client
+                    p = (Patient) tmp;
+                    if (p != null) {//If received, it will not be null. Username is NOT free.no 
+                        return false;
+                    }
+                } else if (signal == -1) {
+                    System.out.println("NO CONNECTION");
                     return false;
                 }
             }

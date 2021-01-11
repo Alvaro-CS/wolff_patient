@@ -44,7 +44,6 @@ public class Patient implements Runnable, Serializable {
     
     private ArrayList<Clinical_record> clinical_record_list;
 
-    private final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
     
     
     public Patient(String DNI, String password, String name, String lastName) {
@@ -62,6 +61,7 @@ public class Patient implements Runnable, Serializable {
         this.name = name;
         this.lastName = lastName;
         this.gender = gender;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         this.birthdate = formatter.format(date);
         this.address = address;
         this.SSNumber = SSNumber;
