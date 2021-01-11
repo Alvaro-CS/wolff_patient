@@ -109,7 +109,9 @@ public class RegistrationController implements Initializable {
             } else {
                 confirmPasswordLabel.setText("Passwords don't match or are not valid");
             }
-        } else {
+        } else if(com_data_client.getSocket() == null) {
+            regMessageLabel.setText("Connection could not be established");
+        }else{
             regMessageLabel.setText("That username already exists or it is not valid.\nIntroduce a valid one.");
         }
 
@@ -160,6 +162,7 @@ public class RegistrationController implements Initializable {
         String password = Hashmaker.getSHA256(passwordField.getText());
         String name = nameField.getText();
         String surname = surnameField.getText();
+        String ssnumber = ssNumberField.getText();
 
         Gender gender = null;
         if (genderComboBox.getValue().equals("Male")) {
@@ -172,7 +175,6 @@ public class RegistrationController implements Initializable {
         LocalDate localDate = dobDatePicker.getValue();
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
         Date dob = Date.from(instant);
-        int ssnumber = Integer.parseInt(ssNumberField.getText());
         String address = addressField.getText();
         int phone = Integer.parseInt(phoneField.getText());
 
@@ -206,34 +208,50 @@ public class RegistrationController implements Initializable {
         Patient p;
         try {
             if (!com_data_client.isSocket_created()) {
-                Socket socket = new Socket(com_data_client.getIp_address(), 9000);
-                com_data_client.setSocket(socket);
-                OutputStream outputStream = socket.getOutputStream();
-                com_data_client.setOutputStream(outputStream);
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-                com_data_client.setObjectOutputStream(objectOutputStream);
-                InputStream inputStream = socket.getInputStream();
-                com_data_client.setInputStream(inputStream);
-                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-                com_data_client.setObjectInputStream(objectInputStream);
-                com_data_client.setSocket_created(true);
+                try {
+                    Socket socket = new Socket(com_data_client.getIp_address(), 9000);
+                    if (socket.isConnected()) {
+                        System.out.println("Connection established with: " + com_data_client.getIp_address() + " by port: " + 9000);
 
+                        com_data_client.setSocket(socket);
+                        OutputStream outputStream = socket.getOutputStream();
+                        com_data_client.setOutputStream(outputStream);
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+                        com_data_client.setObjectOutputStream(objectOutputStream);
+                        InputStream inputStream = socket.getInputStream();
+                        com_data_client.setInputStream(inputStream);
+                        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+                        com_data_client.setObjectInputStream(objectInputStream);
+                        com_data_client.setSocket_created(true);
+
+                    } else if (socket == null) {
+                        regMessageLabel.setText("Connection could not be established");
+                    } else {
+                        regMessageLabel.setText("Connection could not be established 1");
+                    }
+                } catch (IOException e) {
+                    System.err.println("No connection established with: " + com_data_client.getIp_address() + " by port: " + 9000);
+                    regMessageLabel.setText("Connection could not be established");
+
+                }
             }
-            //Sending order
-            String order = "EXISTS";
-            ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
-            objectOutputStream.writeObject(order);
-            System.out.println("Order" + order + "sent");
-            //Sending patient
-            objectOutputStream.writeObject(id);
-            System.out.println("Patient name sent to server, will check if it exists.");
+            if (com_data_client.getSocket() != null) {
+                //Sending order
+                String order = "EXISTS";
+                ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
+                objectOutputStream.writeObject(order);
+                System.out.println("Order" + order + "sent");
+                //Sending patient
+                objectOutputStream.writeObject(id);
+                System.out.println("Patient name sent to server, will check if it exists.");
 
-            ObjectInputStream objectInputStream = com_data_client.getObjectInputStream();
-            objectInputStream.readObject();//We read the ORDER. We don't need it for nothing, so we don't save it to a variable.
-            Object tmp = objectInputStream.readObject();//we receive the new patient from client
-            p = (Patient) tmp;
-            if (p != null) {//If received, it will not be null. Username is NOT free.
-                return false;
+                ObjectInputStream objectInputStream = com_data_client.getObjectInputStream();
+                objectInputStream.readObject();//We read the ORDER. We don't need it for nothing, so we don't save it to a variable.
+                Object tmp = objectInputStream.readObject();//we receive the new patient from client
+                p = (Patient) tmp;
+                if (p != null) {//If received, it will not be null. Username is NOT free.no 
+                    return false;
+                }
             }
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
@@ -284,6 +302,7 @@ public class RegistrationController implements Initializable {
         genderComboBox.getItems().add("Female");
         genderComboBox.getItems().add("Other");
     }
+
     public RegistrationController() {
     }
 
