@@ -145,7 +145,7 @@ public class LogInController implements Initializable {
         PatientMenuController controller = loader.getController();
         controller.initData(patientMoved, com_data_client);
         //this line gets the Stage information
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage window = new Stage();
         window.setScene(MainMenuViewScene);
         window.setTitle("WOLFFGRAM");
         window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
@@ -155,6 +155,9 @@ public class LogInController implements Initializable {
 
         //press the X to close the main menu and release resources
         window.setOnCloseRequest(e -> PatientMenuController.releaseResources(com_data_client));
+        
+        Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        myStage.close();
     }
 
     /**

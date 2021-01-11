@@ -79,7 +79,13 @@ public class PatientMenuController implements Initializable {
         window.show();
 
         // When the X is press to close
-        window.setOnCloseRequest(e -> controller.closeWindows());
+        window.setOnCloseRequest(e -> {
+            try {
+                controller.backToMenu(event);
+            } catch (IOException ex) {
+                Logger.getLogger(PatientMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
 
         // Close the current window
         Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -113,7 +119,13 @@ public class PatientMenuController implements Initializable {
         window.show();
 
         // Indico que debe hacer al cerrar
-        window.setOnCloseRequest(e -> controller.closeWindows());
+        window.setOnCloseRequest(e -> {
+            try {
+                controller.backToMenu(event);
+            } catch (IOException ex) {
+                Logger.getLogger(PatientMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
 
         // Cierro la ventana donde estoy
         Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -165,13 +177,17 @@ public class PatientMenuController implements Initializable {
         Scene LogInViewScene = new Scene(LogInViewParent);
 
         //this line gets the Stage information
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage window = new Stage();
+        
         window.setScene(LogInViewScene);
-                window.setTitle("WOLFFGRAM");
+        window.setTitle("WOLFFGRAM");
         window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
         window.centerOnScreen();
 
         window.show();
+        
+        Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        myStage.close();
 
     }
 

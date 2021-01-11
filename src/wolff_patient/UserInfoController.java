@@ -199,7 +199,7 @@ public class UserInfoController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void backToMenu(ActionEvent event) throws IOException {
+    public void backToMenu(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("PatientMenuView.fxml"));
@@ -208,42 +208,22 @@ public class UserInfoController implements Initializable {
         PatientMenuController controller = loader.getController();
         controller.initData(patientMoved, com_data_client);
         //this line gets the Stage information
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage window = new Stage();
         window.setScene(MainMenuViewScene);
         window.centerOnScreen();
         window.setTitle("WOLFFGRAM");
         window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
 
         window.show();
+        
+        Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        myStage.close();
     }
 
     /**
      * This method handles closing the app by X button
      *
      */
-    public void closeWindows() {
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("PatientMenuView.fxml"));
-
-            Parent root = loader.load();
-
-            //CARGAMOS EL CONTROLADOR DE LA VISTA DEL MAIN MENU
-            PatientMenuController controller = loader.getController();
-            controller.initData(patientMoved, com_data_client);
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-
-            stage.setScene(scene);
-            stage.show();
-
-            Stage myStage = (Stage) this.telephoneField.getScene().getWindow();
-            myStage.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(PatientMenuController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
+    
 }

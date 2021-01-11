@@ -73,51 +73,53 @@ public class RegistrationController implements Initializable {
      * @throws java.io.IOException
      */
     @FXML
-    private void registerButtonOnAction(ActionEvent event) throws IOException, InterruptedException {
-        if (usernameIsFree(userNameField.getText()) && userNameField.getText() != null && userNameField.getText().length() == 9) {
-            regMessageLabel.setTextFill(Color.GREEN);
+    private void registerButtonOnAction(ActionEvent event) throws IOException {
+       
 
-            regMessageLabel.setText("Username available");
-
-            if (passwordField.getText().equals(repeatPasswordField.getText()) && passwordField.getText().isEmpty() != true) {
-                System.out.println(passwordField.getText());
-                confirmPasswordLabel.setText("Passwords match");
-                if (nameField.getText() == null || nameField.getText().isEmpty()) {
-                    regMessageLabel.setText("Name parameter is missing");
-                    System.out.println("Name parameter is missing");
-                } else if (surnameField.getText() == null || surnameField.getText().isEmpty()) {
-                    regMessageLabel.setText("Surname parameter is missing");
-                    System.out.println("Surname parameter is missing");
-                } else if (genderComboBox.getValue() == null) {
-                    regMessageLabel.setText("The gender is missing");
-                    System.out.println("The gender is missing");
-                } else if (dobDatePicker.getValue() == null) {
-                    regMessageLabel.setText("The date of birth is missing or is incorrect");
-                    System.out.println("The date of birth is missing or is incorrect");
-                } else if (ssNumberField.getText() == null || isNumeric(ssNumberField.getText()) == false) {
-                    regMessageLabel.setText("Social security number is missing or is incorrect");
-                    System.out.println("Social security number is missing or is incorrect");
-                } else if (addressField.getText() == null || addressField.getText().isEmpty()) {
-                    regMessageLabel.setText("Address parameter is missing");
-                    System.out.println("Address parameter is missing");
-                } else if (phoneField.getText() == null || isNumeric(phoneField.getText()) == false || phoneField.getText().length() != 9) {
-                    regMessageLabel.setText("Phone number is missing or is incorrect");
-                    System.out.println("Phone number is missing or is incorrect");
-                } else {
+        if (passwordField.getText().equals(repeatPasswordField.getText()) && passwordField.getText().isEmpty() != true) {
+            System.out.println(passwordField.getText());
+            confirmPasswordLabel.setText("Passwords match");
+            if (nameField.getText() == null || nameField.getText().isEmpty()) {
+                regMessageLabel.setText("Name parameter is missing");
+                System.out.println("Name parameter is missing");
+            } else if (surnameField.getText() == null || surnameField.getText().isEmpty()) {
+                regMessageLabel.setText("Surname parameter is missing");
+                System.out.println("Surname parameter is missing");
+            } else if (genderComboBox.getValue() == null) {
+                regMessageLabel.setText("The gender is missing");
+                System.out.println("The gender is missing");
+            } else if (dobDatePicker.getValue() == null) {
+                regMessageLabel.setText("The date of birth is missing or is incorrect");
+                System.out.println("The date of birth is missing or is incorrect");
+            } else if (ssNumberField.getText() == null || isNumeric(ssNumberField.getText()) == false) {
+                regMessageLabel.setText("Social security number is missing or is incorrect");
+                System.out.println("Social security number is missing or is incorrect");
+            } else if (addressField.getText() == null || addressField.getText().isEmpty()) {
+                regMessageLabel.setText("Address parameter is missing");
+                System.out.println("Address parameter is missing");
+            } else if (phoneField.getText() == null || isNumeric(phoneField.getText()) == false || phoneField.getText().length() != 9) {
+                regMessageLabel.setText("Phone number is missing or is incorrect");
+                System.out.println("Phone number is missing or is incorrect");
+            } else {
+                if (usernameIsFree(userNameField.getText()) && userNameField.getText() != null && userNameField.getText().length() == 9) {
+                    regMessageLabel.setText("Username available");
                     registerUser();
                     regMessageLabel.setText("Registration completed");
                     backtoLogin(event);
+                } else if(userNameField.getText() == null || userNameField.getText().length() != 9){       
+                    regMessageLabel.setText("That username already exists or it is not valid.\nIntroduce a valid one.");
+                    
+                }else{
+                    regMessageLabel.setText("Connection could not be established");
+ 
                 }
-            } else {
-                confirmPasswordLabel.setText("Passwords don't match or are not valid");
             }
-        } else if (com_data_client.getSocket() == null) {
-            regMessageLabel.setTextFill(Color.RED);
-            regMessageLabel.setText("Connection could not be established");
-        } else {
-            regMessageLabel.setTextFill(Color.RED);
 
-            regMessageLabel.setText("That username already exists or it is not valid.\nIntroduce a valid one.");
+        } else {
+            confirmPasswordLabel.setText("Passwords don't match or are not valid");
+            if (userNameField.getText().isEmpty() == true || passwordField.getText().isEmpty() == true) {
+            confirmPasswordLabel.setText("Introduce username and password");
+        }
         }
 
     }
@@ -201,7 +203,9 @@ public class RegistrationController implements Initializable {
 
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
-            Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger
+                    .getLogger(LogInController.class
+                            .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -233,12 +237,17 @@ public class RegistrationController implements Initializable {
                         com_data_client.setObjectInputStream(objectInputStream);
                         com_data_client.setSocket_created(true);
 
+                    } else if (socket == null) {
+                        regMessageLabel.setText("Connection could not be established");
+                        return false;
                     } else {
-                        regMessageLabel.setText("Connection could not be established.");
+                        regMessageLabel.setText("Connection could not be established 1");
+                        return false;
                     }
                 } catch (IOException e) {
                     System.err.println("No connection established with: " + com_data_client.getIp_address() + " by port: " + 9000);
                     regMessageLabel.setText("Connection could not be established");
+                    return false;
 
                 }
             }
@@ -276,8 +285,11 @@ public class RegistrationController implements Initializable {
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
             Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
         return true; //If patient is null, username IS free.
 
@@ -306,7 +318,8 @@ public class RegistrationController implements Initializable {
             myStage.close();
 
         } catch (IOException ex) {
-            Logger.getLogger(PatientMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PatientMenuController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
     }

@@ -245,7 +245,7 @@ public class MedicalHistoryController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void backToMenu(ActionEvent event) throws IOException {
+    public void backToMenu(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("PatientMenuView.fxml"));
@@ -254,7 +254,8 @@ public class MedicalHistoryController implements Initializable {
         PatientMenuController controller = loader.getController();
         controller.initData(patientMoved, com_data_client);
         //this line gets the Stage information
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage window = new Stage();
         window.setScene(MainMenuViewScene);
         window.setTitle("WOLFFGRAM");
         window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
@@ -263,6 +264,9 @@ public class MedicalHistoryController implements Initializable {
         window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
 
         window.show();
+        
+        Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        myStage.close();
     }
 
     @FXML
@@ -302,35 +306,5 @@ public class MedicalHistoryController implements Initializable {
         stage.show();
     }
 
-    public void closeWindows() {
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("PatientMenuView.fxml"));
-
-            Parent root = loader.load();
-
-            // CARGAMOS EL CONTROLADOR DEL MAIN MENU
-            PatientMenuController controller = loader.getController();
-            controller.initData(patientMoved, com_data_client);
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-
-            stage.setScene(scene);
-            stage.show();
-
-            try {
-
-                Stage myStage = (Stage) this.buttonsLabel.getScene().getWindow();
-                myStage.close();
-
-            } catch (NullPointerException e) {
-                System.out.println("Exception caught");
-            }
-
-        } catch (IOException ex) {
-            Logger.getLogger(PatientMenuController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
+   
 }
