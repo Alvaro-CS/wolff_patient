@@ -38,6 +38,7 @@ import utilities.Hashmaker;
 public class RegistrationController implements Initializable {
 
     private Com_data_client com_data_client;
+    private Com_data_client com_data_client2= new Com_data_client();
 
     @FXML
     private TextField userNameField;
@@ -104,7 +105,7 @@ public class RegistrationController implements Initializable {
                 if (usernameIsFree(userNameField.getText()) && userNameField.getText() != null && userNameField.getText().length() == 9) {
                     regMessageLabel.setText("Username available");
                     registerUser();
-                    regMessageLabel.setText("Registration completed");
+                    regMessageLabel.setText("Registration completed");                  
                     backtoLogin(event);
                 } else if(userNameField.getText() == null || userNameField.getText().length() != 9){       
                     regMessageLabel.setText("That username already exists or it is not valid.\nIntroduce a valid one.");
@@ -148,7 +149,8 @@ public class RegistrationController implements Initializable {
 
         LogInController controller = loader.getController();
         System.out.println("Registration:" + com_data_client.getIp_address());
-        controller.initData(com_data_client);
+
+        controller.initData(com_data_client2, com_data_client.getIp_address());
         //this line gets the Stage information
         Stage window = new Stage();
         window.setScene(LogInViewScene);
@@ -259,16 +261,16 @@ public class RegistrationController implements Initializable {
                 ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
                 objectOutputStream.writeObject(order);
                 System.out.println("Order" + order + "sent");
-                Thread.sleep(500); //Time for receiving the signal that checks server is active.
-                int signal = objectInputStream.available();
-                System.out.println("Signal: " + signal);
-                if (signal == 0) {//Connection with the server refused
-                    regMessageLabel.setTextFill(Color.RED);
-                    regMessageLabel.setText("Connection to the server lost.\nPlease log out and try again.");
-                    Thread.sleep(2000);//time for showing the message until next error appears (null patient).
-                    return false;
-                } else {
-                    System.out.println(objectInputStream.readByte());
+//                Thread.sleep(500); //Time for receiving the signal that checks server is active.
+//                int signal = objectInputStream.available();
+//                System.out.println("Signal: " + signal);
+//                if (signal == 0) {//Connection with the server refused
+//                    regMessageLabel.setTextFill(Color.RED);
+//                    regMessageLabel.setText("Connection to the server lost.\nPlease log out and try again.");
+//                    Thread.sleep(2000);//time for showing the message until next error appears (null patient).
+//                    return false;
+//                } else {
+//                    System.out.println(objectInputStream.readByte());
                     //Sending patient
                     objectOutputStream.writeObject(id);
                     System.out.println("Patient name sent to server, will check if it exists.");
@@ -280,7 +282,7 @@ public class RegistrationController implements Initializable {
                     if (p != null) {//If received, it will not be null. Username is NOT free.no 
                         return false;
                     }
-                }
+//                }
             }
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");

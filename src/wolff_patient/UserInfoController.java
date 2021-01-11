@@ -129,26 +129,31 @@ public class UserInfoController implements Initializable {
         }
         if (!surnameField.getText().isEmpty() && !surnameField.getText().equals(patientMoved.getLastName())) {
             patientMoved.setLastName(surnameField.getText());
+            surnameLabel.setText("Patient's surname: " + patientMoved.getLastName());
             System.out.println("Last Name updated");
         }
-        if (!telephoneField.getText().isEmpty()
-                && Integer.parseInt(telephoneField.getText()) != patientMoved.getTelf()) {
+        if (!telephoneField.getText().isEmpty()&& Integer.parseInt(telephoneField.getText()) != patientMoved.getTelf()) {
             patientMoved.setTelf(Integer.parseInt(telephoneField.getText()));
+            telephoneLabel.setText("Patient's phone number: " + patientMoved.getTelf());
             System.out.println("Telephone updated");
         }
         if (!adressField.getText().isEmpty() && !adressField.getText().equals(patientMoved.getAddress())) {
             patientMoved.setAddress(adressField.getText());
+            adressLabel.setText("Patient's address: " + patientMoved.getAddress());
             System.out.println("Adress updated");
         }
         if (genderComboBox.getValue() != null) {
             if (!genderComboBox.getValue().equals(patientMoved.getGender()) && genderComboBox.getValue().equals("Female")) {
                 patientMoved.setGender(Patient.Gender.FEMALE);
+                genderLabel.setText("Patient's gender: " + patientMoved.getGender());
             }
             if (!genderComboBox.getValue().equals(patientMoved.getGender()) && genderComboBox.getValue().equals("Male")) {
                 patientMoved.setGender(Patient.Gender.MALE);
+                 genderLabel.setText("Patient's gender: " + patientMoved.getGender());
             }
             if (!genderComboBox.getValue().equals(patientMoved.getGender()) && genderComboBox.getValue().equals("Other")) {
                 patientMoved.setGender(Patient.Gender.OTHER);
+                 genderLabel.setText("Patient's gender: " + patientMoved.getGender());
             }
         }
         updatePatient();

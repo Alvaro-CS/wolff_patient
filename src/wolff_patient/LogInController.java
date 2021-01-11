@@ -202,15 +202,15 @@ public class LogInController implements Initializable {
                 ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
                 objectOutputStream.writeObject(order);
                 System.out.println("Order " + order + " sent to server");
-                Thread.sleep(500); //Time for receiving the signal that checks server is active.
-                int signal = objectInputStream.available();
-                System.out.println("Signal: " + signal);
-                if (signal == 0) {//Connection with the server refused
-                    loginMessageLabel.setTextFill(Color.RED);
-                    loginMessageLabel.setText("Connection to the server lost.\nPlease log out and try again.");
-                    Thread.sleep(2000);//time for showing the message until next error appears (null patient).
-                } else {
-                    System.out.println(objectInputStream.readByte());
+//                Thread.sleep(1000); //Time for receiving the signal that checks server is active.
+//                int signal = objectInputStream.available();
+//                System.out.println("Signal: " + signal);
+//                if (signal == 0) {//Connection with the server refused
+//                    loginMessageLabel.setTextFill(Color.RED);
+//                    loginMessageLabel.setText("Connection to the server lost.\nPlease log out and try again.");
+//                    Thread.sleep(2000);//time for showing the message until next error appears (null patient).
+//                } else {
+//                    System.out.println(objectInputStream.readByte());
                     //We send the query with ID + password combination to the server
                     objectOutputStream.writeObject((Object) userNameField.getText());
                     objectOutputStream.writeObject((Object) Hashmaker.getSHA256(passwordField.getText()));
@@ -226,7 +226,7 @@ public class LogInController implements Initializable {
                     }
                     return clientThreadsServer.getPatient();
                 }
-            }
+//            }
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
             Logger
@@ -282,6 +282,10 @@ public class LogInController implements Initializable {
 
     void initData(Com_data_client com_data) {
         this.com_data_client = com_data;
+    }
+    void initData(Com_data_client com_data, String ipaddress ) {
+    this.com_data_client = com_data;
+    this.com_data_client.setIp_address(ipaddress);
     }
 
     void initData(String ipaddress, String bitalinoMac) {
