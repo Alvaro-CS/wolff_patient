@@ -27,7 +27,7 @@ public class ComDataController implements Initializable {
     private Label messageLabel;
 
     @FXML
-    private void goBackLogin(ActionEvent event) throws IOException {
+    public void goBackLogin(ActionEvent event) throws IOException {
         if (ipAddressField.getText().isEmpty()) {
             messageLabel.setText("The IP address is required");
         } else {
@@ -42,12 +42,16 @@ public class ComDataController implements Initializable {
             controller.initData(ipAddressField.getText(), bitalinoField.getText());
 
             //this line gets the Stage information
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Stage window= new Stage();
             window.setScene(LogInViewScene);
             window.centerOnScreen();
             window.setTitle("WOLFFGRAM");
             window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
             window.show();
+            
+            Stage myStage = (Stage) (this.bitalinoField.getScene().getWindow());
+            myStage.close();
+            
         }
     }
 
@@ -55,32 +59,37 @@ public class ComDataController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }
 
+    
     public void closeWindows() throws IOException {
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInView.fxml"));
+    
+            FXMLLoader loader = new FXMLLoader();
 
-            Parent root = loader.load();
+            loader.setLocation(getClass().getResource("LogInView.fxml"));
 
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
+            Parent LogInViewParent = loader.load();
+            Scene LogInViewScene = new Scene(LogInViewParent);
+            LogInController controller = loader.getController();
+            controller.initData(ipAddressField.getText(), bitalinoField.getText());
 
-            stage.setScene(scene);
-            stage.show();
-
-            try {
-
-                Stage myStage = (Stage) (this.messageLabel.getScene().getWindow());
-                myStage.close();
-
-            } catch (NullPointerException e) {
-                System.out.println("Exception caught");
-            }
-
+            //this line gets the Stage information
+            //Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Stage window=new Stage();
+            window.setScene(LogInViewScene);
+            window.centerOnScreen();
+            window.setTitle("WOLFFGRAM");
+            window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
+            window.show();
+            
+            Stage myStage = (Stage) (this.bitalinoField.getScene().getWindow());
+            myStage.close();
+    
         } catch (IOException ex) {
             Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
+
 
 }

@@ -18,12 +18,14 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import utilities.Hashmaker;
 
 public class LogInController implements Initializable {
@@ -247,14 +249,17 @@ public class LogInController implements Initializable {
         window.show();
 
         // When the X is press to closs
-        window.setOnCloseRequest(e -> {
+        window.setOnCloseRequest(e->{
             try {
                 controller.closeWindows();
             } catch (IOException ex) {
                 Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        });
-
+        }); 
+            
+            
+         
+        
         // Close the current window
         Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         myStage.close();
