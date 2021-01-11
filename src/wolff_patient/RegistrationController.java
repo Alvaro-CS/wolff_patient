@@ -143,12 +143,15 @@ public class RegistrationController implements Initializable {
         System.out.println("Registration:" + com_data_client.getIp_address());
         controller.initData(com_data_client);
         //this line gets the Stage information
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage window = new Stage();
         window.setScene(LogInViewScene);
         window.centerOnScreen();
         window.setTitle("WOLFFGRAM");
         window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
         window.show();
+        
+        Stage myStage = (Stage) this.confirmPasswordLabel.getScene().getWindow();
+        myStage.close();
     }
 
     /**
@@ -266,19 +269,21 @@ public class RegistrationController implements Initializable {
     public void closeWindows(Com_data_client com_data_client) {
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInView.fxml"));
+            FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("LogInView.fxml"));
+        Parent LogInViewParent = loader.load();
+        Scene LogInViewScene = new Scene(LogInViewParent);
 
-            Parent root = loader.load();
-
-            //Cargamos el controlador del LogInView para que recuerde la IP
-            LogInController controller = loader.getController();
-            controller.initData(com_data_client);
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-
-            stage.setScene(scene);
-            stage.show();
+        LogInController controller = loader.getController();
+        System.out.println("Registration:" + com_data_client.getIp_address());
+        controller.initData(com_data_client);
+        //this line gets the Stage information
+        Stage window = new Stage();
+        window.setScene(LogInViewScene);
+        window.centerOnScreen();
+        window.setTitle("WOLFFGRAM");
+        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
+        window.show();
 
             Stage myStage = (Stage) this.confirmPasswordLabel.getScene().getWindow();
             myStage.close();
