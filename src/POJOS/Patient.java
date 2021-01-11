@@ -25,7 +25,7 @@ public class Patient implements Runnable, Serializable {
     private String birthdate;
 
     private String address;
-    private int SSNumber;
+    private String SSNumber;
     private int telf;
 
     public enum Gender {
@@ -38,7 +38,7 @@ public class Patient implements Runnable, Serializable {
     private transient StringProperty lastName_prop;
     private transient StringProperty birthdate_prop;
     private transient StringProperty address_prop;
-    private transient IntegerProperty SSNumber_prop;
+    private transient StringProperty SSNumber_prop;
     private transient IntegerProperty telf_prop;
     private transient StringProperty gender_prop;
     
@@ -56,7 +56,7 @@ public class Patient implements Runnable, Serializable {
     }
 
     public Patient(String DNI, String password, String name, String lastName,
-            Gender gender, Date date, String address, int SSNumber, int telf) {
+            Gender gender, Date date, String address, String SSNumber, int telf) {
         this.DNI = DNI;
         this.password = password;
         this.name = name;
@@ -91,7 +91,7 @@ public class Patient implements Runnable, Serializable {
         this.birthdate_prop = new SimpleStringProperty(birthdate);
         this.address_prop = new SimpleStringProperty(address);
         this.gender_prop = new SimpleStringProperty(gender.toString());
-        this.SSNumber_prop= new SimpleIntegerProperty(SSNumber);
+        this.SSNumber_prop= new SimpleStringProperty(SSNumber);
         this.telf_prop= new SimpleIntegerProperty(telf);
 
     }
@@ -162,14 +162,6 @@ public class Patient implements Runnable, Serializable {
         this.address = address;
     }
 
-    public int getSSNumber() {
-        return SSNumber;
-    }
-
-    public void setSSNumber(int SSNumber) {
-        this.SSNumber = SSNumber;
-    }
-
     public int getTelf() {
         return telf;
     }
@@ -218,14 +210,6 @@ public class Patient implements Runnable, Serializable {
         this.address_prop = address_prop;
     }
 
-    public IntegerProperty getSSNumber_prop() {
-        return SSNumber_prop;
-    }
-
-    public void setSSNumber_prop(IntegerProperty SSNumber_prop) {
-        this.SSNumber_prop = SSNumber_prop;
-    }
-
     public IntegerProperty getTelf_prop() {
         return telf_prop;
     }
@@ -240,6 +224,22 @@ public class Patient implements Runnable, Serializable {
 
     public void setGender_prop(StringProperty gender_prop) {
         this.gender_prop = gender_prop;
+    }
+
+    public String getSSNumber() {
+        return SSNumber;
+    }
+
+    public void setSSNumber(String SSNumber) {
+        this.SSNumber = SSNumber;
+    }
+
+    public StringProperty getSSNumber_prop() {
+        return SSNumber_prop;
+    }
+
+    public void setSSNumber_prop(StringProperty SSNumber_prop) {
+        this.SSNumber_prop = SSNumber_prop;
     }
 
 

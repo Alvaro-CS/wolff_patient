@@ -188,6 +188,7 @@ public class LogInController implements Initializable {
 
                 } catch (IOException e) {
                     System.err.println("No connection established with: " + com_data_client.getIp_address() + " by port: " + 9000);
+                    loginMessageLabel.setText("Connection could not be established");
                 }
 
             }
