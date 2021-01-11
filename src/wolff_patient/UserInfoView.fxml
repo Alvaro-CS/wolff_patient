@@ -95,6 +95,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </TextField>
+                              <Label fx:id="errorLabel" prefHeight="84.0" prefWidth="240.0" />
                            </children>
                            <HBox.margin>
                               <Insets left="10.0" right="20.0" />

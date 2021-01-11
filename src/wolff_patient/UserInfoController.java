@@ -8,6 +8,7 @@ package wolff_patient;
 import POJOS.Com_data_client;
 import POJOS.Patient;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import utilities.Hashmaker;
 
@@ -66,6 +68,8 @@ public class UserInfoController implements Initializable {
     private PasswordField password_field;
     @FXML
     private Label passwordLabel;
+    @FXML
+    private Label errorLabel;
 
     /**
      * Initializes the controller class.
@@ -97,14 +101,15 @@ public class UserInfoController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void changePassword(ActionEvent event) throws IOException {
+    private void changePassword(ActionEvent event) throws IOException, InterruptedException {
         if (Hashmaker.getSHA256(password_field.getText()).equals(patientMoved.getPassword()) && new_password_field.getText().equals(repeat_password_field.getText())) {
             patientMoved.setPassword(Hashmaker.getSHA256(new_password_field.getText()));
             updatePatient();
-
+            passwordLabel.setTextFill(Color.GREEN);
             passwordLabel.setText("Password Updated");
 
         } else {
+            passwordLabel.setTextFill(Color.RED);
             passwordLabel.setText("Password can't be updated");
         }
     }
@@ -116,7 +121,7 @@ public class UserInfoController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void updateInformation(ActionEvent event) throws IOException {
+    private void updateInformation(ActionEvent event) throws IOException, InterruptedException {
         if (!nameField.getText().isEmpty() && !nameField.getText().equals(patientMoved.getName())) {
             patientMoved.setName(nameField.getText());
             nameLabel.setText("Patient's name: " + patientMoved.getName());
@@ -154,20 +159,33 @@ public class UserInfoController implements Initializable {
      *
      */
     @FXML
-    private void updatePatient() {
+    private void updatePatient() throws InterruptedException {
         ObjectOutputStream objectOutputStream;
-        try {
+        ObjectInputStream objectInputStream;
 
+        try {
+            objectInputStream = com_data_client.getObjectInputStream();
             objectOutputStream = com_data_client.getObjectOutputStream();
+
             //Sending order
             String order = "UPDATE";
             objectOutputStream.writeObject(order);
             System.out.println("Order" + order + "sent");
+            Thread.sleep(100); //Time for receiving the signal that checks server is active.
+            int signal = objectInputStream.available();
+            System.out.println("Signal: " + signal);
+            if (signal == 0) {//Connection with the server refused, double check.
+                errorLabel.setTextFill(Color.RED);
+                errorLabel.setText("Connection to the server lost.\nPlease log out and try again.");
+            } else {
+                //Sending patient
+                System.out.println(objectInputStream.readByte());
+                objectOutputStream.writeObject(patientMoved);
+                objectOutputStream.reset();
+                System.out.println("Patient data sent to register in server");
+            }
 
-            //Sending patient
-            objectOutputStream.writeObject(patientMoved);
-            objectOutputStream.reset();
-            System.out.println("Patient data sent to register in server");
+            // }
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
             Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
@@ -198,7 +216,7 @@ public class UserInfoController implements Initializable {
 
         window.show();
     }
-    
+
     /**
      * This method handles closing the app by X button
      *

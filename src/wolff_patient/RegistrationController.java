@@ -31,6 +31,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import utilities.Hashmaker;
 
@@ -72,8 +73,10 @@ public class RegistrationController implements Initializable {
      * @throws java.io.IOException
      */
     @FXML
-    private void registerButtonOnAction(ActionEvent event) throws IOException {
+    private void registerButtonOnAction(ActionEvent event) throws IOException, InterruptedException {
         if (usernameIsFree(userNameField.getText()) && userNameField.getText() != null && userNameField.getText().length() == 9) {
+            regMessageLabel.setTextFill(Color.GREEN);
+
             regMessageLabel.setText("Username available");
 
             if (passwordField.getText().equals(repeatPasswordField.getText()) && passwordField.getText().isEmpty() != true) {
@@ -109,8 +112,11 @@ public class RegistrationController implements Initializable {
                 confirmPasswordLabel.setText("Passwords don't match or are not valid");
             }
         } else if (com_data_client.getSocket() == null) {
+            regMessageLabel.setTextFill(Color.RED);
             regMessageLabel.setText("Connection could not be established");
         } else {
+            regMessageLabel.setTextFill(Color.RED);
+
             regMessageLabel.setText("That username already exists or it is not valid.\nIntroduce a valid one.");
         }
 
@@ -148,7 +154,7 @@ public class RegistrationController implements Initializable {
         window.setTitle("WOLFFGRAM");
         window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
         window.show();
-        
+
         Stage myStage = (Stage) this.confirmPasswordLabel.getScene().getWindow();
         myStage.close();
     }
@@ -184,14 +190,15 @@ public class RegistrationController implements Initializable {
             //Sending order
             String order = "REGISTER";
             ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
+
             objectOutputStream.writeObject(order);
             System.out.println("Order" + order + "sent");
-
             //Sending patient
             Patient p1 = new Patient(ID, password, name, surname, gender, dob, address, ssnumber, phone);
 
             objectOutputStream.writeObject(p1);
             System.out.println("Patient data (" + p1.getDNI() + ") sent to register in server");
+
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
             Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, ex);
@@ -206,7 +213,7 @@ public class RegistrationController implements Initializable {
      * @return boolean
      */
     @FXML
-    private boolean usernameIsFree(String id) {//TODO fix connection check
+    private boolean usernameIsFree(String id) throws InterruptedException {//TODO fix connection check
         Patient p;
         try {
             if (!com_data_client.isSocket_created()) {
@@ -238,13 +245,21 @@ public class RegistrationController implements Initializable {
             if (com_data_client.getSocket() != null) {
                 //Sending order
                 ObjectInputStream objectInputStream = com_data_client.getObjectInputStream();
-                int signal = objectInputStream.readByte();
-                if (signal == 1) {//Connection with the server 
-                    System.out.println("Connection established");
-                    String order = "EXISTS";
-                    ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
-                    objectOutputStream.writeObject(order);
-                    System.out.println("Order" + order + "sent");
+
+                String order = "EXISTS";
+                ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
+                objectOutputStream.writeObject(order);
+                System.out.println("Order" + order + "sent");
+                Thread.sleep(500); //Time for receiving the signal that checks server is active.
+                int signal = objectInputStream.available();
+                System.out.println("Signal: " + signal);
+                if (signal == 0) {//Connection with the server refused
+                    regMessageLabel.setTextFill(Color.RED);
+                    regMessageLabel.setText("Connection to the server lost.\nPlease log out and try again.");
+                    Thread.sleep(2000);//time for showing the message until next error appears (null patient).
+                    return false;
+                } else {
+                    System.out.println(objectInputStream.readByte());
                     //Sending patient
                     objectOutputStream.writeObject(id);
                     System.out.println("Patient name sent to server, will check if it exists.");
@@ -256,9 +271,6 @@ public class RegistrationController implements Initializable {
                     if (p != null) {//If received, it will not be null. Username is NOT free.no 
                         return false;
                     }
-                } else if (signal == -1) {
-                    System.out.println("NO CONNECTION");
-                    return false;
                 }
             }
         } catch (IOException ex) {
@@ -275,20 +287,20 @@ public class RegistrationController implements Initializable {
 
         try {
             FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("LogInView.fxml"));
-        Parent LogInViewParent = loader.load();
-        Scene LogInViewScene = new Scene(LogInViewParent);
+            loader.setLocation(getClass().getResource("LogInView.fxml"));
+            Parent LogInViewParent = loader.load();
+            Scene LogInViewScene = new Scene(LogInViewParent);
 
-        LogInController controller = loader.getController();
-        System.out.println("Registration:" + com_data_client.getIp_address());
-        controller.initData(com_data_client);
-        //this line gets the Stage information
-        Stage window = new Stage();
-        window.setScene(LogInViewScene);
-        window.centerOnScreen();
-        window.setTitle("WOLFFGRAM");
-        window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
-        window.show();
+            LogInController controller = loader.getController();
+            System.out.println("Registration:" + com_data_client.getIp_address());
+            controller.initData(com_data_client);
+            //this line gets the Stage information
+            Stage window = new Stage();
+            window.setScene(LogInViewScene);
+            window.centerOnScreen();
+            window.setTitle("WOLFFGRAM");
+            window.getIcons().add(new Image("/wolff_patient/images/logo.png"));
+            window.show();
 
             Stage myStage = (Stage) this.confirmPasswordLabel.getScene().getWindow();
             myStage.close();

@@ -14,7 +14,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Patient implements Runnable, Serializable {
+public class Patient implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
@@ -246,11 +246,6 @@ public class Patient implements Runnable, Serializable {
     @Override
     public String toString() {
         return "Patient{" + "DNI=" + DNI + ", password=" + password + ", name=" + name + ", lastName=" + lastName + ", birthdate=" + birthdate + ", gender=" + gender + ", address=" + address + ", SSNumber=" + SSNumber + ", telf=" + telf + ", nº records="+clinical_record_list.size()+"}";
-    }
-
-    @Override
-    public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
