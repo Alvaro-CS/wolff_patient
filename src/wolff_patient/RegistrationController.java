@@ -73,7 +73,7 @@ public class RegistrationController implements Initializable {
      * @throws java.io.IOException
      */
     @FXML
-    private void registerButtonOnAction(ActionEvent event) throws IOException {
+    private void registerButtonOnAction(ActionEvent event) throws IOException, InterruptedException {
        
 
         if (passwordField.getText().equals(repeatPasswordField.getText()) && passwordField.getText().isEmpty() != true) {
