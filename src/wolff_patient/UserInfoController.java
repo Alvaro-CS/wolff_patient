@@ -129,6 +129,8 @@ public class UserInfoController implements Initializable {
         }
         if (!surnameField.getText().isEmpty() && !surnameField.getText().equals(patientMoved.getLastName())) {
             patientMoved.setLastName(surnameField.getText());
+                        nameLabel.setText("Patient's lastname: " + patientMoved.getLastName());
+
             System.out.println("Last Name updated");
         }
         if (!telephoneField.getText().isEmpty()
