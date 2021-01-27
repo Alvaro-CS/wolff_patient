@@ -14,25 +14,6 @@ The diagnosis can be done when we observe in the electrocardiogram (ECG) a short
 
 This syndrome affects between the 0.1 and 0.3% in the population. The risk of death in those without symptoms is about 0.5% per year in children and 0.1% per year in adults. WPW is also associated with a very small risk of sudden death due to more dangerous heart rhythm disturbances.
 
-**PATHOPHYSIOLOGY**
-
-Electrical activity in the normal human heart begins when a cardiac action potential arises in the sinoatrial (SA) node, which is in the right atrium. From there, the electrical stimulus is transmitted via internodal pathways to the atrioventricular (AV) node. After a brief delay at the AV node, the stimulus travels through the bundle of His to the left and right bundle branches and then to the Purkinje fibers and the endocardium at the apex of the heart, then finally to the ventricular myocardium.
-
-The AV node serves an important function as a &quot;gatekeeper&quot;, limiting the electrical activity that reaches the ventricles. In situations where the atria generate excessively rapid electrical activity (such as atrial fibrillation or atrial flutter), the AV node limits the number of signals conducted to the ventricles.
-
-Individuals with WPW have an accessory pathway that communicates between the atria and the ventricles, in addition to the AV node. This accessory pathway is known as the bundle of Kent. This accessory pathway does not share the rate-slowing properties of the AV node, and may conduct electrical activity at a significantly higher rate than the AV node.
-
-Extremely rapid heart rates such as this may result in hemodynamic instability or cardiogenic shock. In some cases, the combination of an accessory pathway and abnormal heart rhythms can trigger ventricular fibrillation, a leading cause of sudden cardiac death.
-
-**DIAGNOSIS**
-
-The WPW pattern can be detected by an ECG, even in an asymptomatic individual. Conduction through the accessory pathway produces a **characteristic ECG pattern.** A classic finding is a **short PR interval and a delta wave** , which reflects early conduction (preexcitation) to the ventricles through the accessory pathway.
-
-Short PR interval and slurring of the QRS complex are reflective of the impulse making it to the ventricles early (via the accessory pathway) without the usual delay experienced in the AV node.
-
-The ECG can vary from day to day, depending upon other factors such as adrenaline. These factors can alter the relative proportion of impulses that are conducted via the accessory pathway, which produces the WPW pattern.
-
-
 Our aim with this project is to provide a way to detect this unknown disease in an easier way, facilitating the measuring of the ECG to the patient. He can do it at home, saving him visits to the hospital and allowing him to do the measuring more frequently, which is better to monitor the disorder and put him in the right treatment. It allows a constant following of the development of the disease in a more continuous way which is also better for reducing the symptoms.
 
 The patient can also write down his symptoms at every moment he wants to record a new ECG, which also enables the doctor to have a continuous tracking of the state of the patient.
