@@ -127,9 +127,9 @@
                                     <Insets top="15.0" />
                                  </VBox.margin>
                               </PasswordField>
-                              <Button fx:id="change_button" onAction="#changePassword" prefHeight="40.0" prefWidth="200.0" styleClass="starter_buttom" text="Change" textFill="#000000b5">
+                              <Button fx:id="change_button" onAction="#changePassword" prefHeight="40.0" prefWidth="200.0" styleClass="starter_buttom" text="Change password" textFill="#000000b5">
                                  <font>
-                                    <Font name="System Bold" size="20.0" />
+                                    <Font name="System Bold" size="14.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="33.0" />
