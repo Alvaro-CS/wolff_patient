@@ -12,10 +12,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import wolff_patient.ECGShowController;
 
-/**
- *
- * @author ALVARO
- */
+
 public class ECGplot {
     Integer [] ecg_data;
     

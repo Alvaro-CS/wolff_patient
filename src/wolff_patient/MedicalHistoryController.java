@@ -253,8 +253,7 @@ public class MedicalHistoryController implements Initializable {
         Scene MainMenuViewScene = new Scene(patientMenuViewParent);
         PatientMenuController controller = loader.getController();
         controller.initData(patientMoved, com_data_client);
-        //this line gets the Stage information
-        //Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
         Stage window = new Stage();
         window.setScene(MainMenuViewScene);
         window.setTitle("WOLFFGRAM");

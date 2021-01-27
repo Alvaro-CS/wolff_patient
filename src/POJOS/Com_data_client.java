@@ -11,10 +11,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-/**
- *
- * @author ALVARO
- */
+
 public class Com_data_client {//If we want to encapsulate all data
     
     private String ip_address;

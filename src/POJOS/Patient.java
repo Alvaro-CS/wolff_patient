@@ -245,7 +245,7 @@ public class Patient implements Serializable {
 
     @Override
     public String toString() {
-        return "Patient{" + "DNI=" + DNI + ", password=" + password + ", name=" + name + ", lastName=" + lastName + ", birthdate=" + birthdate + ", gender=" + gender + ", address=" + address + ", SSNumber=" + SSNumber + ", telf=" + telf + ", nº records="+clinical_record_list.size()+"}";
+        return "Patient{" + "DNI=" + DNI +  "name=" + name + ", lastName=" + lastName + ", birthdate=" + birthdate + ", gender=" + gender + ", address=" + address + ", SSNumber=" + SSNumber + ", telf=" + telf + ", nº records="+clinical_record_list.size()+"}";
     }
 
 }

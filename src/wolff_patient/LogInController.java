@@ -23,7 +23,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import utilities.Hashmaker;
 
@@ -155,7 +154,7 @@ public class LogInController implements Initializable {
 
         //press the X to close the main menu and release resources
         window.setOnCloseRequest(e -> PatientMenuController.releaseResources(com_data_client));
-        
+
         Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         myStage.close();
     }
@@ -195,38 +194,25 @@ public class LogInController implements Initializable {
 
             }
             if (com_data_client.getSocket() != null) {
-                ObjectInputStream objectInputStream = com_data_client.getObjectInputStream();
-
                 //We send the order to server that we want to search for patients
                 String order = "SEARCH_PATIENT";
                 ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
                 objectOutputStream.writeObject(order);
                 System.out.println("Order " + order + " sent to server");
-//                Thread.sleep(1000); //Time for receiving the signal that checks server is active.
-//                int signal = objectInputStream.available();
-//                System.out.println("Signal: " + signal);
-//                if (signal == 0) {//Connection with the server refused
-//                    loginMessageLabel.setTextFill(Color.RED);
-//                    loginMessageLabel.setText("Connection to the server lost.\nPlease log out and try again.");
-//                    Thread.sleep(2000);//time for showing the message until next error appears (null patient).
-//                } else {
-//                    System.out.println(objectInputStream.readByte());
-                    //We send the query with ID + password combination to the server
-                    objectOutputStream.writeObject((Object) userNameField.getText());
-                    objectOutputStream.writeObject((Object) Hashmaker.getSHA256(passwordField.getText()));
-                    System.out.println("Query sent");
+                objectOutputStream.writeObject((Object) userNameField.getText());
+                objectOutputStream.writeObject((Object) Hashmaker.getSHA256(passwordField.getText()));
+                System.out.println("Query sent");
 
-                    //We here need to receive from the server the patient found.
-                    clientThreadsServer = new ClientThreadsServer();
-                    clientThreadsServer.setCom_data_client(com_data_client);
-                    new Thread(clientThreadsServer).start();
+                //We here need to receive from the server the patient found.
+                clientThreadsServer = new ClientThreadsServer();
+                clientThreadsServer.setCom_data_client(com_data_client);
+                new Thread(clientThreadsServer).start();
 
-                    synchronized (clientThreadsServer) {
-                        clientThreadsServer.wait(); //wait until patient logs in (if not, it returns null because not enough time to get it).
-                    }
-                    return clientThreadsServer.getPatient();
+                synchronized (clientThreadsServer) {
+                    clientThreadsServer.wait(); //wait until patient logs in (if not, it returns null because not enough time to get it).
                 }
-//            }
+                return clientThreadsServer.getPatient();
+            }
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");
             Logger
@@ -261,7 +247,7 @@ public class LogInController implements Initializable {
 
         window.show();
 
-        // When the X is press to closs
+        // When the X is press to close
         window.setOnCloseRequest(e -> {
             try {
                 controller.closeWindows();
@@ -283,9 +269,10 @@ public class LogInController implements Initializable {
     void initData(Com_data_client com_data) {
         this.com_data_client = com_data;
     }
-    void initData(Com_data_client com_data, String ipaddress ) {
-    this.com_data_client = com_data;
-    this.com_data_client.setIp_address(ipaddress);
+
+    void initData(Com_data_client com_data, String ipaddress) {
+        this.com_data_client = com_data;
+        this.com_data_client.setIp_address(ipaddress);
     }
 
     void initData(String ipaddress, String bitalinoMac) {

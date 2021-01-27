@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package wolff_patient;
 
 import POJOS.Com_data_client;
@@ -10,10 +5,7 @@ import POJOS.Patient;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-/**
- *
- * @author ALVARO
- */
+
 public class ClientThreadsServer implements Runnable {
 
     private Com_data_client com_data_client;

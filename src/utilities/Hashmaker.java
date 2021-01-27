@@ -13,10 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import wolff_patient.RegistrationController;
 
-/**
- *
- * @author ALVARO
- */
+
 public class Hashmaker {
     
     // Creates a SHA256 using user's password as input, generates hash with MessageDigest class.

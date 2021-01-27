@@ -23,7 +23,7 @@ public class BitalinoManager {
             //Sampling rate, should be 10, 100 or 1000
             int SamplingRate = 100;
             System.out.println("Connecting with " + macAddress);
-            bitalino.open(macAddress, SamplingRate); //TODO como manejar si falla esto
+            bitalino.open(macAddress, SamplingRate);
             System.out.println("Bitalino connected.");
             connected = true;
 

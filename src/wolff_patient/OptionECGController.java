@@ -1,14 +1,3 @@
-/*
-In this FXML login controller, we have this methods: 
-initialize-->need to override because we implement Initializable
-
-when Login is clicked
-loginButtonOnAction--> if the fields aren't empty, it checks if the id and password are correct (exist on the db). (calls validateLogin)
-validateLogin--> checks if account exists 
-
-when Signup is clicked
-createAccountForm--> opens registration view
- */
 package wolff_patient;
 
 import POJOS.Com_data_client;
@@ -23,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -37,9 +25,6 @@ public class OptionECGController implements Initializable {
         this.patientMoved = patient;
 
     }
-
-    @FXML
-    private Label messageLabel;
 
     @FXML
     private void withECG(ActionEvent event) throws IOException {

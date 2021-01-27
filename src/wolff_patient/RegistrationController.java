@@ -25,20 +25,18 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import java.util.Date;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import utilities.Hashmaker;
 
 public class RegistrationController implements Initializable {
 
     private Com_data_client com_data_client;
-    private Com_data_client com_data_client2= new Com_data_client();
+    private final Com_data_client com_data_client2 = new Com_data_client();
 
     @FXML
     private TextField userNameField;
@@ -75,7 +73,6 @@ public class RegistrationController implements Initializable {
      */
     @FXML
     private void registerButtonOnAction(ActionEvent event) throws IOException, InterruptedException {
-       
 
         if (passwordField.getText().equals(repeatPasswordField.getText()) && passwordField.getText().isEmpty() != true) {
             System.out.println(passwordField.getText());
@@ -105,22 +102,22 @@ public class RegistrationController implements Initializable {
                 if (usernameIsFree(userNameField.getText()) && userNameField.getText() != null && userNameField.getText().length() == 9) {
                     regMessageLabel.setText("Username available");
                     registerUser();
-                    regMessageLabel.setText("Registration completed");                  
+                    regMessageLabel.setText("Registration completed");
                     backtoLogin(event);
-                } else if(userNameField.getText() == null || userNameField.getText().length() != 9){       
+                } else if (userNameField.getText() == null || userNameField.getText().length() != 9) {
                     regMessageLabel.setText("That username already exists or it is not valid.\nIntroduce a valid one.");
-                    
-                }else{
+
+                } else {
                     regMessageLabel.setText("Connection could not be established");
- 
+
                 }
             }
 
         } else {
             confirmPasswordLabel.setText("Passwords don't match or are not valid");
             if (userNameField.getText().isEmpty() == true || passwordField.getText().isEmpty() == true) {
-            confirmPasswordLabel.setText("Introduce username and password");
-        }
+                confirmPasswordLabel.setText("Introduce username and password");
+            }
         }
 
     }
@@ -261,28 +258,15 @@ public class RegistrationController implements Initializable {
                 ObjectOutputStream objectOutputStream = com_data_client.getObjectOutputStream();
                 objectOutputStream.writeObject(order);
                 System.out.println("Order" + order + "sent");
-//                Thread.sleep(500); //Time for receiving the signal that checks server is active.
-//                int signal = objectInputStream.available();
-//                System.out.println("Signal: " + signal);
-//                if (signal == 0) {//Connection with the server refused
-//                    regMessageLabel.setTextFill(Color.RED);
-//                    regMessageLabel.setText("Connection to the server lost.\nPlease log out and try again.");
-//                    Thread.sleep(2000);//time for showing the message until next error appears (null patient).
-//                    return false;
-//                } else {
-//                    System.out.println(objectInputStream.readByte());
-                    //Sending patient
-                    objectOutputStream.writeObject(id);
-                    System.out.println("Patient name sent to server, will check if it exists.");
+                objectOutputStream.writeObject(id);
+                System.out.println("Patient name sent to server, will check if it exists.");
+                objectInputStream.readObject();//We read the ORDER. We don't need it for nothing, so we don't save it to a variable.
+                Object tmp = objectInputStream.readObject();//we receive the new patient from client
+                p = (Patient) tmp;
+                if (p != null) {//If received, it will not be null. Username is NOT free.no 
+                    return false;
+                }
 
-                    //ObjectInputStream objectInputStream = com_data_client.getObjectInputStream();
-                    objectInputStream.readObject();//We read the ORDER. We don't need it for nothing, so we don't save it to a variable.
-                    Object tmp = objectInputStream.readObject();//we receive the new patient from client
-                    p = (Patient) tmp;
-                    if (p != null) {//If received, it will not be null. Username is NOT free.no 
-                        return false;
-                    }
-//                }
             }
         } catch (IOException ex) {
             System.out.println("Unable to write the object on the server.");

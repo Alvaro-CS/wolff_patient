@@ -30,11 +30,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import utilities.Hashmaker;
 
-/**
- * FXML Controller class
- *
- * @author susan
- */
+
 public class UserInfoController implements Initializable {
 
     private Com_data_client com_data_client;
@@ -82,8 +78,8 @@ public class UserInfoController implements Initializable {
         patientMoved = patient;
         nameLabel.setText("Patient's name: " + patientMoved.getName());
         surnameLabel.setText("Patient's surname: " + patientMoved.getLastName());
-        telephoneLabel.setText("Patient's phone: " + patientMoved.getTelf());
-        adressLabel.setText("Patient's adress: " + patientMoved.getAddress());
+        telephoneLabel.setText("Patient's phone number: " + patientMoved.getTelf());
+        adressLabel.setText("Patient's address: " + patientMoved.getAddress());
         genderLabel.setText("Patient's gender: " + patientMoved.getGender());
     }
 

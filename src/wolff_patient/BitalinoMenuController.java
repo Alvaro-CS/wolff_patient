@@ -1,14 +1,3 @@
-/*
-In this FXML login controller, we have this methods: 
-initialize-->need to override because we implement Initializable
-
-when Login is clicked
-loginButtonOnAction--> if the fields aren't empty, it checks if the id and password are correct (exist on the db). (calls validateLogin)
-validateLogin--> checks if account exists 
-
-when Signup is clicked
-createAccountForm--> opens registration view
- */
 package wolff_patient;
 
 import BITalino.BitalinoManager;
