@@ -39,7 +39,7 @@ The patient can also write down his symptoms at every moment he wants to record 
 
 **WOLLGRAM APP USAGE**
 
-With the Server being open, we can run the clients app. We will start explaining the patient app, **wolff\_patient**.
+With the Server being open, we can run the clients app. Here, **wolff\_patient** usage is explained.
 
 A Welcome window will appear with the logo of our app, &quot; **Wolffgram**&quot;. In this window the user has different options.
 
@@ -86,7 +86,7 @@ After making the changes, the user can go back to the main menu by using the &qu
 
 Here the patient can visualize a table with all the medical recordings that have been done before. For each medical record, many attributes are shown: the date when it was recorded and the different symptoms that were and not present. A system for **displaying visually an electrocardiogram** has been developed, so the user can select the &quot;View&quot; button on the ECG column to see the electrocardiogram if it was recorded.
 
-Next to that column, the comment section can be found: the doctor can add any observation about the symptoms or the ECG, as a way to **communicate**  **with**  **the patient** and give feedback to each medical record.
+Next to that column, the comment section can be found: the doctor can add any observation about the symptoms or the ECG, as a way to **communicate with the patient** and give feedback to each medical record.
 
 The &quot;Add Clinical Record&quot; button can be selected to start a new record. A new window will appear asking the patient if he wants to record and ECG or not.
 
